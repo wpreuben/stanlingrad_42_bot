@@ -436,13 +436,8 @@ hex_id,direction,neighbor_id,review_status,crossing_features,blue_pixels_29x29,p
 1831,s,1832,unreviewed,,0,17,55,136,67,8,road_candidate;rail_or_primary_candidate;route_crossing_candidate
 1831,ne,1931,unreviewed,,0,2,0,2,1,0,no_feature_candidate;strong_no_feature_candidate
 1831,se,1932,unreviewed,,0,0,0,0,2,0,no_feature_candidate;strong_no_feature_candidate
-1832,s,1833,unreviewed,,496,6,0,1448,242,8,river_candidate;road_candidate;route_crossing_candidate
 1832,ne,1932,unreviewed,,0,0,194,302,31,3,rail_or_primary_candidate
 1832,se,1933,unreviewed,,0,20,62,139,78,9,road_candidate;rail_or_primary_candidate;route_crossing_candidate
-1833,s,1834,unreviewed,,834,0,0,2555,297,24,river_candidate;route_crossing_candidate
-1833,ne,1933,unreviewed,,462,2,0,1368,132,1,river_candidate
-1833,se,1934,unreviewed,,304,0,0,1099,117,0,river_candidate
-1834,ne,1934,unreviewed,,457,1,0,1360,183,2,river_candidate
 1900,s,1901,reviewed,none,0,0,0,0,35,0,no_feature_candidate
 1900,se,2000,reviewed,minor_river,289,31,0,678,163,2,river_candidate;road_candidate
 1901,s,1902,reviewed,none,0,7,0,7,42,0,road_candidate;no_feature_candidate

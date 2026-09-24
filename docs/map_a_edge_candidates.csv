@@ -436,13 +436,8 @@ hex_id,direction,neighbor_id,review_status,crossing_features,source_ref
 1831,s,1832,unreviewed,,
 1831,ne,1931,unreviewed,,
 1831,se,1932,unreviewed,,
-1832,s,1833,unreviewed,,
 1832,ne,1932,unreviewed,,
 1832,se,1933,unreviewed,,
-1833,s,1834,unreviewed,,
-1833,ne,1933,unreviewed,,
-1833,se,1934,unreviewed,,
-1834,ne,1934,unreviewed,,
 1900,s,1901,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x850-1160 y45-455
 1900,se,2000,reviewed,minor_river,Stal42_Map_west-FINAL-150 Q12.jpg crop x850-1160 y45-455
 1901,s,1902,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x850-1160 y45-455

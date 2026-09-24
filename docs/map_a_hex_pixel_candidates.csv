@@ -157,8 +157,6 @@ hex_id,candidate,median_red,median_green,median_blue,green_fraction,dark_fractio
 1830,clear_candidate,239,235,224,0.0,0.0337,0.0,
 1831,clear_candidate,239,235,224,0.0,0.0377,0.0,
 1832,clear_candidate,239,234,224,0.0,0.0556,0.0,
-1833,unresolved,153,168,175,0.0,0.0278,0.9663,
-1834,unresolved,153,168,175,0.0,0.0,1.0,
 1900,clear_candidate,239,235,224,0.0,0.0,0.0119,clear
 1901,clear_candidate,239,235,224,0.0,0.0,0.0,clear
 1902,clear_candidate,239,235,224,0.0,0.0119,0.0,clear

@@ -14,13 +14,14 @@
 - 작업 위치: `/home/pc/project/Stalingrad42_bot/.worktrees/engine-foundation`, 브랜치 `feat/engine-foundation`.
 - 이 작업 위치는 자체 `.git`을 갖는다. 이전 임시 Git 디렉터리가 시스템 재시작으로 삭제된 뒤 원격 브랜치에서 복구했다. 다시 `/tmp`에 Git 관리 디렉터리를 만들지 않는다.
 - 게임 엔진의 상태·행동·페이즈·카탈로그 계약과 일부 규칙 보조 함수가 있다. 전체 `map_a.json`, `units_s1.json`, `fall_blau.json`은 아직 없으므로 S1 플레이는 불가능하다. 검수하지 않은 자료를 완성 지도나 초기화 가능 시나리오로 만들지 않는다.
-- [지도 전사 기록](map_a_transcription_progress.md)에 확인한 인쇄 ID 1,042개, 지형·변까지 검수한 헥스 80개와 변 178개를 구분해 적었다.
-- [이웃 후보](map_a_edge_candidates.csv)는 2,947개 중 178개만 `reviewed`이며 나머지는 단순 기하 후보이다. [강변 검토 대기열](map_a_river_review_queue.csv)은 99픽셀 가로 간격으로 보정한 이미지 신호를 사용한다. 두 파일 모두 실행용 지도 자료가 아니다.
+- [지도 전사 기록](map_a_transcription_progress.md)에 확인한 인쇄 ID 1,040개, 지형·변까지 검수한 헥스 80개와 변 178개를 구분해 적었다.
+- [이웃 후보](map_a_edge_candidates.csv)는 2,942개 중 178개만 `reviewed`이며 나머지는 단순 기하 후보이다. [강변 검토 대기열](map_a_river_review_queue.csv)은 99픽셀 가로 간격으로 보정한 이미지 신호를 사용한다. 두 파일 모두 실행용 지도 자료가 아니다.
 - 사용자 제공 `Stalingrad42_v203/` 조사 결과는 [VASSAL 모듈 자료 조사](vassal_module_inventory.md)에 기록했다. 격자·카운터·시나리오 배치는 구조화되어 있으나 헥스별 지형·변 자료는 확인되지 않았다. Map A 이미지는 기존 `images_high` 파일과 해시가 같다.
 - [일괄 판독 시험](map_a_automation_spike.md)에서 단순 색 신호의 한계를 측정했다. 강 28변 중 25개를 오탐 없이 찾았으나 보조도로·철도 신호는 오탐이 많다. 검수된 헥스 80개가 모두 `clear`라 다른 지형의 정확도를 평가할 수 없다. 다음에는 선 연결성 분석과 다양한 지형 표본 검수를 우선한다.
-- [변 픽셀 후보](map_a_edge_pixel_candidates.csv)는 `tools.map_edge_pixel_candidates`로 확인된 인쇄 ID 사이의 기하학적 변 2,947개를 일괄 점수화한 자료다. 51×51픽셀 영역의 색 신호가 거의 없고 통과선이 없는 미검수 변 1,116개는 `no_feature_candidate`, 그중 공유 변의 양 끝까지 조용한 972개는 `strong_no_feature_candidate`로 표시된다. 변을 가로질러 양쪽으로 이어지는 선은 `route_crossing_candidate`로 표시된다. 후보 신호는 실행용 지도 속성이 아니다.
+- [변 픽셀 후보](map_a_edge_pixel_candidates.csv)는 `tools.map_edge_pixel_candidates`로 확인된 인쇄 ID 사이의 기하학적 변 2,942개를 일괄 점수화한 자료다. 51×51픽셀 영역의 색 신호가 거의 없고 통과선이 없는 미검수 변 1,116개는 `no_feature_candidate`, 그중 공유 변의 양 끝까지 조용한 972개는 `strong_no_feature_candidate`로 표시된다. 변을 가로질러 양쪽으로 이어지는 선은 `route_crossing_candidate`로 표시된다. 후보 신호는 실행용 지도 속성이 아니다.
 - 지형 표본 탐색: 기존 검수 헥스 80개는 전부 `clear`다. VASSAL 지형표와 지도 확대 대조에서 `3905`·`4010`·`2122`·`3805`는 수목, `3534`는 습지, `2029`·`2503`·`3134`는 대도시, `1824`는 소도시의 후보로 확인했다. 아직 부분 CSV의 정식 검수 자료는 아니다. 이 표본으로 비평지 분류 가능성을 시험한다.
-- [헥스 색상 후보](map_a_hex_pixel_candidates.csv)는 `tools.map_hex_pixel_candidates`로 확인된 ID 1,042개를 일괄 점수화한 자료다. 평지 967, 수목 32, 습지 2, 대도시 3, 미해결 38개로 분류됐다. [일괄 판독 시험](map_a_automation_spike.md)에 표본 검사와 규칙상 한계를 적었다. 모두 실행용 지형이 아닌 후보이다.
+- [헥스 색상 후보](map_a_hex_pixel_candidates.csv)는 `tools.map_hex_pixel_candidates`로 확인된 ID 1,040개를 일괄 점수화한 자료다. 평지 967, 수목 32, 습지 2, 대도시 3, 미해결 36개로 분류됐다. [일괄 판독 시험](map_a_automation_spike.md)에 표본 검사와 규칙상 한계를 적었다. 모두 실행용 지형이 아닌 후보이다.
+- VASSAL의 Map A 격자 영역 1,174개 중심과 확인 ID 1,040개를 대조한 [추가 ID 검토 대기열](map_a_vassal_grid_review.csv)은 134개다. `1833`·`1834`는 회색 `X` 엔트리 구역이라 인쇄 헥스 목록에서 제외했다. GitHub 푸시는 `6b28f0c`부터 SSH/서버 오류로 아직 원격에 반영되지 않았다. 재시도 전에 로컬·원격 브랜치 상태를 확인한다.
 
 ## 재현 명령
 

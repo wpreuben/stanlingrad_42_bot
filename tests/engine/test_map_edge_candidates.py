@@ -72,6 +72,9 @@ class MapEdgeCandidateTests(unittest.TestCase):
         self.assertEqual(len(reviewed), 178)
         self.assertTrue(all(edge.crossing_features and edge.source_ref for edge in reviewed))
         self.assertGreater(len(candidates), len(reviewed))
+        self.assertFalse(any("1833" in (edge.hex_id, edge.neighbor_id)
+                             or "1834" in (edge.hex_id, edge.neighbor_id)
+                             for edge in candidates))
 
 
 if __name__ == "__main__":
