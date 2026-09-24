@@ -5,6 +5,8 @@ import csv
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+from engine.catalog import _expected_neighbor
+from tools.map_edge_candidates import FORWARD_DIRECTIONS
 from tools.map_image_evidence import center_of
 
 
@@ -61,11 +63,32 @@ def read_printed_ids(path: Path) -> set[str]:
     return set(ids)
 
 
+def zone_candidate_edges(
+    zone_ids: set[str], checked_ids: set[str],
+) -> list[tuple[str, str, str]]:
+    if not checked_ids <= zone_ids:
+        raise ValueError("checked printed ID outside Map A zone")
+    result = []
+    for hex_id in sorted(zone_ids):
+        for direction in FORWARD_DIRECTIONS:
+            neighbor = _expected_neighbor(hex_id, direction)
+            if neighbor in zone_ids and (hex_id not in checked_ids or neighbor not in checked_ids):
+                result.append((hex_id, direction, neighbor))
+    return result
+
+
 def write_review_queue(rows: list[tuple[str, int, int]], stream) -> None:
     writer = csv.writer(stream, lineterminator="\n")
     writer.writerow(("hex_id", "center_x", "center_y", "review_status"))
     for hex_id, x, y in rows:
         writer.writerow((hex_id, x, y, "unconfirmed_zone_center"))
+
+
+def write_edge_queue(rows: list[tuple[str, str, str]], stream) -> None:
+    writer = csv.writer(stream, lineterminator="\n")
+    writer.writerow(("hex_id", "direction", "neighbor_id", "review_status"))
+    for hex_id, direction, neighbor_id in rows:
+        writer.writerow((hex_id, direction, neighbor_id, "zone_unconfirmed"))
 
 
 if __name__ == "__main__":
@@ -74,6 +97,7 @@ if __name__ == "__main__":
     parser.add_argument("--printed-csv", type=Path,
                         default=Path("docs/map_a_printed_id_checks.csv"))
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--edge-output", type=Path)
     args = parser.parse_args()
 
     centers = candidate_centers(load_map_a_zone(args.build_file))
@@ -81,5 +105,10 @@ if __name__ == "__main__":
     candidates = [row for row in centers if row[0] not in checked]
     with args.output.open("w", newline="", encoding="utf-8") as stream:
         write_review_queue(candidates, stream)
+    if args.edge_output:
+        edges = zone_candidate_edges({row[0] for row in centers}, checked)
+        with args.edge_output.open("w", newline="", encoding="utf-8") as stream:
+            write_edge_queue(edges, stream)
+        print(f"zone-only geometric edges={len(edges)}")
     print(f"zone centers={len(centers)}, checked_inside={len(centers)-len(candidates)}, "
           f"unconfirmed={len(candidates)}, checked_outside={sorted(checked - {r[0] for r in centers})}")

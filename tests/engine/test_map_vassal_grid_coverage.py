@@ -1,6 +1,6 @@
 import unittest
 
-from tools.map_vassal_grid_coverage import candidate_centers, point_in_polygon
+from tools.map_vassal_grid_coverage import candidate_centers, point_in_polygon, zone_candidate_edges
 
 
 class MapVassalGridCoverageTests(unittest.TestCase):
@@ -16,6 +16,11 @@ class MapVassalGridCoverageTests(unittest.TestCase):
         self.assertTrue(point_in_polygon(5, 0, polygon))
         self.assertTrue(point_in_polygon(5, 5, polygon))
         self.assertFalse(point_in_polygon(11, 5, polygon))
+
+    def test_new_zone_edges_are_separate_from_checked_id_edges(self):
+        result = zone_candidate_edges({"1300", "1301", "1400"}, {"1300", "1301"})
+        self.assertEqual(result, [("1300", "se", "1400"),
+                                  ("1301", "ne", "1400")])
 
 
 if __name__ == "__main__":
