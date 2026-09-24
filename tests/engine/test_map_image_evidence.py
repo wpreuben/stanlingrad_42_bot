@@ -15,7 +15,7 @@ class MapImageEvidenceTests(unittest.TestCase):
     def test_center_uses_printed_map_grid(self):
         self.assertEqual(center_of("1300"), (420, 138))
         self.assertEqual(center_of("1301"), (420, 252))
-        self.assertEqual(center_of("3200"), (2320, 195))
+        self.assertEqual(center_of("3200"), (2301, 195))
 
     def test_blue_pixel_probe_prioritizes_without_changing_review_status(self):
         edges = [EdgeCandidate("1300", "s", "1301", "unreviewed", "", "")]

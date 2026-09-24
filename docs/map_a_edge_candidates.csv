@@ -1478,15 +1478,15 @@ hex_id,direction,neighbor_id,review_status,crossing_features,source_ref
 2901,s,2902,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560
 2901,ne,3000,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560
 2901,se,3001,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560
-2902,s,2903,unreviewed,,
+2902,s,2903,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1770-2440 y380-950
 2902,ne,3001,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560
 2902,se,3002,reviewed,railroad,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560
-2903,s,2904,unreviewed,,
-2903,ne,3002,unreviewed,,
-2903,se,3003,unreviewed,,
+2903,s,2904,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1770-2440 y380-950
+2903,ne,3002,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1770-2440 y380-950
+2903,se,3003,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1770-2440 y380-950
 2904,s,2905,unreviewed,,
-2904,ne,3003,unreviewed,,
-2904,se,3004,unreviewed,,
+2904,ne,3003,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1770-2440 y380-950
+2904,se,3004,reviewed,secondary_road,Stal42_Map_west-FINAL-150 Q12.jpg crop x1770-2440 y380-950
 2905,s,2906,unreviewed,,
 2905,ne,3004,unreviewed,,
 2905,se,3005,unreviewed,,
@@ -1582,10 +1582,10 @@ hex_id,direction,neighbor_id,review_status,crossing_features,source_ref
 3001,s,3002,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560
 3001,ne,3101,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560
 3001,se,3102,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560
-3002,s,3003,unreviewed,,
+3002,s,3003,reviewed,railroad,Stal42_Map_west-FINAL-150 Q12.jpg crop x1770-2440 y380-950
 3002,ne,3102,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560
 3002,se,3103,unreviewed,,
-3003,s,3004,unreviewed,,
+3003,s,3004,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1770-2440 y380-950
 3003,ne,3103,unreviewed,,
 3003,se,3104,unreviewed,,
 3004,s,3005,unreviewed,,

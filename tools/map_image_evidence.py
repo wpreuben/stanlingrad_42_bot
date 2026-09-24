@@ -29,7 +29,7 @@ class EdgeImageEvidence:
 def center_of(hex_id: str) -> tuple[int, int]:
     """Printed ID center on the 3300×5100 Map A source image."""
     column, row = int(hex_id[:2]), int(hex_id[2:])
-    return 420 + (column - 13) * 100, 138 + row * 114 + (57 if column % 2 == 0 else 0)
+    return 420 + (column - 13) * 99, 138 + row * 114 + (57 if column % 2 == 0 else 0)
 
 
 def score_blue_edges(candidates: list[EdgeCandidate], image: PixelImage) -> list[EdgeImageEvidence]:

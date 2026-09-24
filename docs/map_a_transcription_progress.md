@@ -40,17 +40,17 @@
 `x=585–970, y=45–475` 확대 영역에서는 `1500`–`1502`, `1600`–`1602`, `1700`–`1702` 아홉 헥스와 16개 내부 공유 변을 추가로 대조했다. [`map_a_tim_kshen_edges.csv`](map_a_tim_kshen_edges.csv)에 Tim 강변 5개, `1800`–`1802`로 이어지는 Kshen 강변 5개, `1600→1601→1602` 보조도로 2개를 기록했다. TEC의 붉은 빗금과 일치하는 `1502`, `1600`, `1601`은 인쇄된 방어시설(`fortification`)로 [`map_a_tim_kshen_hexes.csv`](map_a_tim_kshen_hexes.csv)에 표시했다. 아직 연결을 적지 않은 바깥 헥스변은 미검수다.
 
 부분 검수 CSV는 `uv run --locked python -m tools.map_fragment_audit docs`로 묶어서 검사한다. 이 도구는 검수한 헥스끼리의 인접 변 누락(구역 경계 포함), 좌표 오류, 중복 변, 모르는 지형·특성 ID를 거부한다. 아직 검수하지 않은 헥스로 향하는 연결의 완전성과 그림 판독 자체는 검사할 수 없으므로 전체 `map_a.json`의 완료 판정에 사용하지 않는다.
-현재 구역별 부분 검수 합계는 헥스 76개, 변 170개, 인쇄 승점 1점이다. 변 특성의 내역은 보조도로 23개, 주도로 2개, 철도 10개, 소하천 23개, 대하천 5개이며, 나머지 107개 변에는 횡단 특성이 없다.
+현재 구역별 부분 검수 합계는 헥스 80개, 변 178개, 인쇄 승점 1점이다. 변 특성의 내역은 보조도로 24개, 주도로 2개, 철도 11개, 소하천 23개, 대하천 5개이며, 나머지 113개 변에는 횡단 특성이 없다.
 
 ### 전사 후보 생성과 이미지 검토 순서
 
-인쇄 ID 1,042개와 검수된 부분 CSV에서 [`map_a_edge_candidates.csv`](map_a_edge_candidates.csv)를 생성했다. 격자 좌표로 가능한 이웃 변 2,947개를 한 번씩 나열하며, 그중 기존 검수 변 170개만 `reviewed`와 확정된 `crossing_features`·출처를 갖는다. 나머지 2,777개는 `unreviewed`이고 속성이 빈칸이다. 인쇄 ID에는 바다 헥스도 있으므로 이 후보 목록은 통행 가능 지도 그래프가 아니다. 검수 자료를 바꾸면 아래 명령으로 다시 생성한다.
+인쇄 ID 1,042개와 검수된 부분 CSV에서 [`map_a_edge_candidates.csv`](map_a_edge_candidates.csv)를 생성했다. 격자 좌표로 가능한 이웃 변 2,947개를 한 번씩 나열하며, 그중 기존 검수 변 178개만 `reviewed`와 확정된 `crossing_features`·출처를 갖는다. 나머지 2,769개는 `unreviewed`이고 속성이 빈칸이다. 인쇄 ID에는 바다 헥스도 있으므로 이 후보 목록은 통행 가능 지도 그래프가 아니다. 검수 자료를 바꾸면 아래 명령으로 다시 생성한다.
 
 ```bash
 uv run --locked python -m tools.map_edge_candidates --output docs/map_a_edge_candidates.csv
 ```
 
-2019년 제공 지도 이미지(3300×5100)에서 각 후보 변 중심의 29×29픽셀을 검사해 파란 픽셀이 25개 이상인 미검수 변 483개를 [`map_a_river_review_queue.csv`](map_a_river_review_queue.csv)에 모았다. `map-tools` 의존성 그룹의 Pillow는 이 보조 도구에만 필요하며 게임 엔진의 실행 의존성에는 넣지 않았다. 검수된 변 170개를 기준으로 이 신호는 강 변 28개 중 25개를 잡았고 강이 아닌 변 142개 중 5개도 표시했다. 따라서 **강 판정이나 빈 변 확정에는 사용할 수 없으며**, 표시되지 않은 변도 후속 육안 검수가 필요하다.
+2019년 제공 지도 이미지(3300×5100)에서 각 후보 변 중심의 29×29픽셀을 검사해 파란 픽셀이 25개 이상인 미검수 변 495개를 [`map_a_river_review_queue.csv`](map_a_river_review_queue.csv)에 모았다. `map-tools` 의존성 그룹의 Pillow는 이 보조 도구에만 필요하며 게임 엔진의 실행 의존성에는 넣지 않았다. 지도의 여러 열에서 실제 헥스변을 대조해 이미지 좌표의 가로 간격을 99픽셀로 보정했다. 검수된 변 178개를 기준으로 이 신호는 강 변 28개 중 25개를 잡았고 강이 아닌 변 150개는 표시하지 않았다. 표본에 없는 지형에서 같은 성능을 보장하지 않으며 **강 판정이나 빈 변 확정에는 사용할 수 없다**. 표시되지 않은 변도 후속 육안 검수가 필요하다.
 
 첫 대조로 Savala 주변 `3600→3701`, `3700→3701` 후보를 확대 원본에서 확인했다. 두 변의 강 표시는 보이지만 `3600→3701`에는 철도도 가로지르므로, 교량 속성까지 확인하기 전에는 검수 CSV로 승격하지 않는다.
 
@@ -58,6 +58,14 @@ uv run --locked python -m tools.map_edge_candidates --output docs/map_a_edge_can
 uv run --locked --group map-tools python -m tools.map_image_evidence \
   '../../images_high/Stal42_Map_west-FINAL-150 Q12.jpg' \
   --output docs/map_a_river_review_queue.csv
+```
+
+헥스변을 빠르게 대조할 때는 다음 검토 시트를 생성한다. 미검수 변만 모아 각 변의 원본 지도 확대와 기하학적 중점을 붉은 원으로 표시한다. 원은 변의 위치를 찾는 보조 표시이며 강·도로·철도 판정은 사람이 원본 전체를 대조해 확정한다.
+
+```bash
+uv run --locked --group map-tools python -m tools.map_edge_review_sheet \
+  '../../images_high/Stal42_Map_west-FINAL-150 Q12.jpg' \
+  --columns 29 31 --rows 3 4 --output /tmp/map_a_edge_review_29_31.png
 ```
 
 ### 구역 사이 연결과 Don 강 북쪽
@@ -68,11 +76,13 @@ uv run --locked --group map-tools python -m tools.map_image_evidence \
 
 `x=1890–2420, y=40–560`에서 `2900`–`2902`, `3000`–`3002`, `3100`–`3102` 아홉 평지 헥스의 내부 변 16개를 확인했다. [`map_a_bityug_west_edges.csv`](map_a_bityug_west_edges.csv)의 `2902→3002`는 철도 변이고, 나머지 15개에는 횡단 특성이 없다. [`map_a_bityug_west_hexes.csv`](map_a_bityug_west_hexes.csv)는 해당 헥스의 지형 기록이다. 서쪽 `2600`–`2802`는 숲 범위와 철도·도로의 변별 귀속을 더 확인해야 하므로 이 구역과 연결하지 않았다.
 
+99픽셀 간격으로 보정한 검토 시트와 원본 `x=1770–2440, y=380–950`을 대조해 `2903`·`2904`·`3003`·`3004` 평지와 변 8개를 추가로 확인했다. [`map_a_usman_south_edges.csv`](map_a_usman_south_edges.csv)의 `3002→3003`은 철도, `2904→3004`는 보조도로이며 나머지 여섯 변에는 횡단 특성이 없다. 헥스별 기록은 [`map_a_usman_south_hexes.csv`](map_a_usman_south_hexes.csv)에 있다. Anna와 Bityug 강이 만나는 `3103`·`3104`는 교량 속성 확인 전까지 확정하지 않는다.
+
 `x=1900–2620, y=80–550` 확대 영역에서 `3200`–`3202`, `3300`–`3302`, `3400`–`3402` 아홉 평지 헥스, 내부 변 16개, 기존 `3100`–`3102`와 맞닿는 Bityug 소하천 변 5개를 대조했다. [`map_a_bityug_east_hexes.csv`](map_a_bityug_east_hexes.csv)에는 Ertil의 흰 원이 있는 `3202`를 `landmark`로, `3300`의 붉은 원 안 숫자를 승점 1로 기록했다. [`map_a_bityug_east_edges.csv`](map_a_bityug_east_edges.csv)에는 철도 변 4개와 보조도로 변 3개를 기록했다. 남쪽 연결은 아래 시험 구역에서 일부 확인했다.
 
 `x=2420–3250, y=80–550` 확대 영역에서 `3500`–`3502`, `3600`–`3602`의 여섯 평지 헥스, 내부 변 9개와 앞선 `3400`–`3402`에 맞닿는 변 5개를 확인했다. [`map_a_tokarevka_hexes.csv`](map_a_tokarevka_hexes.csv)에는 Tokarevka의 흰 원이 있는 `3500`을 `landmark`로 기록했다. [`map_a_tokarevka_edges.csv`](map_a_tokarevka_edges.csv)에는 철도 변 2개, 보조도로 변 2개를 기록했다. `3700`열과 맞닿는 Savala 강변과 그 뒤의 연결은 아직 검수하지 않았다.
 
-전사 속도 시험 구역으로 `x=2130–2850, y=380–990`을 사용했다. [`map_a_ertil_south_hexes.csv`](map_a_ertil_south_hexes.csv)에 `3203`–`3604`의 평지 10개를, [`map_a_ertil_south_edges.csv`](map_a_ertil_south_edges.csv)에 기존 검수 구역과 맞닿는 변을 포함한 26개를 기록했다. 여덟 변은 보조도로이며 나머지는 횡단 특성이 없다. 파란색 신호가 뜬 `3602→3603`과 `3603→3604`는 원본 대조에서 강이 지나가는 변이 아닌 것으로 확인했다. 2026-09-24 22:17:06–22:24:23 KST에 후보 선택, 원본 대조, CSV 작성, 보조도로 대각 변 네 개의 재검수, 후보 재생성, 전체 테스트를 수행했다(약 7분 17초). 이전 수작업 구역의 시간을 재지 않았고 이 구역은 모두 평지이므로, 이 한 번의 측정만으로 속도 향상을 판정하지 않는다. 이 구역의 동쪽 Savala 강변과 아래쪽 `05`행은 검수 범위 밖이다.
+전사 속도 시험 구역으로 `x=2130–2850, y=380–990`을 사용했다. [`map_a_ertil_south_hexes.csv`](map_a_ertil_south_hexes.csv)에 `3203`–`3604`의 평지 10개를, [`map_a_ertil_south_edges.csv`](map_a_ertil_south_edges.csv)에 기존 검수 구역과 맞닿는 변을 포함한 26개를 기록했다. 여덟 변은 보조도로이며 나머지는 횡단 특성이 없다. 이전 이미지 좌표식에서는 `3602→3603`과 `3603→3604`에 파란색 신호가 잘못 떴으나, 99픽셀 간격으로 보정한 뒤에는 표시되지 않는다. 2026-09-24 22:17:06–22:24:23 KST에 후보 선택, 원본 대조, CSV 작성, 보조도로 대각 변 네 개의 재검수, 후보 재생성, 전체 테스트를 수행했다(약 7분 17초). 이전 수작업 구역의 시간을 재지 않았고 이 구역은 모두 평지이므로, 이 한 번의 측정만으로 속도 향상을 판정하지 않는다. 이 구역의 동쪽 Savala 강변과 아래쪽 `05`행은 검수 범위 밖이다.
 
 승점이 인쇄된 헥스를 기록하기 위해 부분 헥스 CSV에는 선택적 `victory_points` 열을 사용할 수 있다. 이 열이 없는 기존 부분 기록은 0점으로 해석하며, 새 열의 값은 음수가 아닌 정수인지 검사한다. 승점이 보이는 헥스는 값을 직접 대조한 후 기록한다.
 
