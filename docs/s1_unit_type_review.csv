@@ -4,12 +4,12 @@ GE-385Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,i
 GE-45Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-45Inf-Div-f.png
 GE-95Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-95Inf-Div-f.png
 GE-383Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-383Inf-Div-f.png
-GE-177&243Stug-Bn,sturmgeschutz,mechanized,symbol_sample_checked,images_high/GE-177&243Stug-Bn-f.png
+GE-177&243Stug-Bn,sturmgeschutz,mechanized,symbol_playbook_key_verified,images_high/GE-177&243Stug-Bn-f.png
 GE-4PzAHQ,artillery_support_unit,mechanized,filename_inference_pending_symbol_review,images_high/GE-4PzAHQ-f.png
-GE-SupplyPt-1,supply_point,mechanized,symbol_sample_checked,images_high/GE-SupplyPt-1-f.png
+GE-SupplyPt-1,supply_point,mechanized,symbol_playbook_key_verified,images_high/GE-SupplyPt-1-f.png
 GE-9Pz-Div,tank_unit,mechanized,filename_inference_pending_symbol_review,images_high/GE-9Pz-Div-f.png
 GE-11Pz-Div,tank_unit,mechanized,filename_inference_pending_symbol_review,images_high/GE-11Pz-Div-f.png
-GE-3Pzg-Div,panzergrenadier,mechanized,symbol_sample_checked,images_high/GE-3Pzg-Div-f.png
+GE-3Pzg-Div,panzergrenadier,mechanized,symbol_playbook_key_verified,images_high/GE-3Pzg-Div-f.png
 GE-82Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-82Inf-Div-f.png
 GE-88Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-88Inf-Div-f.png
 GE-377Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-377Inf-Div-f.png
@@ -63,7 +63,7 @@ GE-14Pz-Div,tank_unit,mechanized,filename_inference_pending_symbol_review,images
 GE-17AHQ,artillery_support_unit,mechanized,filename_inference_pending_symbol_review,images_high/GE-17AHQ-f.png
 GE-370Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-370Inf-Div-f.png
 GE-111Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-111Inf-Div-f.png
-IT-3CalMechInf-Div,panzergrenadier,mechanized,symbol_sample_checked,images_high/IT-3CalMechInf-Div-f.png
+IT-3CalMechInf-Div,panzergrenadier,mechanized,symbol_playbook_key_verified,images_high/IT-3CalMechInf-Div-f.png
 IT-PasInf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/IT-PasInf-Div-f.png
 IT-TorInf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/IT-TorInf-Div-f.png
 IT-BarboCav-Bde,cavalry,non_mechanized,filename_inference_pending_symbol_review,images_high/IT-BarboCav-Bde-f.png
@@ -75,7 +75,7 @@ GE-13Pz-Div,tank_unit,mechanized,filename_inference_pending_symbol_review,images
 GE-125Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-125Inf-Div-r.png
 GE-298Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-298Inf-Div-f.png
 GE-73Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-73Inf-Div-r.png
-GE-4Bicycle-Regt,bicycle_infantry,non_mechanized,symbol_sample_checked,images_high/GE-4Bicycle-Regt-f.png
+GE-4Bicycle-Regt,bicycle_infantry,non_mechanized,symbol_playbook_key_verified,images_high/GE-4Bicycle-Regt-f.png
 RO-5Cav-Div,cavalry,non_mechanized,filename_inference_pending_symbol_review,images_high/RO-5Cav-Div-f.png
 SO-15&143Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/SO-15&143Inf-Div-f.png
 SO-129Tank-Bde,tank_unit,mechanized,filename_inference_pending_symbol_review,images_high/SO-129Tank-Bde-f.png
@@ -94,7 +94,7 @@ SO-284Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,i
 SO-115&116Tank-Bde,tank_unit,mechanized,filename_inference_pending_symbol_review,images_high/SO-115&116Tank-Bde-f.png
 SO-6Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/SO-6Inf-Div-r.png
 SO-14&170Tank-Bde,tank_unit,mechanized,filename_inference_pending_symbol_review,images_high/SO-14&170Tank-Bde-f.png
-SO-8NKVD-Div,nkvd_infantry,non_mechanized,symbol_sample_checked,images_high/SO-8NKVD-Div-f.png
+SO-8NKVD-Div,nkvd_infantry,non_mechanized,symbol_playbook_key_verified,images_high/SO-8NKVD-Div-f.png
 SO-1MotInf-Bde,motorized_infantry,mechanized,filename_inference_pending_symbol_review,images_high/SO-1MotInf-Bde-f.png
 SO-227Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/SO-227Inf-Div-r.png
 SO-297Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/SO-297Inf-Div-f.png
@@ -119,11 +119,11 @@ SO-3GdsCav-Corps,cavalry,non_mechanized,filename_inference_pending_symbol_review
 SO-6GdsTank-Bde,tank_unit,mechanized,filename_inference_pending_symbol_review,images_high/SO-6GdsTank-Bde-f.png
 SO-162&300Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/SO-162&300Inf-Div-f.png
 SO-277Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/SO-277Inf-Div-r.png
-SO-1TD-Div,tank_destroyer,mechanized,symbol_interpretation_pending,images_high/SO-1TD-Div-f.png
+SO-1TD-Div,tank_destroyer,mechanized,symbol_playbook_key_verified,images_high/SO-1TD-Div-f.png
 SO-199&278Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/SO-199&278Inf-Div-r.png
 SO-242&255Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/SO-242&255Inf-Div-f.png
 SO-106&333Cav-Div,cavalry,non_mechanized,filename_inference_pending_symbol_review,images_high/SO-106&333Cav-Div-f.png
-SO-81&304MotCav-Div,infantry,non_mechanized,symbol_sample_checked,images_high/SO-81&304MotCav-Div-r.png
+SO-81&304MotCav-Div,infantry,non_mechanized,symbol_playbook_key_verified,images_high/SO-81&304MotCav-Div-r.png
 SO-51&140Cav-Div,cavalry,non_mechanized,filename_inference_pending_symbol_review,images_high/SO-51&140Cav-Div-f.png
 SO-296&318Cav-Div,cavalry,non_mechanized,filename_inference_pending_symbol_review,images_high/SO-296&318Cav-Div-f.png
 SO-22Tank-Corps,tank_unit,mechanized,filename_inference_pending_symbol_review,images_high/SO-22Tank-Corps-r.png
@@ -156,7 +156,7 @@ SO-16Inf-Bde,infantry,non_mechanized,filename_inference_pending_symbol_review,im
 SO-2GdsInf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/SO-2GdsInf-Div-f.png
 SO-63Tank-Bde,tank_unit,mechanized,filename_inference_pending_symbol_review,images_high/SO-63Tank-Bde-f.png
 SO-17Tank-Corps,tank_unit,mechanized,filename_inference_pending_symbol_review,images_high/SO-17Tank-Corps-f.png
-SO-2TD-Div,tank_destroyer,mechanized,symbol_interpretation_pending,images_high/SO-2TD-Div-f.png
+SO-2TD-Div,tank_destroyer,mechanized,symbol_playbook_key_verified,images_high/SO-2TD-Div-f.png
 SO-Vor-NKVD-Div,nkvd_infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/SO-Vor-NKVD-Div-f.png
 SO-9NKVD-Div,nkvd_infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/SO-9NKVD-Div-f.png
 SO-91&302Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/SO-91&302Inf-Div-f.png

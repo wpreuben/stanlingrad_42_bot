@@ -8,6 +8,11 @@
       "edition": "v2.1, April 2025"
     },
     {
+      "kind": "playbook",
+      "path": "Stal42_Playbook.pdf",
+      "edition": "2019 examples and counter key; cross-check rule effects with 2025 rules"
+    },
+    {
       "kind": "map_a",
       "path": "Stal42_Map_west-FINAL-150 Q12.jpg",
       "edition": "2019 Map A image, 3300x5100; cross-check with 2025 rules"

@@ -17,3 +17,4 @@ uv run --locked python -m unittest discover -s tests -t . -v
 S1 카운터 병과의 임시 분류는 [병과 검수표](docs/s1_unit_type_review.md)에 있으며, 기호 전수 검수 전에는 실행용 자료에 포함하지 않습니다.
 
 설계와 남은 작업은 [설계 명세](docs/superpowers/specs/2026-09-24-stalingrad42-engine-foundation-design.md)와 [구현 계획](docs/superpowers/plans/2026-09-24-stalingrad42-engine-foundation.md)에 기록했습니다. 자료 확인 사항은 [규칙·자료 확인 사항](docs/rule_issues.md)을 참고하세요.
+추가된 2019년 playbook의 규칙·기호 대조 결과는 [playbook 검수 기록](docs/playbook_source_review.md)에 있습니다.
