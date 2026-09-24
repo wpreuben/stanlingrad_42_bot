@@ -13,6 +13,11 @@
       "edition": "2019 Map A image, 3300x5100; cross-check with 2025 rules"
     },
     {
+      "kind": "terrain_key",
+      "path": "images_high/STAL42_TEC-100 Q12.jpg",
+      "edition": "2019 terrain key image; rule effects checked against 2025 rules"
+    },
+    {
       "kind": "axis_at_start",
       "path": "Images/httpssteamusercontentaakamaihdnetugc17884688380553658153FC9D37838E1E7AE747007396036D0CAE7AF8A0C.jpg",
       "edition": "2019 component image; cross-check with 2025 rules"
