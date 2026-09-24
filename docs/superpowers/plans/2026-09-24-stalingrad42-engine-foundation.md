@@ -1,63 +1,63 @@
-# Stalingrad ’42 Engine Foundation Implementation Plan
+# Stalingrad ’42 게임 엔진 기반 구현 계획
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **구현 담당자:** 작업별로 이 계획의 체크박스를 진행한다. 실행 방식에 따라 `superpowers:subagent-driven-development` 또는 `superpowers:executing-plans` 스킬을 사용한다.
 
-**Goal:** Build a deterministic, serializable rules-engine foundation that loads the complete playable Map A and the Fall Blau (S1) starting position while explicitly refusing rules that are not implemented yet.
+**목표:** 플레이 가능한 Map A 전체와 Fall Blau(S1) 시작 상태를 읽어들이는 결정론적 게임 엔진의 기반을 만든다. 아직 구현하지 않은 규칙은 명확하게 거부한다.
 
-**Architecture:** Versioned JSON reference data describes the map, units, and scenario; immutable game state contains only changing facts. A small engine API validates actions, advances the §3 phase graph where supported, and records seeded dice and events. Later plans add movement, combat, logistics, advanced rules, and full S1–S4 play without replacing these contracts.
+**구조:** 판본이 고정된 JSON 자료에 지도·유닛·시나리오의 변하지 않는 사실을 보관하고, 불변 `GameState`에는 게임 중 바뀌는 정보만 둔다. 엔진 API는 행동을 검증하고, 지원되는 범위에서 룰북 §3의 페이즈를 진행하며, 시드가 있는 주사위와 사건을 기록한다. 이후 계획은 이 계약을 유지하면서 이동·전투·보급·고급 규칙과 S1~S4의 완전한 플레이를 추가한다.
 
-**Tech Stack:** Python 3.11 or newer, standard library (`dataclasses`, `enum`, `json`, `hashlib`, `unittest`); no runtime dependency.
+**기술 선택:** Python 3.11 이상. 표준 라이브러리의 `dataclasses`, `enum`, `json`, `hashlib`, `unittest`를 사용하며 실행 의존성은 추가하지 않는다.
 
-**Spec:** `docs/superpowers/specs/2026-09-24-stalingrad42-engine-foundation-design.md`
+**설계 명세:** `docs/superpowers/specs/2026-09-24-stalingrad42-engine-foundation-design.md`
 
-## Global Constraints
+## 공통 제약
 
-- Rules source: `Stal42_RULES-2025-Final_LoRes.pdf`, v2.1, April 2025. The 2019 component images are secondary evidence where they disagree with this rules version.
-- Preserve confirmed IDs from `data/glossary.csv` where they name rules concepts; compare IDs in logic, never Korean or English display text.
-- Keep AI evaluation, search, strategy, and UI outside the engine.
-- S1 initialization in this plan is not a claim of full playability. Unsupported mandatory rules raise `UnsupportedRuleError`; they are never skipped or treated as no-ops.
-- Record uncertain source readings in `docs/rule_issues.md` with `TODO_RULE_REVIEW`; reject data depending on unresolved readings.
-- Do not import the Little Saturn/Winter Storm expansion.
-- The shared source directory has an empty, read-only `.git` placeholder. Execute implementation in an isolated clone or worktree of `git@github.com:wpreuben/stanlingrad_42_bot.git`; copy approved project inputs into it before the relevant task. Do not copy `*:Zone.Identifier` files.
+- 규칙 판정의 기준은 `Stal42_RULES-2025-Final_LoRes.pdf` 영문 v2.1(2025년 4월)이다. 2019년 구성품 이미지는 이 판본과 충돌하면 보조 자료로만 사용한다.
+- 규칙 개념에는 가능한 한 `data/glossary.csv`의 `term_id`를 쓴다. 한글·영문 표시 문자열로 규칙을 분기하지 않는다.
+- AI 평가, 탐색, 전략 판단, UI는 엔진에 넣지 않는다.
+- 이 계획의 S1 초기화는 S1을 끝까지 플레이할 수 있다는 뜻이 아니다. 필수 규칙이 아직 없으면 `UnsupportedRuleError`를 발생시키며 건너뛰거나 아무 효과 없는 행동으로 처리하지 않는다.
+- 출처 판독이나 규칙 해석이 불확실하면 `docs/rule_issues.md`에 `TODO_RULE_REVIEW`로 기록한다. 미해결 자료에 의존하는 초기화는 거부한다.
+- Little Saturn/Winter Storm 확장판은 포함하지 않는다.
+- 현재 공유 작업 폴더의 `.git`은 비어 있고 쓰기 제한이 있다. 구현할 때는 `git@github.com:wpreuben/stanlingrad_42_bot.git`의 별도 복제본 또는 worktree에서 작업한다. 필요한 프로젝트 원본을 해당 작업 공간으로 옮기되 `*:Zone.Identifier` 파일은 제외한다.
 
-## Review Focus
+## 검토 시 특히 확인할 사례
 
-1. A corrupt or future state schema must fail on load before any partial state is returned — Task 7 tests this.
-2. A map edge present on only one hex, or an edge pointing outside Map A, must fail catalog validation — Tasks 2 and 3 test this.
-3. A setup card entry with a missing unit or hex ID must fail S1 initialization — Task 4 tests this.
-4. An end-phase request while a mandatory rule is unavailable must raise `UnsupportedRuleError` without changing state — Task 5 tests this.
-5. Saving after one die roll and resuming must produce the same next roll and event as uninterrupted play — Tasks 6 and 7 test this.
+1. 손상됐거나 미래 버전인 상태 JSON은 일부만 복원하지 않고 즉시 실패해야 한다. → 작업 7의 테스트.
+2. 한쪽에만 기록된 헥스 연결이나 Map A 밖을 가리키는 연결은 자료 검증에서 실패해야 한다. → 작업 2·3의 테스트.
+3. 시작 배치가 존재하지 않는 유닛 또는 헥스를 가리키면 S1 초기화가 실패해야 한다. → 작업 4의 테스트.
+4. 필수 규칙이 미구현인 페이즈를 종료하려 하면 원본 상태를 바꾸지 않고 `UnsupportedRuleError`가 발생해야 한다. → 작업 5의 테스트.
+5. 주사위를 한 번 굴린 뒤 저장·복원해도 다음 주사위와 사건 기록이 중단 없이 진행한 경우와 같아야 한다. → 작업 6·7의 테스트.
 
-## File Map
+## 파일별 책임
 
-| Path | Responsibility |
+| 파일 | 책임 |
 |---|---|
-| `src/engine/types.py` | Frozen dynamic state, enums, result and event types. |
-| `src/engine/errors.py` | Stable error categories for invalid actions, data, state format, unsupported rules. |
-| `src/engine/catalog.py` | Immutable definitions, versioned data loader, reference and graph validation. |
-| `src/engine/phase.py` | Pure §3 phase and turn successor function. |
-| `src/engine/rng.py` | Version-stable seeded d6 sequence and roll events. |
-| `src/engine/actions.py` | Tagged action types and action JSON codec. |
-| `src/engine/engine.py` | `Engine` methods and thin public API functions. |
-| `src/engine/codec.py` | Canonical state JSON, validated restore, rule-state hash. |
-| `data/engine/v2025_04/map_a.json` | Every playable Map A hex, explicit six-direction neighbors, terrain and hexside features. |
-| `data/engine/v2025_04/units_s1.json` | Counter definitions used by S1 at start; counter faces and stable IDs. |
-| `data/engine/v2025_04/fall_blau.json` | S1 starting positions, markers, scope, source references. |
-| `data/engine/v2025_04/sources.json` | Filenames, edition, and image regions for each transcribed data set. |
-| `docs/rule_issues.md` | Source ambiguity and conflict log. |
-| `tests/engine/test_*.py` | Rule-number tests, data integrity, round-trip and failure tests. |
+| `src/engine/types.py` | 불변 게임 상태, enum, 결과·사건 타입 |
+| `src/engine/errors.py` | 불법 행동·자료·저장 형식·미구현 규칙의 오류 타입 |
+| `src/engine/catalog.py` | 불변 지도·유닛·시나리오 정의, 판본별 자료 로더, 참조와 그래프 검증 |
+| `src/engine/phase.py` | 룰북 §3의 순수 페이즈·턴 전이 함수 |
+| `src/engine/rng.py` | 시드 기반 6면체 주사위와 사건 기록 |
+| `src/engine/actions.py` | 행동 타입과 행동 JSON 변환 |
+| `src/engine/engine.py` | `Engine` 메서드와 공개 API 함수 |
+| `src/engine/codec.py` | 정규화된 상태 JSON, 검증된 복원, 규칙 상태 해시 |
+| `data/engine/v2025_04/map_a.json` | Map A의 모든 플레이 가능 헥스, 여섯 방향 인접 관계, 지형·헥스변 정보 |
+| `data/engine/v2025_04/units_s1.json` | S1 시작 시 사용하는 카운터의 정의·면별 수치·고정 ID |
+| `data/engine/v2025_04/fall_blau.json` | S1 시작 배치, 마커, 적용 범위, 출처 |
+| `data/engine/v2025_04/sources.json` | 전사한 자료의 파일명·판본·이미지 영역 |
+| `docs/rule_issues.md` | 판독 불가 항목과 자료 충돌 기록 |
+| `tests/engine/test_*.py` | 규칙 번호, 자료 무결성, 저장·복원, 실패 상황 테스트 |
 
-The JSON files are deliberately separate: a reviewer can reject the map, counter inventory, or scenario setup without rejecting their neighbors. Every data object records its `source_ref` as a path and printed rule, card title, or image region.
+JSON 자료를 지도·카운터·시나리오별로 분리한다. 검토자가 한 자료 묶음의 문제를 다른 묶음과 독립적으로 판단할 수 있어야 한다. 각 자료 객체의 `source_ref`에는 원본 파일과 인쇄된 규칙 번호, 카드 제목 또는 이미지 영역을 기록한다.
 
 ---
 
-### Task 1: State and error contract
+### 작업 1: 게임 상태와 오류 계약
 
-**Files:** Create `src/engine/__init__.py`, `src/engine/types.py`, `src/engine/errors.py`, `tests/engine/test_state.py`.
+**파일:** `src/engine/__init__.py`, `src/engine/types.py`, `src/engine/errors.py`, `tests/engine/test_state.py` 생성.
 
-**Interfaces:** Produces `Side`, `Phase`, `UnitState`, `RngState`, `Event`, `GameState`, `GameResult`; produces `CatalogError`, `InvalidActionError`, `UnsupportedRuleError`, `StateFormatError`. Later tasks import these exact names.
+**인터페이스:** `Side`, `Phase`, `UnitState`, `RngState`, `Event`, `GameState`, `GameResult`를 제공한다. 오류 타입은 `CatalogError`, `InvalidActionError`, `UnsupportedRuleError`, `StateFormatError`다. 뒤 작업에서는 이 이름을 그대로 사용한다.
 
-- [ ] **Step 1: Write the failing immutability test.**
+- [ ] **1단계: 불변성 테스트를 먼저 작성한다.**
 
 ```python
 # tests/engine/test_state.py
@@ -75,8 +75,8 @@ class StateTests(unittest.TestCase):
             state.units["axis-2a-hq"] = UnitState("axis-2a-hq", "1301", 1, ())
 ```
 
-- [ ] **Step 2: Run** `PYTHONPATH=src python3 -m unittest tests.engine.test_state -v`; expect `ModuleNotFoundError` for `engine.types`.
-- [ ] **Step 3: Implement the types.** `Phase` values are `weather`, `initial`, `movement`, `combat`, `recovery`, `supply`, `victory`; `Side` values are `axis`, `soviet`, `none`. Make all state members frozen. The mapping copy is essential:
+- [ ] **2단계:** `PYTHONPATH=src python3 -m unittest tests.engine.test_state -v`를 실행한다. `engine.types`가 없어 실패해야 한다.
+- [ ] **3단계: 타입을 구현한다.** `Phase` 값은 용어집의 `weather_phase`, `initial_phase`, `movement_phase`, `combat_phase`, `recovery_phase`, `supply_phase`, `victory_determination_phase`를 사용한다. `Side` 값은 `axis`, `soviet`, `none`이다. 입력 매핑을 복사해 읽기 전용으로 만드는 부분이 핵심이다.
 
 ```python
 from dataclasses import dataclass, field
@@ -146,18 +146,18 @@ class GameResult(str, Enum):
     SOVIET_VICTORY = "soviet_victory"
 ```
 
-`errors.py` contains four `class Name(ValueError): pass` declarations using the names in the interface block. The first task defines every dynamic state area required by the spec; later rules refine the values without moving them outside `GameState`.
+`errors.py`에는 인터페이스에 적은 네 오류 클래스를 `ValueError`의 하위 클래스로 둔다. 이 단계에서 설계 명세의 동적 상태 영역을 모두 정의한다. 후속 규칙은 필요한 값 타입을 구체화한다.
 
-- [ ] **Step 4: Re-run** the test and add a frozen `UnitState` mutation assertion; expect all tests in this file to pass.
-- [ ] **Step 5: Commit** `src/engine/` and `tests/engine/test_state.py` with message `feat: define immutable engine state contract`.
+- [ ] **4단계:** 테스트를 다시 실행하고 `UnitState` 필드 변경도 금지되는지 검사한다. 파일의 모든 테스트가 통과해야 한다.
+- [ ] **5단계:** `src/engine/`, `tests/engine/test_state.py`를 `feat: define immutable engine state contract`로 커밋한다.
 
-### Task 2: Catalog loader and reference validation
+### 작업 2: 규칙 자료 로더와 참조 검증
 
-**Files:** Create `src/engine/catalog.py`, `tests/engine/test_catalog.py`, `data/engine/v2025_04/sources.json`.
+**파일:** `src/engine/catalog.py`, `tests/engine/test_catalog.py`, `data/engine/v2025_04/sources.json` 생성.
 
-**Interfaces:** `load_catalog(root: Path) -> Catalog`; `validate_catalog(catalog: Catalog) -> None`. `Catalog` exposes `ruleset_id`, `hexes`, `units`, `scenarios`. Each `HexDef` exposes `id`, `terrain`, `neighbors`, `features`, `source_ref`; each `UnitDef` exposes `id`, `side`, `term_id`, `faces`, `source_ref`; each `ScenarioDef` exposes `id`, `map_ids`, `start_turn`, `start_phase`, `start_side`, `end_turn`, `placements`.
+**인터페이스:** `load_catalog(root: Path) -> Catalog`, `validate_catalog(catalog: Catalog) -> None`. `Catalog`는 `ruleset_id`, `hexes`, `units`, `scenarios`를 제공한다. `HexDef`에는 `id`, `terrain`, `neighbors`, `features`, `edge_features`, `source_ref`가 있다. `UnitDef`에는 `id`, `side`, `term_id`, `printed_label`, `faces`, `source_ref`가 있다. `ScenarioDef`에는 `id`, `map_ids`, `start_turn`, `start_phase`, `start_side`, `end_turn`, `placements`가 있다.
 
-- [ ] **Step 1: Write tests** using `tempfile.TemporaryDirectory` with three small JSON files. One fixture has `1300` east of `1400` and `1400` west of `1300`; the negative fixture removes the reciprocal west edge and must raise `CatalogError`. Add a missing `source_ref` case.
+- [ ] **1단계: 작은 JSON 임시 자료로 실패 테스트를 작성한다.** `a`의 동쪽이 `b`라면 `b`의 서쪽이 `a`여야 한다. 역방향이 빠진 자료와 `source_ref`가 빠진 자료는 `CatalogError`가 나야 한다.
 
 ```python
 def test_nonreciprocal_neighbor_rejected(self):
@@ -169,8 +169,8 @@ def test_nonreciprocal_neighbor_rejected(self):
         validate_catalog(catalog)
 ```
 
-- [ ] **Step 2: Run** `PYTHONPATH=src python3 -m unittest tests.engine.test_catalog -v`; expect import failure.
-- [ ] **Step 3: Implement strict loading and validation.** Define `HexDef(id: str, terrain: str, neighbors: Mapping[str, str], features: tuple[str, ...], edge_features: Mapping[str, tuple[str, ...]], source_ref: str)`, `UnitFace(steps: int, attack: int | None, defense: int | None, movement: int | None, abilities: tuple[str, ...])`, `UnitDef(id: str, side: Side, term_id: str, printed_label: str, faces: tuple[UnitFace, ...], source_ref: str)`, `Placement(unit_id: str, location: str, steps: int, source_ref: str)`, `ScenarioDef(id: str, map_ids: tuple[str, ...], start_turn: int, start_phase: Phase, start_side: Side, end_turn: int, placements: tuple[Placement, ...])`, and `Catalog(ruleset_id: str, hexes: Mapping[str, HexDef], units: Mapping[str, UnitDef], scenarios: Mapping[str, ScenarioDef])`. Use frozen dataclasses and copy mappings into read-only views. Optional numeric face fields cover non-combat counters; encode their special abilities as IDs rather than printed symbols. Load JSON with `object_pairs_hook` that rejects duplicate keys; require exact `schema_version == 1`, `ruleset_id == "v2025_04"`, nonempty `source_ref`; reject unknown terrain IDs. Start the fixed allowed terrain set with `clear`, `desert`, `rough`, `woods`, `wooded_rough`, `mountain`, `minor_city`, `major_city`, `marsh`, `seasonal_marsh`; add a term only when it appears on the supplied TEC/map and record its source. Use direction opposites `{e:w, se:nw, sw:ne, w:e, nw:se, ne:sw}`. A neighbor must exist and point back through the opposite direction. Every unit and placement reference must be unique and point to an existing definition. Reject invalid data before constructing `Catalog`.
+- [ ] **2단계:** `PYTHONPATH=src python3 -m unittest tests.engine.test_catalog -v`를 실행한다. import 실패가 예상된다.
+- [ ] **3단계: 엄격한 로더와 검증기를 구현한다.** 불변 데이터 클래스 `HexDef(id: str, terrain: str, neighbors: Mapping[str, str], features: tuple[str, ...], edge_features: Mapping[str, tuple[str, ...]], source_ref: str)`, `UnitFace(steps: int, attack: int | None, defense: int | None, movement: int | None, abilities: tuple[str, ...])`, `UnitDef(id: str, side: Side, term_id: str, printed_label: str, faces: tuple[UnitFace, ...], source_ref: str)`, `Placement(unit_id: str, location: str, steps: int, source_ref: str)`, `ScenarioDef(id: str, map_ids: tuple[str, ...], start_turn: int, start_phase: Phase, start_side: Side, end_turn: int, placements: tuple[Placement, ...])`, `Catalog(ruleset_id: str, hexes: Mapping[str, HexDef], units: Mapping[str, UnitDef], scenarios: Mapping[str, ScenarioDef])`를 만든다. 각 매핑은 복사해 읽기 전용으로 보관한다. 전투 수치가 없는 비전투 유닛은 선택적 숫자 필드를 사용하고 특수 능력은 인쇄 기호 대신 ID로 기록한다. JSON 중복 키를 거부하는 `object_pairs_hook`을 사용한다. `schema_version == 1`, `ruleset_id == "v2025_04"`, 비어 있지 않은 `source_ref`를 요구한다. 지형 ID의 시작 집합은 `clear`, `desert`, `rough`, `woods`, `wooded_rough`, `mountain`, `minor_city`, `major_city`, `marsh`, `seasonal_marsh`다. 추가 ID는 제공된 TEC/지도에 실제로 있을 때만 출처와 함께 정의한다. 유효하지 않은 자료는 `Catalog`를 반환하기 전에 거부한다.
 
 ```python
 OPPOSITE = {"e": "w", "se": "nw", "sw": "ne",
@@ -182,59 +182,59 @@ for h in catalog.hexes.values():
             raise CatalogError(f"nonreciprocal edge {h.id}:{direction}->{neighbor_id}")
 ```
 
-- [ ] **Step 4: Add a test for an outside-map neighbor, duplicate JSON key, unknown term ID, and missing setup unit ID; run the file and expect all to pass.** Read `data/glossary.csv` with `encoding="utf-8-sig"`; preserve its `term_id` values rather than display strings.
-- [ ] **Step 5: Create `sources.json`** with schema/ruleset IDs and these concrete source paths: local English PDF; `Images/httpssteamusercontentaakamaihdnetugc17884687792252896570A62D23C2FCE91331EED1641567952E124BC8AF7.jpg` (map); `Images/httpssteamusercontentaakamaihdnetugc17884688380553658153FC9D37838E1E7AE747007396036D0CAE7AF8A0C.jpg` (Axis start); `Images/httpssteamusercontentaakamaihdnetugc1788468838055329033A93814D55EA6FBC4805AE36AD0C6339D5A88391A.jpg` (Soviet start).
-- [ ] **Step 6: Commit** catalog code, source manifest, and tests as `feat: validate versioned game reference data`.
+- [ ] **4단계:** 지도 밖 인접 헥스, JSON 중복 키, 모르는 용어 ID, 없는 배치 유닛 ID의 실패 테스트를 추가한다. `data/glossary.csv`는 `encoding="utf-8-sig"`로 읽고 표시어가 아닌 `term_id`를 보존한다. 테스트 파일 전체가 통과해야 한다.
+- [ ] **5단계:** `sources.json`에 스키마·룰셋 ID와 다음 실제 파일 경로를 기록한다: 로컬 영문 규칙서; `Images/httpssteamusercontentaakamaihdnetugc17884687792252896570A62D23C2FCE91331EED1641567952E124BC8AF7.jpg`(지도); `Images/httpssteamusercontentaakamaihdnetugc17884688380553658153FC9D37838E1E7AE747007396036D0CAE7AF8A0C.jpg`(추축군 시작 배치); `Images/httpssteamusercontentaakamaihdnetugc1788468838055329033A93814D55EA6FBC4805AE36AD0C6339D5A88391A.jpg`(소련군 시작 배치).
+- [ ] **6단계:** 자료 로더, 출처 목록, 테스트를 `feat: validate versioned game reference data`로 커밋한다.
 
-### Task 3: Complete Map A graph and feature data
+### 작업 3: Map A의 전체 헥스 그래프와 지형 자료
 
-**Files:** Create `data/engine/v2025_04/map_a.json`, `tests/engine/test_map_a.py`, `docs/rule_issues.md`.
+**파일:** `data/engine/v2025_04/map_a.json`, `tests/engine/test_map_a.py`, `docs/rule_issues.md` 생성.
 
-**Interfaces:** Supplies every playable Map A hex to `load_catalog`; direction labels and feature IDs follow Task 2. A JSON hex has `id`, `terrain`, `neighbors`, `features`, `source_ref`; `features` lists hex properties, while `edge_features` maps each direction to road, railroad, river, bridge, ferry, or impassable IDs.
+**인터페이스:** `load_catalog`에 Map A의 모든 플레이 가능 헥스를 제공한다. 작업 2의 방향·지형 ID를 사용한다. 각 헥스 JSON에는 `id`, `terrain`, `neighbors`, `features`, `edge_features`, `source_ref`가 있다. `features`는 헥스의 속성, `edge_features`는 방향별 도로·철도·강·교량·나루터·통행 불가 속성이다.
 
-- [ ] **Step 1: Add a failing test** that loads the full catalog, checks known S1 hexes `1300`, `1600`, `3806`, `4100`, `4111`, and checks that every edge feature has the same value from both neighboring hexes. Include a coast/map-edge case where a missing neighbor is valid but an outgoing feature claiming a road connection is rejected.
-- [ ] **Step 2: Run** `PYTHONPATH=src python3 -m unittest tests.engine.test_map_a -v`; expect missing `map_a.json`.
-- [ ] **Step 3: Transcribe the Map A hex list and six neighbors** from the 6519×7186 map source named in Task 2. Store one JSON object per printed playable hex ID. Use `source_ref` values like `map-a:1300`; do not infer a neighbor from the four-digit ID alone. For each source image row, verify printed ID, six sides, and whether a partial edge hex is playable before moving to the next row. Validate the complete graph after each image region and commit only after all regions are covered.
+- [ ] **1단계: 전체 자료가 필요한 실패 테스트를 만든다.** 실제 자료를 읽어 S1에서 쓰는 `1300`, `1600`, `3806`, `4100`, `4111`의 존재를 확인한다. 모든 헥스변 속성이 이웃의 반대쪽에도 같은 값으로 기록됐는지 검사한다. 이웃이 없는 해안·지도 끝은 허용하지만, 이웃 없이 연결 도로가 있다고 적힌 자료는 거부한다.
+- [ ] **2단계:** `PYTHONPATH=src python3 -m unittest tests.engine.test_map_a -v`를 실행한다. `map_a.json`이 없어서 실패해야 한다.
+- [ ] **3단계: 지도 원본에서 Map A의 인쇄된 헥스 ID와 여섯 방향 이웃을 전사한다.** 작업 2에 적은 6519×7186 지도 이미지를 사용한다. 인쇄된 플레이 가능 헥스마다 JSON 객체 하나를 작성한다. 각 이미지 행을 끝낼 때 ID, 여섯 변, 가장자리 부분 헥스의 플레이 가능 여부를 원본과 확인한다. 네 자리 숫자만 계산해서 이웃을 추정하지 않는다. 이미지 영역마다 전체 그래프 검증을 실행하고, 모든 영역의 전사가 끝나야 이 작업을 커밋한다.
 
 ```json
 {"id":"fixture-a","terrain":"clear","neighbors":{"e":"fixture-b"},"features":[],"edge_features":{},"source_ref":"fixture:a"}
 ```
 
-The line above is a complete synthetic two-hex fixture record shape; real Map A records use printed hex IDs and all visible sides. The `source_ref` is a coordinate locator, not evidence that data has been audited.
+위 줄은 **실제 지도 자료가 아닌**, 두 헥스 테스트용 레코드의 형태다. Map A 레코드에는 인쇄된 헥스 ID와 눈으로 확인한 모든 연결을 넣는다. `source_ref`는 이미지 위치를 찾기 위한 값이며 검수 완료 표시가 아니다.
 
-- [ ] **Step 4: Transcribe terrain and each hexside feature** from the same source image, including major/minor rivers, road/rail crossings, bridges, impassable/coast sides, cities, victory values, and entry boundaries. Use the 2019 TEC image `Images/httpssteamusercontentaakamaihdnetugc1788468838055324885C6C8FFAB6D5B1E880B63E27895D8291F069A9C64.jpg` only to identify printed symbols; apply 2025 rule effects later. Place ambiguous image readings in `docs/rule_issues.md` with `TODO_RULE_REVIEW` and leave their data unaccepted until resolved against the English rulebook and image.
-- [ ] **Step 5: Run** `PYTHONPATH=src python3 -m unittest tests.engine.test_map_a tests.engine.test_catalog -v` after each map region and at the end. Visually audit all map regions once more, checking the independent source image against each recorded row; record audited image regions and counts in `sources.json`.
-- [ ] **Step 6: Commit** complete Map A data, source-region audit, tests, and any issue entries as `data: transcribe and validate Map A`.
+- [ ] **4단계: 헥스 지형과 헥스변 속성을 옮긴다.** 대·소하천, 도로·철도 교차, 교량, 통행 불가 경계, 도시, 승리 점수, 진입 경계를 포함한다. 2019년 TEC 이미지 `Images/httpssteamusercontentaakamaihdnetugc1788468838055324885C6C8FFAB6D5B1E880B63E27895D8291F069A9C64.jpg`는 기호 판독에만 사용하고 실제 효과는 이후 2025년 규칙으로 구현한다. 판독이 어려운 항목은 `docs/rule_issues.md`에 `TODO_RULE_REVIEW`로 적고 확정 전에는 자료 검증을 통과시키지 않는다.
+- [ ] **5단계:** 이미지 영역을 완료할 때마다, 마지막에는 전체에 대해 `PYTHONPATH=src python3 -m unittest tests.engine.test_map_a tests.engine.test_catalog -v`를 실행한다. 원본 그림의 각 영역을 다시 보고 JSON의 헥스 행과 대조한다. 검토한 영역과 개수는 `sources.json`에 기록한다.
+- [ ] **6단계:** 완성된 Map A 자료, 영역별 대조 기록, 테스트, 규칙 쟁점 기록을 `data: transcribe and validate Map A`로 커밋한다.
 
-### Task 4: Fall Blau unit definitions and starting position
+### 작업 4: Fall Blau 유닛 정의와 시작 배치
 
-**Files:** Create `data/engine/v2025_04/units_s1.json`, `data/engine/v2025_04/fall_blau.json`, `tests/engine/test_fall_blau_data.py`.
+**파일:** `data/engine/v2025_04/units_s1.json`, `data/engine/v2025_04/fall_blau.json`, `tests/engine/test_fall_blau_data.py` 생성.
 
-**Interfaces:** `Catalog.scenarios["fall_blau"]` loads S1.1–S1.2, Map A only, turn 1–8, Axis Initial Phase start, and the complete Map A at-start units from both campaign setup cards. `ScenarioDef.placements` entries carry `unit_id`, `location`, `steps`, and `source_ref`.
+**인터페이스:** `Catalog.scenarios["fall_blau"]`는 S1.1~S1.2에 따라 Map A만 사용하고, 1턴에 시작하여 8턴에 종료하며, 추축군 초기 페이즈에서 시작한다. 양측 시작 카드에 있는 Map A 시작 유닛 전체를 읽는다. `ScenarioDef.placements`에는 `unit_id`, `location`, `steps`, `source_ref`가 있다.
 
-- [ ] **Step 1: Write the failing tests.** Check that `axis-2a-hq` begins in `1300`, that a Soviet setup entry exists at `1600`, and that `fall_blau` starts at turn 1, Axis Initial Phase, ends after turn 8, and uses only Map A. A fixture with placement `missing-unit` or `9999` must raise `CatalogError`.
-- [ ] **Step 2: Run** `PYTHONPATH=src python3 -m unittest tests.engine.test_fall_blau_data -v`; expect missing data.
-- [ ] **Step 3: Transcribe the Axis start card** from `Images/httpssteamusercontentaakamaihdnetugc17884688380553658153FC9D37838E1E7AE747007396036D0CAE7AF8A0C.jpg`, then the Soviet start card from `Images/httpssteamusercontentaakamaihdnetugc1788468838055329033A93814D55EA6FBC4805AE36AD0C6339D5A88391A.jpg`. Include only units on S1 Map A and setup areas named by S1.1–S1.2. Give every physical counter a stable ID; keep its printed label separately. Record starting reduced faces, markers, and holding/entry locations rather than forcing every piece onto a hex. Use counter-sheet fronts and backs in `Images/` to record each included counter's printed step faces.
+- [ ] **1단계: 실패 테스트를 작성한다.** `axis-2a-hq`가 `1300`에서 시작하는지, `1600`에 소련군 시작 배치가 있는지 확인한다. `fall_blau`의 시작 턴·진영·페이즈, 마지막 턴, 사용 지도도 검사한다. `missing-unit` 또는 `9999`를 배치한 자료는 `CatalogError`가 나야 한다.
+- [ ] **2단계:** `PYTHONPATH=src python3 -m unittest tests.engine.test_fall_blau_data -v`를 실행한다. 자료가 없어서 실패해야 한다.
+- [ ] **3단계: 양측 시작 카드와 카운터를 전사한다.** 추축군 카드는 `Images/httpssteamusercontentaakamaihdnetugc17884688380553658153FC9D37838E1E7AE747007396036D0CAE7AF8A0C.jpg`, 소련군 카드는 `Images/httpssteamusercontentaakamaihdnetugc1788468838055329033A93814D55EA6FBC4805AE36AD0C6339D5A88391A.jpg`다. S1 Map A 또는 S1.1~S1.2의 배치 구역에 해당하는 유닛만 포함한다. 물리적 카운터마다 안정적인 ID를 주고 인쇄된 이름은 별도 필드로 둔다. 감소 면, 마커, 수용 상자·진입 구역은 억지로 지도 헥스에 놓지 않고 위치 종류를 기록한다. `Images/`의 카운터 앞뒷면으로 포함된 유닛의 면별 수치를 확인한다.
 
 ```json
 {"id":"fixture-infantry","side":"axis","term_id":"infantry","printed_label":"T","faces":[{"steps":1,"attack":3,"defense":5,"movement":3,"abilities":[]}],"source_ref":"fixture:counter"}
 ```
 
-The line above is a synthetic fixture record. Actual units use counter-sheet values. A real S1 placement of `axis-2a-hq` uses `{"unit_id":"axis-2a-hq","location":"1300","steps":1,"source_ref":"axis-at-start:1300"}` after validating its counter face.
+위 줄은 테스트용 가상 유닛이다. 실제 유닛에는 카운터에 인쇄된 값을 사용한다. 실제 `axis-2a-hq` 배치는 카운터 면을 검증한 뒤 `{"unit_id":"axis-2a-hq","location":"1300","steps":1,"source_ref":"axis-at-start:1300"}`로 기록한다.
 
-- [ ] **Step 4: Encode S1-specific starting constraints** as scenario facts: Turn 1 Axis combat units' tactical movement limit; frozen Soviet units per §20.6; and the 14Pz, 22Pz, 60PzG restrictions from S1.2. These facts are data now and become enforced actions in later plans. Keep their source reference `rule:S1.2`.
-- [ ] **Step 5: Run** the data tests and a catalog-wide uniqueness/reference check. Visually compare each setup-card group against the JSON, including multi-unit bracketed positions and units outside Map A that must be excluded. Record unresolved counter identity in `docs/rule_issues.md` and reject the affected scenario data until resolved.
-- [ ] **Step 6: Commit** the two data files and tests as `data: encode Fall Blau initial position`.
+- [ ] **4단계:** S1.2의 시작 제약을 시나리오 자료로 기록한다. 1턴 추축군 전투 유닛의 전술 이동 제한, §20.6에 따른 소련군 이동 제한, 14Pz·22PzG·60PzG가 1턴에 이동·공격하지 못하는 조건을 `rule:S1.2` 출처로 둔다. 실제 행동 제한 적용은 해당 규칙 구현 단계에서 한다.
+- [ ] **5단계:** 자료 테스트와 전체 고유 ID·참조 검증을 실행한다. 시작 카드의 괄호로 묶인 여러 유닛·배치 위치를 이미지와 대조하고, Map A 밖이라 제외해야 할 유닛도 확인한다. 정체가 불분명한 카운터는 `docs/rule_issues.md`에 기록하며 해결 전에는 영향을 받는 시나리오 자료를 통과시키지 않는다.
+- [ ] **6단계:** 자료 파일과 테스트를 `data: encode Fall Blau initial position`으로 커밋한다.
 
-### Task 5: §3 phase graph and guarded actions
+### 작업 5: 룰북 §3 페이즈 그래프와 행동 차단
 
-**Files:** Create `src/engine/phase.py`, `src/engine/actions.py`, `src/engine/engine.py`, `tests/engine/test_phase.py`, `tests/engine/test_actions.py`.
+**파일:** `src/engine/phase.py`, `src/engine/actions.py`, `src/engine/engine.py`, `tests/engine/test_phase.py`, `tests/engine/test_actions.py` 생성.
 
-**Interfaces:** `next_phase(turn: int, phase: Phase, side: Side) -> tuple[int, Phase, Side]`; `EndPhaseAction(side: Side)`; `Engine(catalog: Catalog).new_game(scenario_id: str) -> GameState`; `get_legal_actions(state: GameState) -> list[EndPhaseAction]`; `apply_action(state: GameState, action: EndPhaseAction) -> GameState`.
+**인터페이스:** `next_phase(turn: int, phase: Phase, side: Side) -> tuple[int, Phase, Side]`, `EndPhaseAction(side: Side)`, `Engine(catalog: Catalog).new_game(scenario_id: str) -> GameState`, `get_legal_actions(state: GameState) -> list[EndPhaseAction]`, `apply_action(state: GameState, action: EndPhaseAction) -> GameState`.
 
-- [ ] **Step 1: Write failing §3 tests** for the exact sequence: weather → Axis initial → movement → combat → recovery → supply → Soviet initial → movement → combat → recovery → supply → victory → next turn weather. Check S1 starts directly at Axis initial and that `EndPhaseAction(Side.SOVIET)` during Axis phase is invalid.
-- [ ] **Step 2: Run** `PYTHONPATH=src python3 -m unittest tests.engine.test_phase tests.engine.test_actions -v`; expect import failure.
-- [ ] **Step 3: Implement the pure phase successor and S1 initializer.** `new_game("fall_blau")` loads placement states without executing missing rules; initial weather is `clear_weather` because S1 uses turns 1–8 (§3, §23). Unrecognized scenario IDs raise `CatalogError`.
+- [ ] **1단계: §3 순서의 실패 테스트를 작성한다.** 날씨 → 추축군 초기·이동·전투·회복·보급 → 소련군 초기·이동·전투·회복·보급 → 승리 판정 → 다음 턴 날씨를 확인한다. S1이 곧바로 추축군 초기 페이즈에서 시작하는지, 추축군 페이즈에 소련군의 `EndPhaseAction`이 불법인지 확인한다.
+- [ ] **2단계:** `PYTHONPATH=src python3 -m unittest tests.engine.test_phase tests.engine.test_actions -v`를 실행한다. import 실패가 예상된다.
+- [ ] **3단계: 순수 페이즈 전이 함수와 S1 초기화 함수를 구현한다.** `new_game("fall_blau")`는 배치 상태를 읽되 아직 없는 규칙은 실행하지 않는다. S1은 1~8턴이므로 §3·§23에 따라 초기 날씨를 `clear_weather`로 설정한다. 모르는 시나리오 ID는 `CatalogError`다.
 
 ```python
 ORDER = (Phase.INITIAL, Phase.MOVEMENT, Phase.COMBAT,
@@ -252,49 +252,49 @@ if phase is Phase.VICTORY:
 raise InvalidActionError(f"invalid phase/side: {phase}/{side}")
 ```
 
-- [ ] **Step 4: Guard public actions.** For S1's Axis Initial Phase and every later phase whose mandatory rules are absent, `get_legal_actions` and `apply_action` raise `UnsupportedRuleError`. For a test-only state at Weather Phase in turns 1–16, allow the deterministic clear-weather `EndPhaseAction(Side.NONE)`; do not allow EndPhase when `pending_decision` is set. Reject wrong-side actions before transition. `apply_action` uses `dataclasses.replace`, appends an `Event("phase_ended", ...)`, and leaves the input state unchanged.
-- [ ] **Step 5: Add tests** that S1 Initial cannot be skipped, unknown action tags fail deserialization, wrong-side actions fail, and a pending decision blocks phase end. Run both test files and expect pass.
-- [ ] **Step 6: Commit** phase and action code plus tests as `feat: model rulebook phase sequence and guarded actions`.
+- [ ] **4단계: 공개 행동을 제한한다.** S1의 추축군 초기 페이즈와 아직 필수 규칙이 없는 모든 페이즈에서 `get_legal_actions`, `apply_action`은 `UnsupportedRuleError`를 발생시킨다. 테스트 전용으로 만든 1~16턴 날씨 페이즈 상태에서만 맑은 날씨의 결정론적 `EndPhaseAction(Side.NONE)`을 허용한다. `pending_decision`이 있으면 종료를 허용하지 않는다. 잘못된 진영의 행동은 전이 전에 거부한다. `apply_action`은 `dataclasses.replace`로 새 상태를 만들고 `Event("phase_ended", ...)`를 추가하며 입력 상태는 보존한다.
+- [ ] **5단계:** S1 초기 페이즈를 건너뛸 수 없음, 알 수 없는 행동 태그의 역직렬화 실패, 잘못된 진영의 행동 실패, 대기 중인 결정이 페이즈 종료를 막음에 대한 테스트를 추가한다. 두 테스트 파일이 모두 통과해야 한다.
+- [ ] **6단계:** 페이즈·행동 코드와 테스트를 `feat: model rulebook phase sequence and guarded actions`로 커밋한다.
 
-### Task 6: Seeded d6 and structured events
+### 작업 6: 시드 기반 주사위와 구조화 사건
 
-**Files:** Create `src/engine/rng.py`, `tests/engine/test_rng.py`.
+**파일:** `src/engine/rng.py`, `tests/engine/test_rng.py` 생성.
 
-**Interfaces:** `roll_d6(state: RngState, reason: str) -> tuple[int, RngState, Event]`. The function is pure; callers choose when a rule consumes a die.
+**인터페이스:** `roll_d6(state: RngState, reason: str) -> tuple[int, RngState, Event]`. 순수 함수이며 규칙을 호출하는 쪽에서 주사위 소비 시점을 결정한다.
 
-- [ ] **Step 1: Write a failing test** asserting equal `(seed, draw_count, reason)` produces the same die and event, sequential draws increment `draw_count`, and the result is always 1–6. Check that changing `reason` does not change the die sequence; reason is log metadata, not entropy.
-- [ ] **Step 2: Run** `PYTHONPATH=src python3 -m unittest tests.engine.test_rng -v`; expect import failure.
-- [ ] **Step 3: Implement a version-stable byte encoding and rejection sampling** rather than Python's process-dependent `hash()` or a global random generator. Use SHA-256 of `f"st42-v1:{seed}:{draw_count}:{attempt}".encode("ascii")`; consume the first byte only when it is below 252; return `(byte % 6) + 1`, `RngState(seed, draw_count + 1)`, and `Event("die_roll", (("reason", reason), ("value", str(value))))`.
-- [ ] **Step 4: Add a fixed golden vector test** for seed `428193`, draws 0–9: `[3, 3, 6, 1, 2, 3, 4, 1, 6, 4]`. Verify after a new process start. Run the RNG tests twice; both runs must match.
-- [ ] **Step 5: Commit** RNG and tests as `feat: make die rolls reproducible across processes`.
+- [ ] **1단계: 실패 테스트를 작성한다.** 같은 `(seed, draw_count, reason)`에서 같은 주사위와 사건이 나오는지, 연속 호출에서 `draw_count`가 증가하는지, 값이 항상 1~6인지 확인한다. `reason`을 바꿔도 주사위 숫자는 같아야 한다. `reason`은 기록 정보이지 난수 입력이 아니다.
+- [ ] **2단계:** `PYTHONPATH=src python3 -m unittest tests.engine.test_rng -v`를 실행한다. import 실패가 예상된다.
+- [ ] **3단계: 버전별로 결과가 일정한 바이트 인코딩과 거부 표본 추출을 구현한다.** Python의 프로세스마다 달라질 수 있는 `hash()`나 전역 난수는 사용하지 않는다. `f"st42-v1:{seed}:{draw_count}:{attempt}".encode("ascii")`의 SHA-256 첫 바이트가 252보다 작을 때만 `(byte % 6) + 1`을 반환한다. 새 상태는 `RngState(seed, draw_count + 1)`, 사건은 `Event("die_roll", (("reason", reason), ("value", str(value))))`다.
+- [ ] **4단계:** 시드 `428193`, 0~9번째 추출의 고정 기대값 `[3, 3, 6, 1, 2, 3, 4, 1, 6, 4]`를 테스트한다. 새 프로세스에서 다시 실행해도 같아야 한다. RNG 테스트를 두 번 실행한다.
+- [ ] **5단계:** RNG 코드와 테스트를 `feat: make die rolls reproducible across processes`로 커밋한다.
 
-### Task 7: Versioned state and action serialization
+### 작업 7: 판본이 있는 상태·행동 저장 형식
 
-**Files:** Create `src/engine/codec.py`, extend `src/engine/actions.py`, `tests/engine/test_codec.py`.
+**파일:** `src/engine/codec.py`, `src/engine/actions.py` 수정, `tests/engine/test_codec.py` 생성.
 
-**Interfaces:** `serialize_state(state: GameState) -> dict`; `deserialize_state(data: dict, catalog: Catalog) -> GameState`; `hash_state(state: GameState) -> str`; `serialize_action(action: EndPhaseAction) -> dict`; `deserialize_action(data: dict) -> EndPhaseAction`.
+**인터페이스:** `serialize_state(state: GameState) -> dict`, `deserialize_state(data: dict, catalog: Catalog) -> GameState`, `hash_state(state: GameState) -> str`, `serialize_action(action: EndPhaseAction) -> dict`, `deserialize_action(data: dict) -> EndPhaseAction`.
 
-- [ ] **Step 1: Write failing tests** for state/action round-trip, deterministic JSON key order, hash equality when event history differs, and hash inequality when a unit location or RNG `draw_count` differs. A future schema version, unknown unit ID, absent `ruleset_id`, and malformed RNG counter must raise `StateFormatError`.
-- [ ] **Step 2: Run** `PYTHONPATH=src python3 -m unittest tests.engine.test_codec -v`; expect import failure.
-- [ ] **Step 3: Write explicit encoders** for enums, frozen dataclasses and mappings. Emit `schema_version: 1`; sort keys for units, markers, control, supply, resources, reinforcements, victory points, and private state; store every dynamic field, including pending decision and RNG seed/counter. Do not rely on `dataclasses.asdict` for `MappingProxyType`. Encode actions with `{"schema_version":1,"type":"end_phase","side":"axis"}` shape.
-- [ ] **Step 4: Decode with strict checks.** Reject unknown keys, absent fields, invalid enum values, bools where integers are required, unknown unit references, duplicate unit IDs, and a `ruleset_id` that differs from the catalog. Construct a complete validated `GameState` only after all checks pass. Compute the state hash from canonical JSON after removing `events` only; keep the RNG state because it affects future outcomes.
-- [ ] **Step 5: Add the Review Focus resume test:** roll once, serialize, deserialize, roll again from each resulting RNG state, and compare the second die and event. Run `PYTHONPATH=src python3 -m unittest tests.engine.test_codec tests.engine.test_rng -v` and expect pass.
-- [ ] **Step 6: Commit** codecs and tests as `feat: save restore and hash engine states`.
+- [ ] **1단계: 실패 테스트를 작성한다.** 상태·행동의 저장 후 복원, JSON 키 순서의 안정성, 사건 기록만 다를 때 같은 상태 해시, 유닛 위치 또는 RNG `draw_count`가 다를 때 다른 해시를 확인한다. 미래 스키마 판본, 모르는 유닛 ID, 빠진 `ruleset_id`, 손상된 RNG 카운터는 `StateFormatError`가 나야 한다.
+- [ ] **2단계:** `PYTHONPATH=src python3 -m unittest tests.engine.test_codec -v`를 실행한다. import 실패가 예상된다.
+- [ ] **3단계: 명시적인 인코더를 작성한다.** enum·불변 데이터 클래스·매핑을 JSON 값으로 바꾼다. `schema_version: 1`을 기록하고 유닛·마커·통제·보급·자원·증원·승리 점수·비공개 상태의 키를 정렬한다. 대기 중인 결정과 RNG 시드·카운터를 포함해 모든 동적 필드를 저장한다. `MappingProxyType`에 `dataclasses.asdict`를 바로 사용하지 않는다. 행동 JSON의 형태는 `{"schema_version":1,"type":"end_phase","side":"axis"}`다.
+- [ ] **4단계: 복원 시 엄격히 검사한다.** 모르는 키, 누락 필드, 잘못된 enum 값, 정수 자리에 들어온 bool, 모르는 유닛 참조, 중복 유닛 ID, 카탈로그와 다른 `ruleset_id`를 거부한다. 모든 검사 후 완전한 `GameState`를 생성한다. 상태 해시는 `events`만 제외한 정규 JSON으로 계산한다. RNG 상태는 이후 결과에 영향을 주므로 해시에 포함한다.
+- [ ] **5단계: 저장 후 재개 사례를 추가한다.** 한 번 굴리고 저장·복원한 다음 양쪽 상태에서 두 번째 주사위와 사건이 같은지 검사한다. `PYTHONPATH=src python3 -m unittest tests.engine.test_codec tests.engine.test_rng -v`가 통과해야 한다.
+- [ ] **6단계:** 저장 형식과 테스트를 `feat: save restore and hash engine states`로 커밋한다.
 
-### Task 8: Public API and foundation acceptance
+### 작업 8: 공개 API와 기반 단계 인수 검사
 
-**Files:** Extend `src/engine/__init__.py`, `src/engine/engine.py`, create `tests/engine/test_foundation_acceptance.py`, update `docs/rule_issues.md`.
+**파일:** `src/engine/__init__.py`, `src/engine/engine.py` 수정, `tests/engine/test_foundation_acceptance.py` 생성, `docs/rule_issues.md` 갱신.
 
-**Interfaces:** Export `new_game`, `get_legal_actions`, `apply_action`, `is_terminal`, `get_result`, `serialize_state`, `deserialize_state`. Expose `Engine(catalog)` for isolated fixture tests. The public functions load the packaged v2025_04 catalog; `is_terminal` is `False` and `get_result` is `GameResult.ONGOING` for every reachable foundation state.
+**인터페이스:** `new_game`, `get_legal_actions`, `apply_action`, `is_terminal`, `get_result`, `serialize_state`, `deserialize_state`를 내보낸다. 격리된 테스트에는 `Engine(catalog)`를 제공한다. 공개 함수는 기본 `v2025_04` 카탈로그를 읽는다. 기반 단계에서 실제로 도달 가능한 상태의 `is_terminal`은 `False`, `get_result`는 `GameResult.ONGOING`이다.
 
-- [ ] **Step 1: Write the failing acceptance test.** Load the actual S1 data; assert starting turn 1, Axis Initial Phase, Map A placements, and `get_legal_actions` raising `UnsupportedRuleError` because S1 Initial rules are not implemented in this plan. Verify a complete state/action JSON round-trip. Test a synthetic clear-weather phase transition and original-state immutability.
-- [ ] **Step 2: Run** `PYTHONPATH=src python3 -m unittest tests.engine.test_foundation_acceptance -v`; expect missing exports.
-- [ ] **Step 3: Add the thin public functions** and exact exports in `__init__.py`. `Engine` owns a validated immutable catalog; it does not own mutable game state. `new_game` calls catalog validation before returning. The public functions may construct a read-only default `Engine` from the packaged data; do not store a current game in a global variable.
-- [ ] **Step 4: Run the full suite** with `PYTHONPATH=src python3 -m unittest discover -s tests -v`. Check every `TODO_RULE_REVIEW` entry against the accepted data: any unresolved item referenced by S1 initialization fails acceptance. Verify no test claims S1 can complete a full turn.
-- [ ] **Step 5: Commit** exports, acceptance tests and issue log as `feat: expose validated S1 engine foundation`.
+- [ ] **1단계: 실패하는 인수 테스트를 작성한다.** 실제 S1 자료를 읽어 1턴·추축군 초기 페이즈·Map A 시작 배치를 확인한다. 초기 페이즈 규칙이 이 계획에서 미구현이므로 `get_legal_actions`가 `UnsupportedRuleError`를 내야 한다. 상태·행동 JSON을 저장·복원하고, 테스트용 맑은 날씨 상태에서는 페이즈가 전이되면서 원본이 바뀌지 않는지 확인한다.
+- [ ] **2단계:** `PYTHONPATH=src python3 -m unittest tests.engine.test_foundation_acceptance -v`를 실행한다. 공개 함수가 없어 실패해야 한다.
+- [ ] **3단계:** `__init__.py`에 정확한 공개 함수를 내보내고 얇은 위임 함수를 만든다. `Engine`은 검증된 불변 카탈로그만 소유하고 변경 중인 게임 상태는 소유하지 않는다. `new_game`은 반환 전에 자료를 검증한다. 공개 함수는 기본 자료에서 읽기 전용 `Engine`을 구성할 수 있으나 현재 게임을 전역 변수에 보관하지 않는다.
+- [ ] **4단계:** `PYTHONPATH=src python3 -m unittest discover -s tests -v`로 전체 테스트를 실행한다. `TODO_RULE_REVIEW` 항목이 S1 초기화 자료와 관계있다면 해결 전에는 인수 검사를 실패시킨다. S1을 한 턴 끝까지 플레이할 수 있다고 주장하는 테스트가 없는지도 확인한다.
+- [ ] **5단계:** 공개 함수, 인수 테스트, 쟁점 기록을 `feat: expose validated S1 engine foundation`으로 커밋한다.
 
-## Plan Self-Review and Execution Gate
+## 자체 검토와 구현 전 확인
 
-- Check the spec against Tasks 1–8: state and action contracts, data provenance, Map A, S1 setup, phase graph, RNG, JSON, explicit unsupported-rule behavior, and tests each have an owning task.
-- Check that every path and interface named by a later task is produced by an earlier task. Search for unfinished markers, vague steps, and dangling method names; revise before execution.
-- This plan is complete only after the human reviewer accepts it. Then choose the execution method. A separate spec and plan are needed for each subsequent rules unit; full S1 play is reached after the logistics/victory unit, and S4 after the campaign unit.
+- 명세와 작업 1~8을 대조한다. 상태·행동 계약, 자료 출처, Map A, S1 시작 상태, 페이즈, RNG, JSON, 미구현 규칙 오류, 테스트 모두 담당 작업이 있어야 한다.
+- 뒤 작업이 사용하는 파일·함수·타입이 앞 작업에 정의돼 있는지 확인한다. 미완성 표시, 모호한 단계, 정의되지 않은 메서드 이름을 찾아 수정한다.
+- 이 계획은 사용자가 내용을 검토하고 승인한 뒤에만 실행한다. 이후 규칙 단위마다 별도 설계와 계획이 필요하다. S1 전체 플레이는 보급·승리조건 단위 완료 후, S4 전체 플레이는 캠페인 단위 완료 후 달성한다.
