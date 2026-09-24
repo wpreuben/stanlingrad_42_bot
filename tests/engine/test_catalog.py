@@ -36,14 +36,21 @@ class CatalogTests(unittest.TestCase):
 
     def test_nonreciprocal_neighbor_rejected(self):
         catalog = Catalog("v2025_04", {
-            "a": hex_def("a", {"e": "b"}),
+            "a": hex_def("a", {"s": "b"}),
             "b": hex_def("b"),
         }, {}, {})
         with self.assertRaises(CatalogError):
             validate_catalog(catalog)
 
+    def test_map_a_vertical_neighbors_use_north_and_south_edges(self):
+        catalog = Catalog("v2025_04", {
+            "1300": hex_def("1300", {"s": "1301"}),
+            "1301": hex_def("1301", {"n": "1300"}),
+        }, {}, {})
+        validate_catalog(catalog)
+
     def test_unknown_neighbor_rejected(self):
-        catalog = Catalog("v2025_04", {"a": hex_def("a", {"e": "missing"})}, {}, {})
+        catalog = Catalog("v2025_04", {"a": hex_def("a", {"s": "missing"})}, {}, {})
         with self.assertRaises(CatalogError):
             validate_catalog(catalog)
 

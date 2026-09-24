@@ -173,12 +173,12 @@ class GameResult(str, Enum):
 
 **인터페이스:** `load_catalog(root: Path) -> Catalog`, `validate_catalog(catalog: Catalog) -> None`. `Catalog`는 `ruleset_id`, `hexes`, `units`, `scenarios`를 제공한다. `HexDef`에는 `id`, `terrain`, `neighbors`, `features`, `edge_features`, `source_ref`가 있다. `UnitDef`에는 `id`, `side`, `term_id`, `printed_label`, `faces`, `source_ref`가 있다. `ScenarioDef`에는 `id`, `map_ids`, `start_turn`, `start_phase`, `start_side`, `end_turn`, `placements`가 있다.
 
-- [ ] **1단계: 작은 JSON 임시 자료로 실패 테스트를 작성한다.** `a`의 동쪽이 `b`라면 `b`의 서쪽이 `a`여야 한다. 역방향이 빠진 자료와 `source_ref`가 빠진 자료는 `CatalogError`가 나야 한다.
+- [ ] **1단계: 작은 JSON 임시 자료로 실패 테스트를 작성한다.** 실제 Map A의 평평한 위·아래 변에 맞춰 `a`의 남쪽이 `b`라면 `b`의 북쪽이 `a`여야 한다. 여섯 방향은 `n`, `ne`, `se`, `s`, `sw`, `nw`다. 역방향이 빠진 자료와 `source_ref`가 빠진 자료는 `CatalogError`가 나야 한다.
 
 ```python
 def test_nonreciprocal_neighbor_rejected(self):
     catalog = Catalog("v2025_04", {
-        "a": HexDef("a", "clear", {"e": "b"}, (), {}, "fixture:a"),
+        "a": HexDef("a", "clear", {"s": "b"}, (), {}, "fixture:a"),
         "b": HexDef("b", "clear", {}, (), {}, "fixture:b"),
     }, {}, {})
     with self.assertRaises(CatalogError):
@@ -189,8 +189,8 @@ def test_nonreciprocal_neighbor_rejected(self):
 - [ ] **3단계: 엄격한 로더와 검증기를 구현한다.** 불변 데이터 클래스 `HexDef(id: str, terrain: str, neighbors: Mapping[str, str], features: tuple[str, ...], edge_features: Mapping[str, tuple[str, ...]], source_ref: str)`, `UnitFace(steps: int, attack: int | None, defense: int | None, movement: int | None, abilities: tuple[str, ...])`, `UnitDef(id: str, side: Side, term_id: str, printed_label: str, faces: tuple[UnitFace, ...], source_ref: str)`, `Placement(unit_id: str, location: str, steps: int, source_ref: str)`, `ScenarioDef(id: str, map_ids: tuple[str, ...], start_turn: int, start_phase: Phase, start_side: Side, end_turn: int, placements: tuple[Placement, ...])`, `Catalog(ruleset_id: str, hexes: Mapping[str, HexDef], units: Mapping[str, UnitDef], scenarios: Mapping[str, ScenarioDef])`를 만든다. 각 매핑은 복사해 읽기 전용으로 보관한다. 전투 수치가 없는 비전투 유닛은 선택적 숫자 필드를 사용하고 특수 능력은 인쇄 기호 대신 ID로 기록한다. JSON 중복 키를 거부하는 `object_pairs_hook`을 사용한다. `schema_version == 1`, `ruleset_id == "v2025_04"`, 비어 있지 않은 `source_ref`를 요구한다. 지형 ID의 시작 집합은 `clear`, `desert`, `rough`, `woods`, `wooded_rough`, `mountain`, `minor_city`, `major_city`, `marsh`, `seasonal_marsh`다. 추가 ID는 제공된 TEC/지도에 실제로 있을 때만 출처와 함께 정의한다. 유효하지 않은 자료는 `Catalog`를 반환하기 전에 거부한다.
 
 ```python
-OPPOSITE = {"e": "w", "se": "nw", "sw": "ne",
-            "w": "e", "nw": "se", "ne": "sw"}
+OPPOSITE = {"n": "s", "ne": "sw", "se": "nw",
+            "s": "n", "sw": "ne", "nw": "se"}
 for h in catalog.hexes.values():
     for direction, neighbor_id in h.neighbors.items():
         neighbor = catalog.hexes.get(neighbor_id)
@@ -213,7 +213,7 @@ for h in catalog.hexes.values():
 - [ ] **3단계: 지도 원본에서 Map A의 인쇄된 헥스 ID와 여섯 방향 이웃을 전사한다.** 새로 제공된 `Stal42_Map_west-FINAL-150 Q12.jpg`(3300×5100) 원본을 사용한다. 인쇄된 플레이 가능 헥스마다 JSON 객체 하나를 작성한다. 각 이미지 행을 끝낼 때 ID, 여섯 변, 가장자리 부분 헥스의 플레이 가능 여부를 원본과 확인한다. 네 자리 숫자만 계산해서 이웃을 추정하지 않는다. 이미지 영역마다 전체 그래프 검증을 실행하고, 모든 영역의 전사가 끝나야 이 작업을 커밋한다.
 
 ```json
-{"id":"fixture-a","terrain":"clear","neighbors":{"e":"fixture-b"},"features":[],"edge_features":{},"source_ref":"fixture:a"}
+{"id":"fixture-a","terrain":"clear","neighbors":{"s":"fixture-b"},"features":[],"edge_features":{},"source_ref":"fixture:a"}
 ```
 
 위 줄은 **실제 지도 자료가 아닌**, 두 헥스 테스트용 레코드의 형태다. Map A 레코드에는 인쇄된 헥스 ID와 눈으로 확인한 모든 연결을 넣는다. `source_ref`는 이미지 위치를 찾기 위한 값이며 검수 완료 표시가 아니다.

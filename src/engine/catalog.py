@@ -13,7 +13,8 @@ from .types import Phase, Side
 
 RULESET_ID = "v2025_04"
 SCHEMA_VERSION = 1
-OPPOSITE = {"e": "w", "se": "nw", "sw": "ne", "w": "e", "nw": "se", "ne": "sw"}
+OPPOSITE = {"n": "s", "ne": "sw", "se": "nw",
+            "s": "n", "sw": "ne", "nw": "se"}
 TERRAINS = frozenset({"clear", "desert", "rough", "woods", "wooded_rough",
                       "mountain", "minor_city", "major_city", "marsh", "seasonal_marsh"})
 DEFAULT_GLOSSARY = Path(__file__).resolve().parents[2] / "data" / "glossary.csv"
