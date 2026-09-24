@@ -28,14 +28,24 @@ class MapEdgePixelCandidateTests(unittest.TestCase):
                          ("river_candidate", "road_candidate", "rail_or_primary_candidate"))
         self.assertEqual(result[0].review_status, "unreviewed")
 
+    def test_quiet_wider_area_marks_only_a_candidate(self):
+        edges = [
+            EdgeCandidate("1300", "s", "1301", "unreviewed", "", ""),
+            EdgeCandidate("1301", "s", "1302", "unreviewed", "", ""),
+        ]
+        result = score_edge_pixels(edges, FakeImage(), threshold=1)
+        self.assertNotIn("no_feature_candidate", result[0].signals)
+        self.assertIn("no_feature_candidate", result[1].signals)
+        self.assertEqual(result[1].review_status, "unreviewed")
+
     def test_evaluation_counts_misses_and_false_positives_on_reviewed_edges(self):
         edges = [
             EdgePixelCandidate("1300", "s", "1301", "reviewed", "minor_river",
-                               25, 0, 0, ("river_candidate",)),
+                               25, 0, 0, 25, ("river_candidate",)),
             EdgePixelCandidate("1301", "s", "1302", "reviewed", "none",
-                               25, 0, 0, ("river_candidate",)),
+                               25, 0, 0, 25, ("river_candidate",)),
             EdgePixelCandidate("1302", "s", "1303", "reviewed", "major_river",
-                               0, 0, 0, ()),
+                               0, 0, 0, 0, ()),
         ]
         self.assertEqual(evaluate_reviewed(edges)["river_candidate"],
                          {"true_positive": 1, "false_positive": 1, "false_negative": 1})

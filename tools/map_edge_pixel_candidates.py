@@ -1,4 +1,4 @@
-"""Score every Map A edge from pixels; the scores are review hints, not map data."""
+"""Score known Map A edge candidates from pixels; scores are review hints only."""
 
 import argparse
 import csv
@@ -19,13 +19,14 @@ class EdgePixelCandidate:
     blue_pixels: int
     pink_pixels: int
     dark_pixels: int
+    wide_signal_pixels: int
     signals: tuple[str, ...]
 
 
 def score_edge_pixels(
     candidates: list[EdgeCandidate], image: PixelImage, threshold: int = 25,
 ) -> list[EdgePixelCandidate]:
-    """Count color signals in each edge midpoint's 29×29 square."""
+    """Count color signals near each edge midpoint and in a wider quiet check."""
     if image.size != (3300, 5100):
         raise ValueError(f"Map A image must be 3300x5100 pixels; got {image.size}")
     if threshold < 1:
@@ -36,13 +37,18 @@ def score_edge_pixels(
         x1, y1 = center_of(edge.hex_id)
         x2, y2 = center_of(edge.neighbor_id)
         mid_x, mid_y = (x1 + x2) // 2, (y1 + y2) // 2
-        blue = pink = dark = 0
-        for x in range(max(0, mid_x - 14), min(image.size[0], mid_x + 15)):
-            for y in range(max(0, mid_y - 14), min(image.size[1], mid_y + 15)):
+        blue = pink = dark = wide_signal = 0
+        for x in range(max(0, mid_x - 25), min(image.size[0], mid_x + 26)):
+            for y in range(max(0, mid_y - 25), min(image.size[1], mid_y + 26)):
                 red, green, blue_channel = image.getpixel((x, y))
-                blue += blue_channel > red + 20 and blue_channel > green + 5 and blue_channel > 120
-                pink += red - green > 8 and red - blue_channel > 10 and red > 180 and green > 140
-                dark += max(red, green, blue_channel) < 100
+                is_blue = blue_channel > red + 20 and blue_channel > green + 5 and blue_channel > 120
+                is_pink = red - green > 8 and red - blue_channel > 10 and red > 180 and green > 140
+                is_dark = max(red, green, blue_channel) < 100
+                wide_signal += is_blue + is_pink + is_dark
+                if abs(x - mid_x) <= 14 and abs(y - mid_y) <= 14:
+                    blue += is_blue
+                    pink += is_pink
+                    dark += is_dark
         signals = []
         if blue >= threshold:
             signals.append("river_candidate")
@@ -50,9 +56,12 @@ def score_edge_pixels(
             signals.append("road_candidate")
         if dark >= 10:
             signals.append("rail_or_primary_candidate")
+        if wide_signal <= 10:
+            signals.append("no_feature_candidate")
         result.append(EdgePixelCandidate(
             edge.hex_id, edge.direction, edge.neighbor_id,
-            edge.review_status, edge.crossing_features, blue, pink, dark, tuple(signals),
+            edge.review_status, edge.crossing_features, blue, pink, dark,
+            wide_signal, tuple(signals),
         ))
     return result
 
@@ -65,6 +74,7 @@ def evaluate_reviewed(candidates: list[EdgePixelCandidate]) -> dict[str, dict[st
         "rail_or_primary_candidate": lambda features: (
             "railroad" in features or "primary_road" in features
         ),
+        "no_feature_candidate": lambda features: features == "none",
     }
     metrics = {name: {"true_positive": 0, "false_positive": 0, "false_negative": 0}
                for name in truth}
@@ -87,11 +97,12 @@ def write_candidates(candidates: list[EdgePixelCandidate], stream) -> None:
     writer = csv.writer(stream, lineterminator="\n")
     writer.writerow(("hex_id", "direction", "neighbor_id", "review_status",
                      "crossing_features", "blue_pixels_29x29", "pink_pixels_29x29",
-                     "dark_pixels_29x29", "signals"))
+                     "dark_pixels_29x29", "color_pixels_51x51", "signals"))
     for edge in candidates:
         writer.writerow((edge.hex_id, edge.direction, edge.neighbor_id,
                          edge.review_status, edge.crossing_features,
                          edge.blue_pixels, edge.pink_pixels, edge.dark_pixels,
+                         edge.wide_signal_pixels,
                          ";".join(edge.signals)))
 
 
