@@ -1,0 +1,17 @@
+hex_id,direction,neighbor_id,source_ref,crossing_features
+2000,s,2001,Stal42_Map_west-FINAL-150 Q12.jpg crop x1060-1430 y60-490,railroad
+2000,ne,2100,Stal42_Map_west-FINAL-150 Q12.jpg crop x1060-1430 y60-490,railroad
+2000,se,2101,Stal42_Map_west-FINAL-150 Q12.jpg crop x1060-1430 y60-490,none
+2001,s,2002,Stal42_Map_west-FINAL-150 Q12.jpg crop x1060-1430 y60-490,railroad
+2001,ne,2101,Stal42_Map_west-FINAL-150 Q12.jpg crop x1060-1430 y60-490,none
+2001,se,2102,Stal42_Map_west-FINAL-150 Q12.jpg crop x1060-1430 y60-490,none
+2002,ne,2102,Stal42_Map_west-FINAL-150 Q12.jpg crop x1060-1430 y60-490,none
+2100,s,2101,Stal42_Map_west-FINAL-150 Q12.jpg crop x1060-1430 y60-490,none
+2100,se,2200,Stal42_Map_west-FINAL-150 Q12.jpg crop x1060-1430 y60-490,secondary_road
+2101,s,2102,Stal42_Map_west-FINAL-150 Q12.jpg crop x1060-1430 y60-490,none
+2101,ne,2200,Stal42_Map_west-FINAL-150 Q12.jpg crop x1060-1430 y60-490,none
+2101,se,2201,Stal42_Map_west-FINAL-150 Q12.jpg crop x1060-1430 y60-490,none
+2102,ne,2201,Stal42_Map_west-FINAL-150 Q12.jpg crop x1060-1430 y60-490,secondary_road
+2102,se,2202,Stal42_Map_west-FINAL-150 Q12.jpg crop x1060-1430 y60-490,none
+2200,s,2201,Stal42_Map_west-FINAL-150 Q12.jpg crop x1060-1430 y60-490,secondary_road
+2201,s,2202,Stal42_Map_west-FINAL-150 Q12.jpg crop x1060-1430 y60-490,none
