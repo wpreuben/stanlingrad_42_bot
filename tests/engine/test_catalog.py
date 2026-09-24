@@ -76,6 +76,23 @@ class CatalogTests(unittest.TestCase):
         }, {}, {})
         validate_catalog(catalog)
 
+    def test_reciprocal_but_geometrically_wrong_hex_edge_is_rejected(self):
+        catalog = Catalog("v2025_04", {
+            "1300": hex_def("1300", {"s": "1400"}),
+            "1400": hex_def("1400", {"n": "1300"}),
+        }, {}, {})
+        with self.assertRaises(CatalogError):
+            validate_catalog(catalog)
+
+    def test_northwest_map_edges_follow_alternating_column_offsets(self):
+        catalog = Catalog("v2025_04", {
+            "1200": hex_def("1200", {"ne": "1300", "se": "1301"}),
+            "1300": hex_def("1300", {"sw": "1200", "s": "1301", "se": "1400"}),
+            "1301": hex_def("1301", {"nw": "1200", "n": "1300", "ne": "1400"}),
+            "1400": hex_def("1400", {"nw": "1300", "sw": "1301"}),
+        }, {}, {})
+        validate_catalog(catalog)
+
     def test_unknown_hexside_feature_is_rejected(self):
         catalog = Catalog("v2025_04", {
             "1300": HexDef("1300", "clear", {"s": "1301"}, (),
@@ -177,6 +194,17 @@ class CatalogTests(unittest.TestCase):
                                (Placement("hq", "zone:setup", 1, "fixture:card", "used"),))
         with self.assertRaises(CatalogError):
             validate_catalog(Catalog("v2025_04", {}, {"hq": unit}, {"fall_blau": scenario}))
+
+    def test_supply_point_starts_on_full_movement_face(self):
+        unit = UnitDef("sp", Side.AXIS, "supply_point", "Supply",
+                       (UnitFace(1, 0, 0, 5, (), "full_movement"),
+                        UnitFace(1, None, 0, None, (), "ready")), "fixture:counter")
+        scenario = ScenarioDef("fall_blau", ("map_a",), 1, Phase.INITIAL, Side.AXIS, 8,
+                               (Placement("sp", "zone:setup", 1, "fixture:card",
+                                          "full_movement"),))
+        catalog = Catalog("v2025_04", {}, {"sp": unit}, {"fall_blau": scenario})
+        self.assertEqual(Engine(catalog).new_game("fall_blau").units["sp"].face_state,
+                         "full_movement")
 
     def test_unknown_face_state_is_rejected(self):
         unit = UnitDef("u", Side.AXIS, "infantry", "U",

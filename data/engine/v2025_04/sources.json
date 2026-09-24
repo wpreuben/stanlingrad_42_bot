@@ -30,7 +30,7 @@
     {
       "kind": "counter_images_named",
       "path": "images_high/*.png",
-      "edition": "User-provided named counter images; 306 referenced faces pixel-matched to Images/ PNG files"
+      "edition": "User-provided named counter images; 306 Images/ PNG faces pixel-matched and 3 additional named opposite faces reviewed"
     }
   ]
 }

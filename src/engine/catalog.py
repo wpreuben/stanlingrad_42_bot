@@ -25,6 +25,26 @@ FACE_STATES = frozenset({"normal", "ready", "used", "full_movement"})
 DEFAULT_GLOSSARY = Path(__file__).resolve().parents[2] / "data" / "glossary.csv"
 
 
+def _map_coordinate(value: str) -> bool:
+    return len(value) == 4 and all("0" <= digit <= "9" for digit in value)
+
+
+def _expected_neighbor(hex_id: str, direction: str) -> str | None:
+    column, row = int(hex_id[:2]), int(hex_id[2:])
+    if column % 2:
+        offsets = {"n": (0, -1), "ne": (1, -1), "se": (1, 0),
+                   "s": (0, 1), "sw": (-1, 0), "nw": (-1, -1)}
+    else:
+        offsets = {"n": (0, -1), "ne": (1, 0), "se": (1, 1),
+                   "s": (0, 1), "sw": (-1, 1), "nw": (-1, 0)}
+    delta_column, delta_row = offsets[direction]
+    column += delta_column
+    row += delta_row
+    if not 0 <= column <= 99 or not 0 <= row <= 99:
+        return None
+    return f"{column:02d}{row:02d}"
+
+
 @dataclass(frozen=True)
 class HexDef:
     id: str
@@ -137,6 +157,9 @@ def validate_catalog(catalog: Catalog) -> None:
         if set(hex_def.neighbors) - OPPOSITE.keys() or set(hex_def.edge_features) - OPPOSITE.keys():
             raise CatalogError(f"invalid direction at hex {key}")
         for direction, neighbor_id in hex_def.neighbors.items():
+            if _map_coordinate(key) or _map_coordinate(neighbor_id):
+                if not _map_coordinate(key) or neighbor_id != _expected_neighbor(key, direction):
+                    raise CatalogError(f"geometrically invalid edge {key}:{direction}->{neighbor_id}")
             other = catalog.hexes.get(neighbor_id)
             opposite = OPPOSITE[direction]
             if other is None or other.neighbors.get(opposite) != key:

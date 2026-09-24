@@ -6,7 +6,7 @@ GE-95Inf-Div,axis,GE-95Inf-Div-f.png,GE-95Inf-Div-r.png,5,thin,3,3,2,provisional
 GE-383Inf-Div,axis,GE-383Inf-Div-f.png,GE-383Inf-Div-r.png,5,thin,3,3,2,provisional_stripe_measurement
 GE-177&243Stug-Bn,axis,GE-177&243Stug-Bn-f.png,,,,,,,other_face_pending
 GE-4PzAHQ,axis,GE-4PzAHQ-f.png,GE-4PzAHQ-r.png,,,1,1,1,hq_ready_used_verified
-GE-SupplyPt-1,axis,GE-SupplyPt-1-f.png,,,,,,,other_face_pending
+GE-SupplyPt-1,axis,GE-SupplyPt-1-f.png,GE-SupplyPt-1-r.png,,,1,1,1,state_pair_verified
 GE-9Pz-Div,axis,GE-9Pz-Div-f.png,GE-9Pz-Div-r.png,5,thin,3,3,2,provisional_stripe_measurement
 GE-11Pz-Div,axis,GE-11Pz-Div-f.png,GE-11Pz-Div-r.png,5,thin,3,3,2,provisional_stripe_measurement
 GE-3Pzg-Div,axis,GE-3Pzg-Div-f.png,GE-3Pzg-Div-r.png,5,thin,3,3,2,provisional_stripe_measurement
@@ -14,7 +14,7 @@ GE-82Inf-Div,axis,GE-82Inf-Div-f.png,GE-82Inf-Div-r.png,5,thin,3,3,2,provisional
 GE-88Inf-Div,axis,GE-88Inf-Div-f.png,GE-88Inf-Div-r.png,5,thin,3,3,2,provisional_stripe_measurement
 GE-377Inf-Div,axis,GE-377Inf-Div-f.png,GE-377Inf-Div-r.png,5,thin,3,3,2,provisional_stripe_measurement
 GE-24Pz-Div,axis,GE-24Pz-Div-f.png,GE-24Pz-Div-r.png,5,thin,3,3,2,provisional_stripe_measurement
-GE-16Pzg-Div,axis,GE-16Pzg-Div-f.png,,,,,,,other_face_pending
+GE-16Pzg-Div,axis,GE-16Pzg-Div-f.png,GE-16Pzg-Div-r.png,5,thin,3,3,2,provisional_stripe_measurement
 GE-GDPzg-Div,axis,GE-GDPzg-Div-f.png,GE-GDPzg-Div-r.png,5,thin,3,3,2,provisional_stripe_measurement
 GE-387Inf-Div,axis,GE-387Inf-Div-f.png,GE-387Inf-Div-r.png,5,thin,3,3,2,provisional_stripe_measurement
 GE-340Inf-Div,axis,GE-340Inf-Div-f.png,GE-340Inf-Div-r.png,5,thin,3,3,2,provisional_stripe_measurement
@@ -136,7 +136,7 @@ SO-218&349Inf-Div,soviet,SO-218&349Inf-Div-f.png,SO-218&349Inf-Div-r.png,17,wide
 SO-102&230Inf-Div,soviet,SO-102&230Inf-Div-f.png,SO-102&230Inf-Div-r.png,17,wide,2,2,1,provisional_stripe_measurement
 SO-121Tank-Bde,soviet,SO-121Tank-Bde-f.png,,,,,,,other_face_pending
 SO-4Inf-Div,soviet,SO-4Inf-Div-f.png,SO-4Inf-Div-r.png,17,wide,2,2,1,provisional_stripe_measurement
-SO-261Inf-Div,soviet,SO-261Inf-Div-f.png,,,,,,,other_face_pending
+SO-261Inf-Div,soviet,SO-261Inf-Div-r.png,SO-261Inf-Div-r.png,17,wide,2,1,2,provisional_stripe_measurement
 SO-73&176Inf-Div,soviet,SO-73&176Inf-Div-f.png,SO-73&176Inf-Div-r.png,17,wide,2,2,1,provisional_stripe_measurement
 SO-74Inf-Div,soviet,SO-74Inf-Div-f.png,SO-74Inf-Div-r.png,17,wide,2,2,1,provisional_stripe_measurement
 SO-216Inf-Div,soviet,SO-216Inf-Div-f.png,SO-216Inf-Div-r.png,17,wide,2,2,1,provisional_stripe_measurement
