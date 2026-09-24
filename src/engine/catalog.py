@@ -21,6 +21,7 @@ EDGE_FEATURES = frozenset({"primary_road", "secondary_road", "railroad", "minor_
                            "volga_river", "bridge", "road_bridge", "railroad_bridge",
                            "ferry", "lake_hexside", "alpine_hexside", "impassable_hexside"})
 HEX_FEATURES = frozenset({"town", "landmark", "port", "fortification", "entry_area", "supply_source"})
+FACE_STATES = frozenset({"normal", "ready", "used", "full_movement"})
 DEFAULT_GLOSSARY = Path(__file__).resolve().parents[2] / "data" / "glossary.csv"
 
 
@@ -48,6 +49,7 @@ class UnitFace:
     defense: int | None
     movement: int | None
     abilities: tuple[str, ...]
+    state: str = "normal"
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "abilities", tuple(self.abilities))
@@ -72,6 +74,7 @@ class Placement:
     location: str
     steps: int
     source_ref: str
+    face_state: str = "normal"
 
 
 @dataclass(frozen=True)
@@ -153,12 +156,21 @@ def validate_catalog(catalog: Catalog) -> None:
             raise CatalogError(f"unknown term_id: {unit.term_id}")
         if not unit.faces:
             raise CatalogError(f"unit has no faces: {key}")
+        seen_faces: set[tuple[int, str]] = set()
         for face in unit.faces:
             _int(face.steps, f"unit {key} steps", 1)
+            if type(face.state) is not str or face.state not in FACE_STATES:
+                raise CatalogError(f"invalid unit face state: {key}")
+            face_key = (face.steps, face.state)
+            if face.steps > 3 or face_key in seen_faces:
+                raise CatalogError(f"invalid or duplicate unit face: {key}")
+            seen_faces.add(face_key)
             for field in ("attack", "defense", "movement"):
                 value = getattr(face, field)
                 if value is not None:
                     _int(value, f"unit {key} {field}")
+            if set(face.abilities) - terms:
+                raise CatalogError(f"unknown unit ability: {key}")
     for key, scenario in catalog.scenarios.items():
         if key != scenario.id or not key or not scenario.map_ids:
             raise CatalogError(f"invalid scenario: {key}")
@@ -175,8 +187,12 @@ def validate_catalog(catalog: Catalog) -> None:
             if placement.location not in catalog.hexes and not placement.location.startswith("zone:"):
                 raise CatalogError(f"unknown placement location: {placement.location}")
             _int(placement.steps, f"placement {placement.unit_id} steps", 1)
-            if placement.steps not in {face.steps for face in catalog.units[placement.unit_id].faces}:
-                raise CatalogError(f"invalid placement steps: {placement.unit_id}")
+            if type(placement.face_state) is not str or placement.face_state not in FACE_STATES:
+                raise CatalogError(f"invalid placement face state: {placement.unit_id}")
+            if (placement.steps, placement.face_state) not in {
+                (face.steps, face.state) for face in catalog.units[placement.unit_id].faces
+            }:
+                raise CatalogError(f"invalid placement face: {placement.unit_id}")
 
 
 def _unique_pairs(pairs: list[tuple[str, object]]) -> dict[str, object]:
@@ -230,14 +246,16 @@ def load_catalog(root: Path) -> Catalog:
             units = _unique_by_id(data["units"], lambda u: UnitDef(
                 u["id"], Side(u["side"]), u["term_id"], u["printed_label"],
                 tuple(UnitFace(f["steps"], f["attack"], f["defense"], f["movement"],
-                               tuple(f["abilities"])) for f in u["faces"]), u["source_ref"]), "unit")
+                               tuple(f["abilities"]), f.get("state", "normal"))
+                      for f in u["faces"]), u["source_ref"]), "unit")
         scenarios = {}
         if (root / "fall_blau.json").exists():
             data = _read_json(root / "fall_blau.json")
             scenarios = _unique_by_id(data["scenarios"], lambda s: ScenarioDef(
                 s["id"], tuple(s["map_ids"]), s["start_turn"], Phase(s["start_phase"]),
                 Side(s["start_side"]), s["end_turn"],
-                tuple(Placement(p["unit_id"], p["location"], p["steps"], p["source_ref"])
+                tuple(Placement(p["unit_id"], p["location"], p["steps"], p["source_ref"],
+                                p.get("face_state", "normal"))
                       for p in s["placements"])), "scenario")
         if not hexes or not units or not scenarios:
             raise CatalogError("catalog map, unit, and scenario data must be nonempty")

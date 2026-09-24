@@ -9,7 +9,7 @@ from .errors import StateFormatError
 from .types import Event, GameState, Phase, RngState, Side, UnitState
 
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 STATE_KEYS = frozenset({
     "schema_version", "ruleset_id", "scenario_id", "turn", "phase", "active_side",
     "weather", "units", "markers", "rng", "pending_decision", "events", "control",
@@ -28,7 +28,8 @@ def serialize_state(state: GameState) -> dict[str, Any]:
         "active_side": state.active_side.value,
         "weather": state.weather,
         "units": {key: {"unit_id": unit.unit_id, "location": unit.location,
-                         "steps": unit.steps, "statuses": list(unit.statuses)}
+                         "steps": unit.steps, "statuses": list(unit.statuses),
+                         "face_state": unit.face_state}
                   for key, unit in sorted(state.units.items())},
         "markers": dict(sorted(state.markers.items())),
         "rng": {"seed": state.rng.seed, "draw_count": state.rng.draw_count},
@@ -98,7 +99,7 @@ def deserialize_state(data: dict, catalog: Catalog) -> GameState:
     seen_ids = set()
     for key, raw in data["units"].items():
         _string(key, "unit key")
-        raw = _object(raw, frozenset({"unit_id", "location", "steps", "statuses"}), "unit")
+        raw = _object(raw, frozenset({"unit_id", "location", "steps", "statuses", "face_state"}), "unit")
         unit_id = _string(raw["unit_id"], "unit_id")
         if unit_id != key or unit_id in seen_ids or unit_id not in catalog.units:
             raise StateFormatError(f"unknown or duplicate unit: {unit_id}")
@@ -107,12 +108,15 @@ def deserialize_state(data: dict, catalog: Catalog) -> GameState:
         if location not in catalog.hexes and not location.startswith("zone:"):
             raise StateFormatError(f"unknown unit location: {location}")
         steps = _integer(raw["steps"], "unit steps", 1)
-        if steps not in {face.steps for face in catalog.units[unit_id].faces}:
-            raise StateFormatError(f"invalid unit steps: {unit_id}")
+        face_state = _string(raw["face_state"], "unit face_state")
+        if (steps, face_state) not in {
+            (face.steps, face.state) for face in catalog.units[unit_id].faces
+        }:
+            raise StateFormatError(f"invalid unit face: {unit_id}")
         if type(raw["statuses"]) is not list:
             raise StateFormatError("invalid unit statuses")
         statuses = tuple(_string(x, "unit status") for x in raw["statuses"])
-        units[key] = UnitState(unit_id, location, steps, statuses)
+        units[key] = UnitState(unit_id, location, steps, statuses, face_state)
     markers = _string_map(data["markers"], "markers")
     raw_rng = _object(data["rng"], frozenset({"seed", "draw_count"}), "rng")
     rng = RngState(_integer(raw_rng["seed"], "rng seed"),

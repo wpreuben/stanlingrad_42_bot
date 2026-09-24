@@ -33,7 +33,7 @@ class CodecTests(unittest.TestCase):
         data = serialize_state(self.state)
         restored = deserialize_state(json.loads(json.dumps(data)), self.catalog)
         self.assertEqual(restored, self.state)
-        self.assertEqual(data["schema_version"], 1)
+        self.assertEqual(data["schema_version"], 2)
 
     def test_hash_excludes_events_but_includes_rng_and_locations(self):
         original = hash_state(self.state)
@@ -43,7 +43,7 @@ class CodecTests(unittest.TestCase):
         self.assertNotEqual(original, hash_state(moved))
 
     def test_future_schema_unknown_unit_and_bad_rng_are_rejected(self):
-        for field, value in (("schema_version", 2), ("rng", {"seed": 1, "draw_count": -1})):
+        for field, value in (("schema_version", 3), ("rng", {"seed": 1, "draw_count": -1})):
             with self.subTest(field=field):
                 data = serialize_state(self.state)
                 data[field] = value
@@ -82,6 +82,23 @@ class CodecTests(unittest.TestCase):
         data["surprise"] = 1
         with self.assertRaises(StateFormatError):
             deserialize_state(data, self.catalog)
+
+    def test_face_state_round_trip_and_hash(self):
+        hq = UnitDef("hq", Side.AXIS, "army_hq", "2A HQ",
+                     (UnitFace(1, None, 1, 5, (), "ready"),
+                      UnitFace(1, 0, 1, 5, (), "used")), "fixture:hq")
+        catalog = Catalog("v2025_04", self.catalog.hexes,
+                          {**self.catalog.units, "hq": hq}, self.catalog.scenarios)
+        ready = replace(self.state, units={**self.state.units,
+                        "hq": UnitState("hq", "a", 1, (), "ready")})
+        used = replace(ready, units={**ready.units,
+                       "hq": UnitState("hq", "a", 1, (), "used")})
+        self.assertEqual(deserialize_state(serialize_state(used), catalog), used)
+        self.assertNotEqual(hash_state(ready), hash_state(used))
+        invalid = serialize_state(used)
+        invalid["units"]["hq"]["face_state"] = "normal"
+        with self.assertRaises(StateFormatError):
+            deserialize_state(invalid, catalog)
 
     def test_unknown_reinforcement_and_control_hex_are_rejected(self):
         data = serialize_state(self.state)

@@ -120,6 +120,7 @@ class UnitState:
     location: str
     steps: int
     statuses: tuple[str, ...]
+    face_state: str = "normal"
 
 @dataclass(frozen=True)
 class RngState:
@@ -190,7 +191,7 @@ def test_nonreciprocal_neighbor_rejected(self):
 ```
 
 - [ ] **2단계:** `uv run --locked python -m unittest tests.engine.test_catalog -v`를 실행한다. import 실패가 예상된다.
-- [ ] **3단계: 엄격한 로더와 검증기를 구현한다.** 불변 데이터 클래스 `HexDef(id: str, terrain: str, neighbors: Mapping[str, str], features: tuple[str, ...], edge_features: Mapping[str, tuple[str, ...]], source_ref: str)`, `UnitFace(steps: int, attack: int | None, defense: int | None, movement: int | None, abilities: tuple[str, ...])`, `UnitDef(id: str, side: Side, term_id: str, printed_label: str, faces: tuple[UnitFace, ...], source_ref: str)`, `Placement(unit_id: str, location: str, steps: int, source_ref: str)`, `ScenarioDef(id: str, map_ids: tuple[str, ...], start_turn: int, start_phase: Phase, start_side: Side, end_turn: int, placements: tuple[Placement, ...])`, `Catalog(ruleset_id: str, hexes: Mapping[str, HexDef], units: Mapping[str, UnitDef], scenarios: Mapping[str, ScenarioDef])`를 만든다. 각 매핑은 복사해 읽기 전용으로 보관한다. 전투 수치가 없는 비전투 유닛은 선택적 숫자 필드를 사용하고 특수 능력은 인쇄 기호 대신 ID로 기록한다. JSON 중복 키를 거부하는 `object_pairs_hook`을 사용한다. `schema_version == 1`, `ruleset_id == "v2025_04"`, 비어 있지 않은 `source_ref`를 요구한다. 지형 ID의 시작 집합은 `clear`, `desert`, `rough`, `woods`, `wooded_rough`, `mountain`, `minor_city`, `major_city`, `marsh`, `seasonal_marsh`다. 추가 ID는 제공된 TEC/지도에 실제로 있을 때만 출처와 함께 정의한다. 유효하지 않은 자료는 `Catalog`를 반환하기 전에 거부한다.
+- [ ] **3단계: 엄격한 로더와 검증기를 구현한다.** 불변 데이터 클래스 `HexDef(id: str, terrain: str, neighbors: Mapping[str, str], features: tuple[str, ...], edge_features: Mapping[str, tuple[str, ...]], source_ref: str)`, `UnitFace(steps: int, attack: int | None, defense: int | None, movement: int | None, abilities: tuple[str, ...], state: str = "normal")`, `UnitDef(id: str, side: Side, term_id: str, printed_label: str, faces: tuple[UnitFace, ...], source_ref: str)`, `Placement(unit_id: str, location: str, steps: int, source_ref: str, face_state: str = "normal")`, `ScenarioDef(id: str, map_ids: tuple[str, ...], start_turn: int, start_phase: Phase, start_side: Side, end_turn: int, placements: tuple[Placement, ...])`, `Catalog(ruleset_id: str, hexes: Mapping[str, HexDef], units: Mapping[str, UnitDef], scenarios: Mapping[str, ScenarioDef])`를 만든다. 각 매핑은 복사해 읽기 전용으로 보관한다. 전투 수치가 없는 비전투 유닛은 선택적 숫자 필드를 사용하고 특수 능력은 인쇄 기호 대신 ID로 기록한다. JSON 중복 키를 거부하는 `object_pairs_hook`을 사용한다. 정적 자료에는 `schema_version == 1`, `ruleset_id == "v2025_04"`, 비어 있지 않은 `source_ref`를 요구한다. 지형 ID의 시작 집합은 `clear`, `desert`, `rough`, `woods`, `wooded_rough`, `mountain`, `minor_city`, `major_city`, `marsh`, `seasonal_marsh`다. 추가 ID는 제공된 TEC/지도에 실제로 있을 때만 출처와 함께 정의한다. 유효하지 않은 자료는 `Catalog`를 반환하기 전에 거부한다.
 
 ```python
 OPPOSITE = {"n": "s", "ne": "sw", "se": "nw",
@@ -304,7 +305,7 @@ raise InvalidActionError(f"invalid phase/side: {phase}/{side}")
 
 - [ ] **1단계: 실패 테스트를 작성한다.** 상태·행동의 저장 후 복원, JSON 키 순서의 안정성, 사건 기록만 다를 때 같은 상태 해시, 유닛 위치 또는 RNG `draw_count`가 다를 때 다른 해시를 확인한다. 미래 스키마 판본, 모르는 유닛 ID, 빠진 `ruleset_id`, 손상된 RNG 카운터는 `StateFormatError`가 나야 한다.
 - [ ] **2단계:** `uv run --locked python -m unittest tests.engine.test_codec -v`를 실행한다. import 실패가 예상된다.
-- [ ] **3단계: 명시적인 인코더를 작성한다.** enum·불변 데이터 클래스·매핑을 JSON 값으로 바꾼다. `schema_version: 1`을 기록하고 유닛·마커·통제·보급·자원·증원·승리 점수·비공개 상태의 키를 정렬한다. 대기 중인 결정과 RNG 시드·카운터를 포함해 모든 동적 필드를 저장한다. `MappingProxyType`에 `dataclasses.asdict`를 바로 사용하지 않는다. 행동 JSON의 형태는 `{"schema_version":1,"type":"end_phase","side":"axis"}`다.
+- [ ] **3단계: 명시적인 인코더를 작성한다.** enum·불변 데이터 클래스·매핑을 JSON 값으로 바꾼다. 상태 JSON은 카운터의 `face_state`를 추가하면서 `schema_version: 2`를 기록하고 유닛·마커·통제·보급·자원·증원·승리 점수·비공개 상태의 키를 정렬한다. 대기 중인 결정과 RNG 시드·카운터를 포함해 모든 동적 필드를 저장한다. `MappingProxyType`에 `dataclasses.asdict`를 바로 사용하지 않는다. 행동 JSON의 형태는 `{"schema_version":1,"type":"end_phase","side":"axis"}`다.
 - [ ] **4단계: 복원 시 엄격히 검사한다.** 모르는 키, 누락 필드, 잘못된 enum 값, 정수 자리에 들어온 bool, 모르는 유닛 참조, 중복 유닛 ID, 카탈로그와 다른 `ruleset_id`를 거부한다. 모든 검사 후 완전한 `GameState`를 생성한다. 상태 해시는 `events`만 제외한 정규 JSON으로 계산한다. RNG 상태는 이후 결과에 영향을 주므로 해시에 포함한다.
 - [ ] **5단계: 저장 후 재개 사례를 추가한다.** 한 번 굴리고 저장·복원한 다음 양쪽 상태에서 두 번째 주사위와 사건이 같은지 검사한다. `uv run --locked python -m unittest tests.engine.test_codec tests.engine.test_rng -v`가 통과해야 한다.
 - [ ] **6단계:** 저장 형식과 테스트를 `feat: save restore and hash engine states`로 커밋한다.

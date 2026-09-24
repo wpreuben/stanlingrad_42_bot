@@ -5,6 +5,7 @@ from pathlib import Path
 
 from engine.catalog import Catalog, HexDef, Placement, ScenarioDef, UnitDef, UnitFace, load_catalog, validate_catalog
 from engine.errors import CatalogError
+from engine.engine import Engine
 from engine.types import Phase, Side
 
 
@@ -33,6 +34,32 @@ class CatalogTests(unittest.TestCase):
                 "ruleset_id": "v2025_04", "sources": []}), encoding="utf-8")
             with self.assertRaises(CatalogError):
                 load_catalog(root)
+
+    def test_loader_preserves_hq_start_face_state(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            common = {"schema_version": 1, "ruleset_id": "v2025_04"}
+            records = {
+                "sources.json": {**common, "sources": []},
+                "map_a.json": {**common, "hexes": [{"id": "1300", "terrain": "clear",
+                    "neighbors": {}, "features": [], "edge_features": {}, "source_ref": "fixture:map"}]},
+                "units_s1.json": {**common, "units": [{"id": "hq", "side": "axis",
+                    "term_id": "army_hq", "printed_label": "2A HQ", "source_ref": "fixture:counter",
+                    "faces": [{"steps": 1, "attack": None, "defense": 1, "movement": 5,
+                               "abilities": [], "state": "ready"},
+                              {"steps": 1, "attack": 0, "defense": 1, "movement": 5,
+                               "abilities": [], "state": "used"}]}]},
+                "fall_blau.json": {**common, "scenarios": [{"id": "fall_blau",
+                    "map_ids": ["map_a"], "start_turn": 1, "start_phase": "initial_phase",
+                    "start_side": "axis", "end_turn": 8, "placements": [{"unit_id": "hq",
+                        "location": "1300", "steps": 1, "source_ref": "fixture:card",
+                        "face_state": "ready"}]}]},
+            }
+            for filename, value in records.items():
+                (root / filename).write_text(json.dumps(value), encoding="utf-8")
+            catalog = load_catalog(root)
+            self.assertEqual(Engine(catalog).new_game("fall_blau").units["hq"].face_state,
+                             "ready")
 
     def test_nonreciprocal_neighbor_rejected(self):
         catalog = Catalog("v2025_04", {
@@ -116,6 +143,53 @@ class CatalogTests(unittest.TestCase):
         catalog = Catalog("v2025_04", {"a": hex_def("a")}, {}, {"fall_blau": scenario})
         with self.assertRaises(CatalogError):
             validate_catalog(catalog)
+
+    def test_unit_face_step_count_must_match_rules(self):
+        for steps in (0, 4):
+            with self.subTest(steps=steps):
+                unit = UnitDef("u", Side.AXIS, "infantry", "U",
+                               (UnitFace(steps, 1, 1, 3, ()),), "fixture:unit")
+                with self.assertRaises(CatalogError):
+                    validate_catalog(Catalog("v2025_04", {}, {"u": unit}, {}))
+
+    def test_duplicate_unit_face_step_count_is_rejected(self):
+        unit = UnitDef("u", Side.AXIS, "infantry", "U",
+                       (UnitFace(2, 3, 4, 3, ()), UnitFace(2, 1, 2, 3, ())),
+                       "fixture:unit")
+        with self.assertRaises(CatalogError):
+            validate_catalog(Catalog("v2025_04", {}, {"u": unit}, {}))
+
+    def test_one_step_hq_can_have_ready_and_used_faces(self):
+        unit = UnitDef("hq", Side.AXIS, "army_hq", "2A HQ",
+                       (UnitFace(1, None, 1, 5, (), "ready"),
+                        UnitFace(1, 0, 1, 5, (), "used")), "fixture:unit")
+        scenario = ScenarioDef("fall_blau", ("map_a",), 1, Phase.INITIAL, Side.AXIS, 8,
+                               (Placement("hq", "zone:setup", 1, "fixture:card", "ready"),))
+        catalog = Catalog("v2025_04", {}, {"hq": unit}, {"fall_blau": scenario})
+        validate_catalog(catalog)
+        self.assertEqual(tuple(face.state for face in unit.faces), ("ready", "used"))
+        self.assertEqual(Engine(catalog).new_game("fall_blau").units["hq"].face_state, "ready")
+
+    def test_placement_must_select_existing_face(self):
+        unit = UnitDef("hq", Side.AXIS, "army_hq", "2A HQ",
+                       (UnitFace(1, None, 1, 5, (), "ready"),), "fixture:unit")
+        scenario = ScenarioDef("fall_blau", ("map_a",), 1, Phase.INITIAL, Side.AXIS, 8,
+                               (Placement("hq", "zone:setup", 1, "fixture:card", "used"),))
+        with self.assertRaises(CatalogError):
+            validate_catalog(Catalog("v2025_04", {}, {"hq": unit}, {"fall_blau": scenario}))
+
+    def test_unknown_face_state_is_rejected(self):
+        unit = UnitDef("u", Side.AXIS, "infantry", "U",
+                       (UnitFace(1, 1, 1, 3, (), "mystery"),), "fixture:unit")
+        with self.assertRaises(CatalogError):
+            validate_catalog(Catalog("v2025_04", {}, {"u": unit}, {}))
+
+    def test_unknown_unit_ability_is_rejected(self):
+        unit = UnitDef("u", Side.AXIS, "infantry", "U",
+                       (UnitFace(1, 1, 1, 3, ("unverified_counter_symbol",)),),
+                       "fixture:unit")
+        with self.assertRaises(CatalogError):
+            validate_catalog(Catalog("v2025_04", {}, {"u": unit}, {}))
 
     def test_catalog_copies_input_mappings(self):
         hexes = {"a": hex_def("a")}

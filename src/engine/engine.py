@@ -23,7 +23,7 @@ class Engine:
         if scenario is None:
             raise CatalogError(f"unknown scenario: {scenario_id}")
         validate_catalog(self.catalog)
-        units = {p.unit_id: UnitState(p.unit_id, p.location, p.steps, ())
+        units = {p.unit_id: UnitState(p.unit_id, p.location, p.steps, (), p.face_state)
                  for p in scenario.placements}
         return GameState(self.catalog.ruleset_id, scenario.id, scenario.start_turn,
                          scenario.start_phase, scenario.start_side, "clear_weather",
@@ -71,3 +71,7 @@ class Engine:
                 raise CatalogError(f"unknown state unit: {unit_id}")
             if unit.location not in self.catalog.hexes and not unit.location.startswith("zone:"):
                 raise CatalogError(f"unknown unit location: {unit.location}")
+            if (unit.steps, unit.face_state) not in {
+                (face.steps, face.state) for face in self.catalog.units[unit_id].faces
+            }:
+                raise CatalogError(f"invalid state unit face: {unit_id}")

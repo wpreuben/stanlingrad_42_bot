@@ -28,6 +28,7 @@ class UnitState:
     location: str
     steps: int
     statuses: tuple[str, ...]
+    face_state: str = "normal"
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "statuses", tuple(self.statuses))
