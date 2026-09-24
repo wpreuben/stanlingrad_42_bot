@@ -59,6 +59,34 @@ class CatalogTests(unittest.TestCase):
         with self.assertRaises(CatalogError):
             validate_catalog(catalog)
 
+    def test_printed_town_and_landmark_can_be_recorded(self):
+        catalog = Catalog("v2025_04", {
+            "1300": HexDef("1300", "clear", {}, ("town",), {}, "fixture:map"),
+            "1301": HexDef("1301", "clear", {}, ("landmark",), {}, "fixture:map"),
+        }, {}, {})
+        validate_catalog(catalog)
+
+    def test_distinct_road_and_impassable_hexside_types(self):
+        for feature in ("primary_road", "secondary_road", "lake_hexside", "alpine_hexside"):
+            with self.subTest(feature=feature):
+                catalog = Catalog("v2025_04", {
+                    "1300": HexDef("1300", "clear", {"s": "1301"}, (),
+                                   {"s": (feature,)}, "fixture:map"),
+                    "1301": HexDef("1301", "clear", {"n": "1300"}, (),
+                                   {"n": (feature,)}, "fixture:map"),
+                }, {}, {})
+                validate_catalog(catalog)
+
+    def test_ambiguous_road_feature_is_rejected(self):
+        catalog = Catalog("v2025_04", {
+            "1300": HexDef("1300", "clear", {"s": "1301"}, (),
+                           {"s": ("road",)}, "fixture:map"),
+            "1301": HexDef("1301", "clear", {"n": "1300"}, (),
+                           {"n": ("road",)}, "fixture:map"),
+        }, {}, {})
+        with self.assertRaises(CatalogError):
+            validate_catalog(catalog)
+
     def test_printed_victory_value_is_stored_and_validated(self):
         hex_def_with_vp = HexDef("1300", "clear", {}, (), {}, "fixture:hex", victory_points=2)
         self.assertEqual(hex_def_with_vp.victory_points, 2)

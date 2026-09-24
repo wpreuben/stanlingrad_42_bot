@@ -38,7 +38,13 @@ minor_city,Minor City,소도시,terrain,보급선과 승점 판정 등에 쓰는
 mountain,Mountain,산,terrain,헥스에 일부만 있어도 산으로 취급하는 지형,Stal42_RULES-2025-Final_LoRes.pdf §2.2.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.2.2,,,confirmed
 marsh,Marsh,늪,terrain,이동과 전투에 영향을 주는 늪 지형,Stal42_RULES-2025-Final_LoRes.pdf §2.2.2; 9.5,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.2.2; 9.5,,,confirmed
 road,Road,도로,terrain,이동 비용을 낮추고 보급선을 연장하는 지도 경로,Stal42_RULES-2025-Final_LoRes.pdf §5.2; 16.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.2; 16.3.3,,,confirmed
+primary_road,Primary Road,주도로,terrain,지형 효과표에서 기계화 부대의 도로 이동 비용이 1/2인 굵은 도로,STAL42_TEC-100 Q12.jpg Primary Road; Stal42_RULES-2025-Final_LoRes.pdf §5.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.2,,,confirmed
+secondary_road,Secondary Road,보조도로,terrain,지형 효과표에서 기계화 부대의 도로 이동 비용이 1/2이고 우천·진창 때 1인 가는 도로,STAL42_TEC-100 Q12.jpg Secondary Road; Stal42_RULES-2025-Final_LoRes.pdf §5.2; 23.2.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.2; 23.2.3,,,confirmed
 railroad,Railroad,철도,terrain,철도 이동과 보급에 쓰는 연결 경로,Stal42_RULES-2025-Final_LoRes.pdf §5.6; 17.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.6; 17.0,,,confirmed
+town,Town,소읍,terrain,지형 효과표에 표시된 원형 소읍 기호; 방어 시 기타 지형으로 분류,STAL42_TEC-100 Q12.jpg Town; Stal42_RULES-2025-Final_LoRes.pdf §2.2.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.2.2,,,confirmed
+landmark,Landmark,지명 표식,terrain,지형 효과표에 표시된 작은 원형 지명 표식,STAL42_TEC-100 Q12.jpg Landmark,STAL42_TEC-100 Q12.jpg Landmark,,,confirmed
+lake_hexside,Lake Hexside,호수 헥스변,terrain,얼지 않은 동안 통과할 수 없는 호수 경계,STAL42_TEC-100 Q12.jpg Lake Hexside; Stal42_RULES-2025-Final_LoRes.pdf §2.2.3; 9.5.6,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.2.3; 9.5.6,,,confirmed
+alpine_hexside,Alpine Hexside,고산 헥스변,terrain,산악 부대와 도로에 별도 통과 규칙이 있는 고산 경계,STAL42_TEC-100 Q12.jpg Alpine Hexside; Stal42_RULES-2025-Final_LoRes.pdf §9.6.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §9.6.2,,,confirmed
 minor_river,Minor River,작은 강,terrain,날씨에 따라 도하 비용이 달라지는 강 헥스변,Stal42_RULES-2025-Final_LoRes.pdf §5.5.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.5.1,Minor,,confirmed
 major_river,Major River,큰 강,terrain,도하 및 전투에 별도 제한을 적용하는 강 헥스변,Stal42_RULES-2025-Final_LoRes.pdf §5.5.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.5.2,,,confirmed
 volga_river,Volga River,볼가강,terrain,별도 인접 및 도하 규칙을 적용하는 강,Stal42_RULES-2025-Final_LoRes.pdf §2.2.3; 5.5.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.2.3; 5.5.3,,,confirmed

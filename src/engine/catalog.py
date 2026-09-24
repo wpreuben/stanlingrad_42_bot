@@ -17,10 +17,10 @@ OPPOSITE = {"n": "s", "ne": "sw", "se": "nw",
             "s": "n", "sw": "ne", "nw": "se"}
 TERRAINS = frozenset({"clear", "desert", "rough", "woods", "wooded_rough",
                       "mountain", "minor_city", "major_city", "marsh", "seasonal_marsh"})
-EDGE_FEATURES = frozenset({"road", "railroad", "minor_river", "major_river",
+EDGE_FEATURES = frozenset({"primary_road", "secondary_road", "railroad", "minor_river", "major_river",
                            "volga_river", "bridge", "road_bridge", "railroad_bridge",
-                           "ferry", "impassable_hexside"})
-HEX_FEATURES = frozenset({"port", "fortification", "entry_area", "supply_source"})
+                           "ferry", "lake_hexside", "alpine_hexside", "impassable_hexside"})
+HEX_FEATURES = frozenset({"town", "landmark", "port", "fortification", "entry_area", "supply_source"})
 DEFAULT_GLOSSARY = Path(__file__).resolve().parents[2] / "data" / "glossary.csv"
 
 
