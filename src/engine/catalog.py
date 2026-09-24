@@ -124,10 +124,16 @@ class Catalog:
             object.__setattr__(self, name, MappingProxyType(dict(getattr(self, name))))
 
 
-def _term_ids() -> frozenset[str]:
+def _term_categories() -> dict[str, str]:
     try:
         with DEFAULT_GLOSSARY.open(encoding="utf-8-sig", newline="") as stream:
-            return frozenset(row["term_id"] for row in csv.DictReader(stream))
+            categories: dict[str, str] = {}
+            for row in csv.DictReader(stream):
+                term_id = row["term_id"]
+                if term_id in categories:
+                    raise CatalogError(f"duplicate glossary term_id: {term_id}")
+                categories[term_id] = row["category"]
+            return categories
     except (OSError, KeyError) as exc:
         raise CatalogError(f"cannot read glossary: {DEFAULT_GLOSSARY}") from exc
 
@@ -146,7 +152,8 @@ def validate_catalog(catalog: Catalog) -> None:
     """Reject any reference or graph defect before a catalog is used."""
     if catalog.ruleset_id != RULESET_ID:
         raise CatalogError(f"unsupported ruleset: {catalog.ruleset_id}")
-    terms = _term_ids()
+    categories = _term_categories()
+    terms = frozenset(categories)
     for key, hex_def in catalog.hexes.items():
         if key != hex_def.id or not key or hex_def.terrain not in TERRAINS:
             raise CatalogError(f"invalid hex: {key}")
@@ -175,8 +182,8 @@ def validate_catalog(catalog: Catalog) -> None:
         if key != unit.id or not key or not isinstance(unit.side, Side):
             raise CatalogError(f"invalid unit: {key}")
         _required_source(unit.source_ref, f"unit {key}")
-        if unit.term_id not in terms:
-            raise CatalogError(f"unknown term_id: {unit.term_id}")
+        if categories.get(unit.term_id) != "unit" and unit.term_id != "supply_point":
+            raise CatalogError(f"invalid unit term_id: {unit.term_id}")
         if not unit.faces:
             raise CatalogError(f"unit has no faces: {key}")
         seen_faces: set[tuple[int, str]] = set()

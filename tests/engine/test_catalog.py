@@ -219,6 +219,12 @@ class CatalogTests(unittest.TestCase):
         with self.assertRaises(CatalogError):
             validate_catalog(Catalog("v2025_04", {}, {"u": unit}, {}))
 
+    def test_terrain_glossary_term_cannot_be_unit_type(self):
+        unit = UnitDef("u", Side.AXIS, "road", "U",
+                       (UnitFace(1, 1, 1, 3, ()),), "fixture:unit")
+        with self.assertRaises(CatalogError):
+            validate_catalog(Catalog("v2025_04", {}, {"u": unit}, {}))
+
     def test_catalog_copies_input_mappings(self):
         hexes = {"a": hex_def("a")}
         catalog = Catalog("v2025_04", hexes, {}, {})
