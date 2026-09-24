@@ -5,7 +5,7 @@ from engine.actions import EndPhaseAction
 from engine.catalog import Catalog, ScenarioDef
 from engine.engine import Engine
 from engine.errors import CatalogError, InvalidActionError, UnsupportedRuleError
-from engine.types import GameState, Phase, RngState, Side
+from engine.types import GameState, Phase, RngState, Side, UnitState
 
 
 class ActionTests(unittest.TestCase):
@@ -41,4 +41,10 @@ class ActionTests(unittest.TestCase):
         state = replace(self.engine.new_game("fall_blau"), phase=Phase.WEATHER,
                         active_side=Side.NONE, pending_decision="choose")
         with self.assertRaises(InvalidActionError):
+            self.engine.apply_action(state, EndPhaseAction(Side.NONE))
+
+    def test_forged_unknown_unit_cannot_advance_weather_phase(self):
+        state = replace(self.engine.new_game("fall_blau"), phase=Phase.WEATHER,
+                        active_side=Side.NONE, units={"unknown": UnitState("unknown", "zone:offmap", 1, ())})
+        with self.assertRaises(CatalogError):
             self.engine.apply_action(state, EndPhaseAction(Side.NONE))

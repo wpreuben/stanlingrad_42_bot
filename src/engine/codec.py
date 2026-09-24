@@ -135,6 +135,10 @@ def deserialize_state(data: dict, catalog: Catalog) -> GameState:
         events.append(Event(_string(raw["kind"], "event kind"), tuple(pairs)))
     control = _string_map(data["control"], "control")
     supply = _string_map(data["supply"], "supply")
+    if set(control) - catalog.hexes.keys():
+        raise StateFormatError("unknown control hex")
+    if set(supply) - catalog.units.keys():
+        raise StateFormatError("unknown supply unit")
     resources = _integer_map(data["resources"], "resources")
     if type(data["reinforcements"]) is not dict:
         raise StateFormatError("invalid reinforcements")
@@ -144,6 +148,8 @@ def deserialize_state(data: dict, catalog: Catalog) -> GameState:
             raise StateFormatError("invalid reinforcement list")
         reinforcements[_string(key, "reinforcement key")] = tuple(
             _string(item, "reinforcement unit") for item in value)
+        if set(reinforcements[key]) - catalog.units.keys():
+            raise StateFormatError("unknown reinforcement unit")
     victory_points = _integer_map(data["victory_points"], "victory_points")
     private_state = _string_map(data["private_state"], "private_state")
     return GameState(catalog.ruleset_id, scenario_id, turn, phase, side, weather,

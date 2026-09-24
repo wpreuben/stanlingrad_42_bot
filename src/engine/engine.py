@@ -62,3 +62,8 @@ class Engine:
     def _check_state_catalog(self, state: GameState) -> None:
         if state.ruleset_id != self.catalog.ruleset_id or state.scenario_id not in self.catalog.scenarios:
             raise CatalogError("state does not match engine catalog")
+        for unit_id, unit in state.units.items():
+            if unit_id not in self.catalog.units or unit.unit_id != unit_id:
+                raise CatalogError(f"unknown state unit: {unit_id}")
+            if unit.location not in self.catalog.hexes and not unit.location.startswith("zone:"):
+                raise CatalogError(f"unknown unit location: {unit.location}")

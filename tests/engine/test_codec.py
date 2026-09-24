@@ -82,6 +82,16 @@ class CodecTests(unittest.TestCase):
         data["surprise"] = 1
         with self.assertRaises(StateFormatError):
             deserialize_state(data, self.catalog)
+
+    def test_unknown_reinforcement_and_control_hex_are_rejected(self):
+        data = serialize_state(self.state)
+        data["reinforcements"]["axis"] = ["missing"]
+        with self.assertRaises(StateFormatError):
+            deserialize_state(data, self.catalog)
+        data = serialize_state(self.state)
+        data["control"]["missing"] = "axis"
+        with self.assertRaises(StateFormatError):
+            deserialize_state(data, self.catalog)
         data = serialize_state(self.state)
         data["ruleset_id"] = "future"
         with self.assertRaises(StateFormatError):
