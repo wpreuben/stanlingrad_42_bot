@@ -9,9 +9,13 @@ naval_infantry,Naval Infantry,해병대,unit,비기계화 해병 병과 유닛,S
 mountain_infantry,Mountain Infantry,산악보병,unit,비기계화 산악보병 병과 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
 engineer,Engineer,공병,unit,비기계화 공병 병과 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
 cavalry,Cavalry,기병,unit,비기계화 기병 병과 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
+bicycle_infantry,Bicycle,자전거 보병,unit,비기계화 자전거 병과 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
+nkvd_infantry,NKVD,NKVD 보병,unit,비기계화 NKVD 병과 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
 ski,Ski,스키,unit,비기계화 스키 병과 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
 tank_unit,Tank/Panzer,기갑,unit,기갑 쉬프트를 얻거나 상쇄할 수 있는 유닛 유형,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,Tank Unit,,confirmed
 mechanized_unit,Mechanized,기계화,unit,기계화 이동 비용을 적용받는 유닛 유형,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
+panzergrenadier,Panzergrenadier,기갑척탄병,unit,기계화 보병 병과 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
+sturmgeschutz,Sturmgeschütz,돌격포,unit,기계화 돌격포 병과 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
 non_mechanized_unit,Non-Mechanized,비기계화,unit,비기계화 이동 비용을 적용받는 유닛 유형,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
 motorized_infantry,Motorized Infantry,차량화 보병,unit,기계화 병과의 차량화 보병,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
 tank_destroyer,Tank Destroyer,대전차,unit,기계화 병과의 대전차 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
