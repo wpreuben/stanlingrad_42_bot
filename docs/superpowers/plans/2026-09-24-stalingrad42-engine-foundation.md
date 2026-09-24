@@ -52,7 +52,7 @@ JSON 자료를 지도·카운터·시나리오별로 분리한다. 검토자가 
 
 ---
 
-### 작업 1: 게임 상태와 오류 계약
+### Task 1: 작업 1 — 게임 상태와 오류 계약
 
 **파일:** `pyproject.toml`, `uv.lock`, `.gitignore`, `src/engine/__init__.py`, `src/engine/types.py`, `src/engine/errors.py`, `tests/__init__.py`, `tests/engine/__init__.py`, `tests/engine/test_state.py` 생성.
 
@@ -167,7 +167,7 @@ class GameResult(str, Enum):
 - [ ] **4단계:** 테스트를 다시 실행하고 `UnitState` 필드 변경도 금지되는지 검사한다. 파일의 모든 테스트가 통과해야 한다.
 - [ ] **5단계:** `src/engine/`, `tests/engine/test_state.py`를 `feat: define immutable engine state contract`로 커밋한다.
 
-### 작업 2: 규칙 자료 로더와 참조 검증
+### Task 2: 작업 2 — 규칙 자료 로더와 참조 검증
 
 **파일:** `src/engine/catalog.py`, `tests/engine/test_catalog.py`, `data/engine/v2025_04/sources.json` 생성.
 
@@ -202,7 +202,7 @@ for h in catalog.hexes.values():
 - [ ] **5단계:** `sources.json`에 스키마·룰셋 ID와 다음 실제 파일 경로를 기록한다: 로컬 영문 규칙서; `Images/httpssteamusercontentaakamaihdnetugc17884687792252896570A62D23C2FCE91331EED1641567952E124BC8AF7.jpg`(지도); `Images/httpssteamusercontentaakamaihdnetugc17884688380553658153FC9D37838E1E7AE747007396036D0CAE7AF8A0C.jpg`(추축군 시작 배치); `Images/httpssteamusercontentaakamaihdnetugc1788468838055329033A93814D55EA6FBC4805AE36AD0C6339D5A88391A.jpg`(소련군 시작 배치).
 - [ ] **6단계:** 자료 로더, 출처 목록, 테스트를 `feat: validate versioned game reference data`로 커밋한다.
 
-### 작업 3: Map A의 전체 헥스 그래프와 지형 자료
+### Task 3: 작업 3 — Map A의 전체 헥스 그래프와 지형 자료
 
 **파일:** `data/engine/v2025_04/map_a.json`, `tests/engine/test_map_a.py`, `docs/rule_issues.md` 생성.
 
@@ -222,7 +222,7 @@ for h in catalog.hexes.values():
 - [ ] **5단계:** 이미지 영역을 완료할 때마다, 마지막에는 전체에 대해 `uv run --locked python -m unittest tests.engine.test_map_a tests.engine.test_catalog -v`를 실행한다. 원본 그림의 각 영역을 다시 보고 JSON의 헥스 행과 대조한다. 검토한 영역과 개수는 `sources.json`에 기록한다.
 - [ ] **6단계:** 완성된 Map A 자료, 영역별 대조 기록, 테스트, 규칙 쟁점 기록을 `data: transcribe and validate Map A`로 커밋한다.
 
-### 작업 4: Fall Blau 유닛 정의와 시작 배치
+### Task 4: 작업 4 — Fall Blau 유닛 정의와 시작 배치
 
 **파일:** `data/engine/v2025_04/units_s1.json`, `data/engine/v2025_04/fall_blau.json`, `tests/engine/test_fall_blau_data.py` 생성.
 
@@ -242,7 +242,7 @@ for h in catalog.hexes.values():
 - [ ] **5단계:** 자료 테스트와 전체 고유 ID·참조 검증을 실행한다. 시작 카드의 괄호로 묶인 여러 유닛·배치 위치를 이미지와 대조하고, Map A 밖이라 제외해야 할 유닛도 확인한다. 정체가 불분명한 카운터는 `docs/rule_issues.md`에 기록하며 해결 전에는 영향을 받는 시나리오 자료를 통과시키지 않는다.
 - [ ] **6단계:** 자료 파일과 테스트를 `data: encode Fall Blau initial position`으로 커밋한다.
 
-### 작업 5: 룰북 §3 페이즈 그래프와 행동 차단
+### Task 5: 작업 5 — 룰북 §3 페이즈 그래프와 행동 차단
 
 **파일:** `src/engine/phase.py`, `src/engine/actions.py`, `src/engine/engine.py`, `tests/engine/test_phase.py`, `tests/engine/test_actions.py` 생성.
 
@@ -272,7 +272,7 @@ raise InvalidActionError(f"invalid phase/side: {phase}/{side}")
 - [ ] **5단계:** S1 초기 페이즈를 건너뛸 수 없음, 알 수 없는 행동 태그의 역직렬화 실패, 잘못된 진영의 행동 실패, 대기 중인 결정이 페이즈 종료를 막음에 대한 테스트를 추가한다. 두 테스트 파일이 모두 통과해야 한다.
 - [ ] **6단계:** 페이즈·행동 코드와 테스트를 `feat: model rulebook phase sequence and guarded actions`로 커밋한다.
 
-### 작업 6: 시드 기반 주사위와 구조화 사건
+### Task 6: 작업 6 — 시드 기반 주사위와 구조화 사건
 
 **파일:** `src/engine/rng.py`, `tests/engine/test_rng.py` 생성.
 
@@ -284,7 +284,7 @@ raise InvalidActionError(f"invalid phase/side: {phase}/{side}")
 - [ ] **4단계:** 시드 `428193`, 0~9번째 추출의 고정 기대값 `[3, 3, 6, 1, 2, 3, 4, 1, 6, 4]`를 테스트한다. 새 프로세스에서 다시 실행해도 같아야 한다. RNG 테스트를 두 번 실행한다.
 - [ ] **5단계:** RNG 코드와 테스트를 `feat: make die rolls reproducible across processes`로 커밋한다.
 
-### 작업 7: 판본이 있는 상태·행동 저장 형식
+### Task 7: 작업 7 — 판본이 있는 상태·행동 저장 형식
 
 **파일:** `src/engine/codec.py`, `src/engine/actions.py` 수정, `tests/engine/test_codec.py` 생성.
 
@@ -297,7 +297,7 @@ raise InvalidActionError(f"invalid phase/side: {phase}/{side}")
 - [ ] **5단계: 저장 후 재개 사례를 추가한다.** 한 번 굴리고 저장·복원한 다음 양쪽 상태에서 두 번째 주사위와 사건이 같은지 검사한다. `uv run --locked python -m unittest tests.engine.test_codec tests.engine.test_rng -v`가 통과해야 한다.
 - [ ] **6단계:** 저장 형식과 테스트를 `feat: save restore and hash engine states`로 커밋한다.
 
-### 작업 8: 공개 API와 기반 단계 인수 검사
+### Task 8: 작업 8 — 공개 API와 기반 단계 인수 검사
 
 **파일:** `src/engine/__init__.py`, `src/engine/engine.py` 수정, `tests/engine/test_foundation_acceptance.py` 생성, `docs/rule_issues.md` 갱신.
 
@@ -306,7 +306,7 @@ raise InvalidActionError(f"invalid phase/side: {phase}/{side}")
 - [ ] **1단계: 실패하는 인수 테스트를 작성한다.** 실제 S1 자료를 읽어 1턴·추축군 초기 페이즈·Map A 시작 배치를 확인한다. 초기 페이즈 규칙이 이 계획에서 미구현이므로 `get_legal_actions`가 `UnsupportedRuleError`를 내야 한다. 상태·행동 JSON을 저장·복원하고, 테스트용 맑은 날씨 상태에서는 페이즈가 전이되면서 원본이 바뀌지 않는지 확인한다.
 - [ ] **2단계:** `uv run --locked python -m unittest tests.engine.test_foundation_acceptance -v`를 실행한다. 공개 함수가 없어 실패해야 한다.
 - [ ] **3단계:** `__init__.py`에 정확한 공개 함수를 내보내고 얇은 위임 함수를 만든다. `Engine`은 검증된 불변 카탈로그만 소유하고 변경 중인 게임 상태는 소유하지 않는다. `new_game`은 반환 전에 자료를 검증한다. 공개 함수는 기본 자료에서 읽기 전용 `Engine`을 구성할 수 있으나 현재 게임을 전역 변수에 보관하지 않는다.
-- [ ] **4단계:** `uv run --locked python -m unittest discover -s tests -v`로 전체 테스트를 실행한다. `TODO_RULE_REVIEW` 항목이 S1 초기화 자료와 관계있다면 해결 전에는 인수 검사를 실패시킨다. S1을 한 턴 끝까지 플레이할 수 있다고 주장하는 테스트가 없는지도 확인한다.
+- [ ] **4단계:** `uv run --locked python -m unittest discover -s tests -t . -v`로 전체 테스트를 실행한다. `TODO_RULE_REVIEW` 항목이 S1 초기화 자료와 관계있다면 해결 전에는 인수 검사를 실패시킨다. S1을 한 턴 끝까지 플레이할 수 있다고 주장하는 테스트가 없는지도 확인한다.
 - [ ] **5단계:** 공개 함수, 인수 테스트, 쟁점 기록을 `feat: expose validated S1 engine foundation`으로 커밋한다.
 
 ## 자체 검토와 구현 전 확인
