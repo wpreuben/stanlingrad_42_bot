@@ -17,6 +17,10 @@ OPPOSITE = {"n": "s", "ne": "sw", "se": "nw",
             "s": "n", "sw": "ne", "nw": "se"}
 TERRAINS = frozenset({"clear", "desert", "rough", "woods", "wooded_rough",
                       "mountain", "minor_city", "major_city", "marsh", "seasonal_marsh"})
+EDGE_FEATURES = frozenset({"road", "railroad", "minor_river", "major_river",
+                           "volga_river", "bridge", "road_bridge", "railroad_bridge",
+                           "ferry", "impassable_hexside"})
+HEX_FEATURES = frozenset({"port", "fortification", "entry_area", "supply_source"})
 DEFAULT_GLOSSARY = Path(__file__).resolve().parents[2] / "data" / "glossary.csv"
 
 
@@ -28,6 +32,7 @@ class HexDef:
     features: tuple[str, ...]
     edge_features: Mapping[str, tuple[str, ...]]
     source_ref: str
+    victory_points: int = 0
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "neighbors", MappingProxyType(dict(self.neighbors)))
@@ -123,6 +128,9 @@ def validate_catalog(catalog: Catalog) -> None:
         if key != hex_def.id or not key or hex_def.terrain not in TERRAINS:
             raise CatalogError(f"invalid hex: {key}")
         _required_source(hex_def.source_ref, f"hex {key}")
+        _int(hex_def.victory_points, f"hex {key} victory_points")
+        if set(hex_def.features) - HEX_FEATURES or set(hex_def.features) - terms:
+            raise CatalogError(f"unknown hex feature at {key}")
         if set(hex_def.neighbors) - OPPOSITE.keys() or set(hex_def.edge_features) - OPPOSITE.keys():
             raise CatalogError(f"invalid direction at hex {key}")
         for direction, neighbor_id in hex_def.neighbors.items():
@@ -135,6 +143,8 @@ def validate_catalog(catalog: Catalog) -> None:
         for direction, features in hex_def.edge_features.items():
             if features and direction not in hex_def.neighbors:
                 raise CatalogError(f"edge feature without neighbor {key}:{direction}")
+            if set(features) - EDGE_FEATURES or set(features) - terms:
+                raise CatalogError(f"unknown edge feature at {key}:{direction}")
     for key, unit in catalog.units.items():
         if key != unit.id or not key or not isinstance(unit.side, Side):
             raise CatalogError(f"invalid unit: {key}")
@@ -212,7 +222,8 @@ def load_catalog(root: Path) -> Catalog:
             data = _read_json(root / "map_a.json")
             hexes = _unique_by_id(data["hexes"], lambda h: HexDef(
                 h["id"], h["terrain"], h["neighbors"], tuple(h["features"]),
-                {k: tuple(v) for k, v in h["edge_features"].items()}, h["source_ref"]), "hex")
+                {k: tuple(v) for k, v in h["edge_features"].items()}, h["source_ref"],
+                h.get("victory_points", 0)), "hex")
         units = {}
         if (root / "units_s1.json").exists():
             data = _read_json(root / "units_s1.json")

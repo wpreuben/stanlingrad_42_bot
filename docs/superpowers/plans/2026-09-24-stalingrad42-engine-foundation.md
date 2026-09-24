@@ -173,6 +173,10 @@ class GameResult(str, Enum):
 
 **인터페이스:** `load_catalog(root: Path) -> Catalog`, `validate_catalog(catalog: Catalog) -> None`. `Catalog`는 `ruleset_id`, `hexes`, `units`, `scenarios`를 제공한다. `HexDef`에는 `id`, `terrain`, `neighbors`, `features`, `edge_features`, `source_ref`가 있다. `UnitDef`에는 `id`, `side`, `term_id`, `printed_label`, `faces`, `source_ref`가 있다. `ScenarioDef`에는 `id`, `map_ids`, `start_turn`, `start_phase`, `start_side`, `end_turn`, `placements`가 있다.
 
+실제 지도에는 수치가 인쇄된 승점 헥스가 있으므로 `HexDef.victory_points: int = 0`도 둔다. 헥스·헥스변 특성 ID는 용어집에 있는 허용 집합으로 검증한다. 이 보강은 `features`의 문자열만으로 승점 수치를 표현할 수 없다는 원본 지도 확인 결과에 따른다.
+
+영문 규칙서 v2.1 §2.2.3과 §5.7.1에 따라 순수 바다 헥스는 육상 그래프에서 제외하고, 플레이 가능한 해안 헥스와 바다로 막힌 육지 간 변을 별도로 판독한다. 항구 사이 Shipping Path는 후속 규칙 자료로 다룬다.
+
 - [ ] **1단계: 작은 JSON 임시 자료로 실패 테스트를 작성한다.** 실제 Map A의 평평한 위·아래 변에 맞춰 `a`의 남쪽이 `b`라면 `b`의 북쪽이 `a`여야 한다. 여섯 방향은 `n`, `ne`, `se`, `s`, `sw`, `nw`다. 역방향이 빠진 자료와 `source_ref`가 빠진 자료는 `CatalogError`가 나야 한다.
 
 ```python
@@ -213,7 +217,7 @@ for h in catalog.hexes.values():
 - [ ] **3단계: 지도 원본에서 Map A의 인쇄된 헥스 ID와 여섯 방향 이웃을 전사한다.** 새로 제공된 `Stal42_Map_west-FINAL-150 Q12.jpg`(3300×5100) 원본을 사용한다. 인쇄된 플레이 가능 헥스마다 JSON 객체 하나를 작성한다. 각 이미지 행을 끝낼 때 ID, 여섯 변, 가장자리 부분 헥스의 플레이 가능 여부를 원본과 확인한다. 네 자리 숫자만 계산해서 이웃을 추정하지 않는다. 이미지 영역마다 전체 그래프 검증을 실행하고, 모든 영역의 전사가 끝나야 이 작업을 커밋한다.
 
 ```json
-{"id":"fixture-a","terrain":"clear","neighbors":{"s":"fixture-b"},"features":[],"edge_features":{},"source_ref":"fixture:a"}
+{"id":"fixture-a","terrain":"clear","neighbors":{"s":"fixture-b"},"features":[],"edge_features":{},"victory_points":0,"source_ref":"fixture:a"}
 ```
 
 위 줄은 **실제 지도 자료가 아닌**, 두 헥스 테스트용 레코드의 형태다. Map A 레코드에는 인쇄된 헥스 ID와 눈으로 확인한 모든 연결을 넣는다. `source_ref`는 이미지 위치를 찾기 위한 값이며 검수 완료 표시가 아니다.

@@ -49,6 +49,29 @@ class CatalogTests(unittest.TestCase):
         }, {}, {})
         validate_catalog(catalog)
 
+    def test_unknown_hexside_feature_is_rejected(self):
+        catalog = Catalog("v2025_04", {
+            "1300": HexDef("1300", "clear", {"s": "1301"}, (),
+                           {"s": ("railraod",)}, "fixture:hex"),
+            "1301": HexDef("1301", "clear", {"n": "1300"}, (),
+                           {"n": ("railraod",)}, "fixture:hex"),
+        }, {}, {})
+        with self.assertRaises(CatalogError):
+            validate_catalog(catalog)
+
+    def test_printed_victory_value_is_stored_and_validated(self):
+        hex_def_with_vp = HexDef("1300", "clear", {}, (), {}, "fixture:hex", victory_points=2)
+        self.assertEqual(hex_def_with_vp.victory_points, 2)
+        validate_catalog(Catalog("v2025_04", {"1300": hex_def_with_vp}, {}, {}))
+        invalid = HexDef("1300", "clear", {}, (), {}, "fixture:hex", victory_points=-1)
+        with self.assertRaises(CatalogError):
+            validate_catalog(Catalog("v2025_04", {"1300": invalid}, {}, {}))
+
+    def test_unknown_hex_feature_is_rejected(self):
+        typo = HexDef("1300", "clear", {}, ("porrt",), {}, "fixture:hex")
+        with self.assertRaises(CatalogError):
+            validate_catalog(Catalog("v2025_04", {"1300": typo}, {}, {}))
+
     def test_unknown_neighbor_rejected(self):
         catalog = Catalog("v2025_04", {"a": hex_def("a", {"s": "missing"})}, {}, {})
         with self.assertRaises(CatalogError):
