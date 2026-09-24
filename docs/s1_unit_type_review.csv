@@ -1,11 +1,11 @@
 unit_id,term_id,movement_class,review_status,source_ref
-GE-2AHQ,artillery_support_unit,mechanized,filename_inference_pending_symbol_review,images_high/GE-2AHQ-f.png
+GE-2AHQ,army_hq,mechanized,filename_inference_pending_symbol_review,images_high/GE-2AHQ-f.png
 GE-385Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-385Inf-Div-f.png
 GE-45Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-45Inf-Div-f.png
 GE-95Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-95Inf-Div-f.png
 GE-383Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-383Inf-Div-f.png
 GE-177&243Stug-Bn,sturmgeschutz,mechanized,symbol_playbook_key_verified,images_high/GE-177&243Stug-Bn-f.png
-GE-4PzAHQ,artillery_support_unit,mechanized,filename_inference_pending_symbol_review,images_high/GE-4PzAHQ-f.png
+GE-4PzAHQ,army_hq,mechanized,filename_inference_pending_symbol_review,images_high/GE-4PzAHQ-f.png
 GE-SupplyPt-1,supply_point,mechanized,symbol_playbook_key_verified,images_high/GE-SupplyPt-1-f.png
 GE-9Pz-Div,tank_unit,mechanized,filename_inference_pending_symbol_review,images_high/GE-9Pz-Div-f.png
 GE-11Pz-Div,tank_unit,mechanized,filename_inference_pending_symbol_review,images_high/GE-11Pz-Div-f.png
@@ -21,7 +21,7 @@ GE-340Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,i
 HU-6LInf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/HU-6LInf-Div-f.png
 HU-9LInf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/HU-9LInf-Div-f.png
 HU-7LInf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/HU-7LInf-Div-f.png
-GE-6AHQ,artillery_support_unit,mechanized,filename_inference_pending_symbol_review,images_high/GE-6AHQ-f.png
+GE-6AHQ,army_hq,mechanized,filename_inference_pending_symbol_review,images_high/GE-6AHQ-f.png
 GE-57Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-57Inf-Div-f.png
 GE-168Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-168Inf-Div-f.png
 GE-75Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-75Inf-Div-f.png
@@ -43,7 +43,7 @@ GE-29Pzg-Div,panzergrenadier,mechanized,filename_inference_pending_symbol_review
 GE-244&245Stug-Bn,sturmgeschutz,mechanized,filename_inference_pending_symbol_review,images_high/GE-244&245Stug-Bn-f.png
 CR-369Inf-Regt,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/CR-369Inf-Regt-f.png
 GE-384Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-384Inf-Div-f.png
-GE-1PzAHQ,artillery_support_unit,mechanized,filename_inference_pending_symbol_review,images_high/GE-1PzAHQ-f.png
+GE-1PzAHQ,army_hq,mechanized,filename_inference_pending_symbol_review,images_high/GE-1PzAHQ-f.png
 RO-1Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/RO-1Inf-Div-f.png
 RO-20Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/RO-20Inf-Div-f.png
 RO-4Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/RO-4Inf-Div-f.png
@@ -60,7 +60,7 @@ GE-76Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,im
 GE-22Pz-Div,tank_unit,mechanized,filename_inference_pending_symbol_review,images_high/GE-22Pz-Div-f.png
 GE-60Pzg-Div,panzergrenadier,mechanized,filename_inference_pending_symbol_review,images_high/GE-60Pzg-Div-f.png
 GE-14Pz-Div,tank_unit,mechanized,filename_inference_pending_symbol_review,images_high/GE-14Pz-Div-r.png
-GE-17AHQ,artillery_support_unit,mechanized,filename_inference_pending_symbol_review,images_high/GE-17AHQ-f.png
+GE-17AHQ,army_hq,mechanized,filename_inference_pending_symbol_review,images_high/GE-17AHQ-f.png
 GE-370Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-370Inf-Div-f.png
 GE-111Inf-Div,infantry,non_mechanized,filename_inference_pending_symbol_review,images_high/GE-111Inf-Div-f.png
 IT-3CalMechInf-Div,panzergrenadier,mechanized,symbol_playbook_key_verified,images_high/IT-3CalMechInf-Div-f.png
