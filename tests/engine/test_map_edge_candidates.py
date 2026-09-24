@@ -69,7 +69,7 @@ class MapEdgeCandidateTests(unittest.TestCase):
         root = Path(__file__).resolve().parents[2] / "docs"
         candidates = build_edge_candidates(root / "map_a_printed_id_checks.csv", root)
         reviewed = [edge for edge in candidates if edge.review_status == "reviewed"]
-        self.assertEqual(len(reviewed), 144)
+        self.assertEqual(len(reviewed), 170)
         self.assertTrue(all(edge.crossing_features and edge.source_ref for edge in reviewed))
         self.assertGreater(len(candidates), len(reviewed))
 

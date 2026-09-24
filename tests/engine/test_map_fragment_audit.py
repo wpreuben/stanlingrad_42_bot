@@ -80,11 +80,11 @@ class MapFragmentAuditTests(unittest.TestCase):
     def test_current_verified_fragments(self):
         root = Path(__file__).resolve().parents[2] / "docs"
         result = audit_fragments(root)
-        self.assertEqual((result.hexes, result.edges), (66, 144))
+        self.assertEqual((result.hexes, result.edges), (76, 170))
         self.assertEqual(result.features["minor_river"], 23)
         self.assertEqual(result.features["major_river"], 5)
         self.assertEqual(result.features["railroad"], 10)
-        self.assertEqual(result.features["secondary_road"], 15)
+        self.assertEqual(result.features["secondary_road"], 23)
         self.assertEqual(result.victory_points, 1)
 
 

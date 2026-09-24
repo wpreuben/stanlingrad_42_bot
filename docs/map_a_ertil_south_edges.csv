@@ -1,0 +1,27 @@
+hex_id,direction,neighbor_id,source_ref,crossing_features
+3202,s,3203,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,none
+3202,se,3303,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,none
+3203,s,3204,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,none
+3203,ne,3303,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,none
+3203,se,3304,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,none
+3204,ne,3304,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,secondary_road
+3302,s,3303,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,none
+3303,s,3304,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,none
+3303,ne,3402,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,none
+3303,se,3403,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,none
+3304,ne,3403,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,none
+3304,se,3404,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,secondary_road
+3402,s,3403,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,secondary_road
+3402,se,3503,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,none
+3403,s,3404,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,secondary_road
+3403,ne,3503,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,none
+3403,se,3504,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,none
+3404,ne,3504,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,secondary_road
+3502,s,3503,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,none
+3503,s,3504,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,none
+3503,ne,3602,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,none
+3503,se,3603,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,none
+3504,ne,3603,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,none
+3504,se,3604,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,secondary_road
+3602,s,3603,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,secondary_road
+3603,s,3604,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990,secondary_road

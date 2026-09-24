@@ -354,7 +354,6 @@ hex_id,direction,neighbor_id,blue_pixels_29x29,review_status,source_image
 2524,ne,2623,145,unreviewed,Stal42_Map_west-FINAL-150 Q12.jpg
 2807,se,2908,145,unreviewed,Stal42_Map_west-FINAL-150 Q12.jpg
 3524,ne,3623,145,unreviewed,Stal42_Map_west-FINAL-150 Q12.jpg
-3603,s,3604,144,unreviewed,Stal42_Map_west-FINAL-150 Q12.jpg
 3705,se,3805,142,unreviewed,Stal42_Map_west-FINAL-150 Q12.jpg
 1833,se,1934,141,unreviewed,Stal42_Map_west-FINAL-150 Q12.jpg
 3632,ne,3732,141,unreviewed,Stal42_Map_west-FINAL-150 Q12.jpg
@@ -377,7 +376,6 @@ hex_id,direction,neighbor_id,blue_pixels_29x29,review_status,source_image
 2533,ne,2632,126,unreviewed,Stal42_Map_west-FINAL-150 Q12.jpg
 3523,s,3524,126,unreviewed,Stal42_Map_west-FINAL-150 Q12.jpg
 3705,s,3706,126,unreviewed,Stal42_Map_west-FINAL-150 Q12.jpg
-3602,s,3603,124,unreviewed,Stal42_Map_west-FINAL-150 Q12.jpg
 3025,s,3026,119,unreviewed,Stal42_Map_west-FINAL-150 Q12.jpg
 4111,s,4112,118,unreviewed,Stal42_Map_west-FINAL-150 Q12.jpg
 3007,ne,3107,117,unreviewed,Stal42_Map_west-FINAL-150 Q12.jpg

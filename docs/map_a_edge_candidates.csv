@@ -1788,14 +1788,14 @@ hex_id,direction,neighbor_id,review_status,crossing_features,source_ref
 3201,s,3202,reviewed,railroad,Stal42_Map_west-FINAL-150 Q12.jpg crop x1900-2620 y80-550
 3201,ne,3301,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1900-2620 y80-550
 3201,se,3302,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1900-2620 y80-550
-3202,s,3203,unreviewed,,
+3202,s,3203,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
 3202,ne,3302,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1900-2620 y80-550
-3202,se,3303,unreviewed,,
-3203,s,3204,unreviewed,,
-3203,ne,3303,unreviewed,,
-3203,se,3304,unreviewed,,
+3202,se,3303,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
+3203,s,3204,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
+3203,ne,3303,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
+3203,se,3304,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
 3204,s,3205,unreviewed,,
-3204,ne,3304,unreviewed,,
+3204,ne,3304,reviewed,secondary_road,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
 3204,se,3305,unreviewed,,
 3205,s,3206,unreviewed,,
 3205,ne,3305,unreviewed,,
@@ -1893,15 +1893,15 @@ hex_id,direction,neighbor_id,review_status,crossing_features,source_ref
 3301,s,3302,reviewed,secondary_road,Stal42_Map_west-FINAL-150 Q12.jpg crop x1900-2620 y80-550
 3301,ne,3400,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1900-2620 y80-550
 3301,se,3401,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1900-2620 y80-550
-3302,s,3303,unreviewed,,
+3302,s,3303,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
 3302,ne,3401,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1900-2620 y80-550
 3302,se,3402,reviewed,secondary_road,Stal42_Map_west-FINAL-150 Q12.jpg crop x1900-2620 y80-550
-3303,s,3304,unreviewed,,
-3303,ne,3402,unreviewed,,
-3303,se,3403,unreviewed,,
+3303,s,3304,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
+3303,ne,3402,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
+3303,se,3403,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
 3304,s,3305,unreviewed,,
-3304,ne,3403,unreviewed,,
-3304,se,3404,unreviewed,,
+3304,ne,3403,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
+3304,se,3404,reviewed,secondary_road,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
 3305,s,3306,unreviewed,,
 3305,ne,3404,unreviewed,,
 3305,se,3405,unreviewed,,
@@ -2021,14 +2021,14 @@ hex_id,direction,neighbor_id,review_status,crossing_features,source_ref
 3401,s,3402,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x1900-2620 y80-550
 3401,ne,3501,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2420-3250 y80-550
 3401,se,3502,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2420-3250 y80-550
-3402,s,3403,unreviewed,,
+3402,s,3403,reviewed,secondary_road,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
 3402,ne,3502,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2420-3250 y80-550
-3402,se,3503,unreviewed,,
-3403,s,3404,unreviewed,,
-3403,ne,3503,unreviewed,,
-3403,se,3504,unreviewed,,
+3402,se,3503,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
+3403,s,3404,reviewed,secondary_road,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
+3403,ne,3503,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
+3403,se,3504,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
 3404,s,3405,unreviewed,,
-3404,ne,3504,unreviewed,,
+3404,ne,3504,reviewed,secondary_road,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
 3404,se,3505,unreviewed,,
 3405,s,3406,unreviewed,,
 3405,ne,3505,unreviewed,,
@@ -2147,15 +2147,15 @@ hex_id,direction,neighbor_id,review_status,crossing_features,source_ref
 3501,s,3502,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2420-3250 y80-550
 3501,ne,3600,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2420-3250 y80-550
 3501,se,3601,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2420-3250 y80-550
-3502,s,3503,unreviewed,,
+3502,s,3503,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
 3502,ne,3601,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2420-3250 y80-550
 3502,se,3602,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2420-3250 y80-550
-3503,s,3504,unreviewed,,
-3503,ne,3602,unreviewed,,
-3503,se,3603,unreviewed,,
+3503,s,3504,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
+3503,ne,3602,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
+3503,se,3603,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
 3504,s,3505,unreviewed,,
-3504,ne,3603,unreviewed,,
-3504,se,3604,unreviewed,,
+3504,ne,3603,reviewed,none,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
+3504,se,3604,reviewed,secondary_road,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
 3505,s,3506,unreviewed,,
 3505,ne,3604,unreviewed,,
 3505,se,3605,unreviewed,,
@@ -2275,10 +2275,10 @@ hex_id,direction,neighbor_id,review_status,crossing_features,source_ref
 3601,s,3602,reviewed,secondary_road,Stal42_Map_west-FINAL-150 Q12.jpg crop x2420-3250 y80-550
 3601,ne,3701,unreviewed,,
 3601,se,3702,unreviewed,,
-3602,s,3603,unreviewed,,
+3602,s,3603,reviewed,secondary_road,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
 3602,ne,3702,unreviewed,,
 3602,se,3703,unreviewed,,
-3603,s,3604,unreviewed,,
+3603,s,3604,reviewed,secondary_road,Stal42_Map_west-FINAL-150 Q12.jpg crop x2130-2850 y380-990
 3603,ne,3703,unreviewed,,
 3603,se,3704,unreviewed,,
 3604,s,3605,unreviewed,,
