@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "ruleset_id": "v2025_04",
+  "sources": [
+    {
+      "kind": "rules",
+      "path": "Stal42_RULES-2025-Final_LoRes.pdf",
+      "edition": "v2.1, April 2025"
+    },
+    {
+      "kind": "map_a",
+      "path": "Images/httpssteamusercontentaakamaihdnetugc17884687792252896570A62D23C2FCE91331EED1641567952E124BC8AF7.jpg",
+      "edition": "2019 component image; cross-check with 2025 rules"
+    },
+    {
+      "kind": "axis_at_start",
+      "path": "Images/httpssteamusercontentaakamaihdnetugc17884688380553658153FC9D37838E1E7AE747007396036D0CAE7AF8A0C.jpg",
+      "edition": "2019 component image; cross-check with 2025 rules"
+    },
+    {
+      "kind": "soviet_at_start",
+      "path": "Images/httpssteamusercontentaakamaihdnetugc1788468838055329033A93814D55EA6FBC4805AE36AD0C6339D5A88391A.jpg",
+      "edition": "2019 component image; cross-check with 2025 rules"
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+﻿term_id,en_term,ko_term,category,definition,source_en,source_ko,aliases,notes,status
+combat_unit,Combat Unit,전투 유닛,unit,방어력이 0보다 큰 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.1,,,confirmed
+non_combat_unit,Non-Combat Unit,비전투 유닛,unit,방어력이 0인 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.1,,,confirmed
+marker,Marker,마커,marker,상태나 규칙 효과를 표시하는 카운터,Stal42_RULES-2025-Final_LoRes.pdf §2.3.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.1,,,confirmed
+infantry,Infantry,보병,unit,비기계화 보병 병과 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
+security,Security,경비,unit,비기계화 경비 병과 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
+jager_infantry,Jäger Infantry,경보병,unit,비기계화 경보병 병과 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
+naval_infantry,Naval Infantry,해병대,unit,비기계화 해병 병과 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
+mountain_infantry,Mountain Infantry,산악보병,unit,비기계화 산악보병 병과 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
+engineer,Engineer,공병,unit,비기계화 공병 병과 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
+cavalry,Cavalry,기병,unit,비기계화 기병 병과 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
+ski,Ski,스키,unit,비기계화 스키 병과 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
+tank_unit,Tank/Panzer,기갑,unit,기갑 쉬프트를 얻거나 상쇄할 수 있는 유닛 유형,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,Tank Unit,,confirmed
+mechanized_unit,Mechanized,기계화,unit,기계화 이동 비용을 적용받는 유닛 유형,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
+non_mechanized_unit,Non-Mechanized,비기계화,unit,비기계화 이동 비용을 적용받는 유닛 유형,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
+motorized_infantry,Motorized Infantry,차량화 보병,unit,기계화 병과의 차량화 보병,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
+tank_destroyer,Tank Destroyer,대전차,unit,기계화 병과의 대전차 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.3,,,confirmed
+artillery_support_unit,Artillery Support Unit,포병 지원 유닛,unit,사정거리 안의 전투에 지원을 제공하는 비전투 유닛,Stal42_RULES-2025-Final_LoRes.pdf §18.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §18.2,ASU,,confirmed
+army_hq,Army HQ,군 HQ,unit,특수한 스택 또는 포병 지원 기능을 가진 사령부 유닛,Stal42_RULES-2025-Final_LoRes.pdf §4.3; 18.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §4.3; 18.2,,TODO_GLOSSARY_REVIEW; docs/glossary_notes.md 참조,ambiguous
+leader_unit,Leader Unit,지휘관 유닛,unit,사정 범위 안에서 특수 능력을 사용하는 비전투 유닛,Stal42_RULES-2025-Final_LoRes.pdf §28.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §28.1,,,confirmed
+attack_strength,Attack Strength,공격력,unit_attribute,공격 시 사용하는 유닛의 전투력,Stal42_RULES-2025-Final_LoRes.pdf §2.3.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.2,,,confirmed
+defense_strength,Defense Strength,방어력,unit_attribute,방어 시 사용하는 유닛의 전투력,Stal42_RULES-2025-Final_LoRes.pdf §2.3.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.2,,,confirmed
+movement_allowance,Movement Allowance,이동력,unit_attribute,전투 가능성을 유지하며 사용할 수 있는 최대 이동 포인트,Stal42_RULES-2025-Final_LoRes.pdf §2.3.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.2,MA,,confirmed
+movement_point,Movement Point,이동 포인트,movement,이동 비용과 이동력을 세는 단위,Stal42_RULES-2025-Final_LoRes.pdf §2.3.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.2,MP; MPs,,confirmed
+unit_id,Unit I.D.,유닛의 이름 또는 번호,unit_attribute,카운터가 나타내는 부대의 이름 또는 번호,Stal42_RULES-2025-Final_LoRes.pdf §2.3.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.2,,,confirmed
+troop_quality,Troop Quality,부대의 질,unit_attribute,필사적인 방어와 집결 굴림 등에 쓰는 등급,Stal42_RULES-2025-Final_LoRes.pdf §2.3.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.2,TQ,,confirmed
+elite_unit,Elite Unit,정예,unit_attribute,정예 품질로 취급되는 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.2,,,confirmed
+low_quality,Low Quality,저질 병력,unit_attribute,낮은 부대의 질을 가진 유닛,Stal42_RULES-2025-Final_LoRes.pdf §2.3.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.2,,,confirmed
+step,Step,스텝,unit_attribute,유닛의 손실 단위,Stal42_RULES-2025-Final_LoRes.pdf §2.3.5,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.3.5,,,confirmed
+step_loss,Step Loss,스텝 손실,combat,유닛의 스텝을 한 단계 줄이는 손실,Stal42_RULES-2025-Final_LoRes.pdf §10.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §10.2,,,confirmed
+remnant,Remnant,잔존 병력,unit,3스텝 유닛이 두 번째 스텝을 잃은 뒤 대체될 수 있는 유닛,Stal42_RULES-2025-Final_LoRes.pdf §10.4,Stal42_RULES-2025-Final_LoRes_KO.pdf §10.4,Rem,,confirmed
+hex,Hex,헥스,map,지도에서 이동과 전투를 판정하는 육각 칸,Stal42_RULES-2025-Final_LoRes.pdf §2.2.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.2.1,,,confirmed
+hexside,Hexside,헥스변,map,인접한 두 헥스 사이의 경계,Stal42_RULES-2025-Final_LoRes.pdf §2.2.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.2.3,,,confirmed
+adjacent,Adjacent,인접한,map,통과 불가 헥스변 및 볼가강 헥스변을 사이에 두지 않은 이웃 관계,Stal42_RULES-2025-Final_LoRes.pdf §2.2.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.2.3,,,confirmed
+impassable_hexside,Impassable Hexside,통과 불가 헥스변,terrain,이동할 수 없고 양쪽 유닛을 인접으로 보지 않는 경계,Stal42_RULES-2025-Final_LoRes.pdf §2.2.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.2.3,,,confirmed
+city,City,도시,terrain,아래 지형을 덮어쓰는 도시 지형,Stal42_RULES-2025-Final_LoRes.pdf §2.2.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.2.2,,,confirmed
+minor_city,Minor City,소도시,terrain,보급선과 승점 판정 등에 쓰는 도시 지형,Stal42_RULES-2025-Final_LoRes.pdf §16.3.4,Stal42_RULES-2025-Final_LoRes_KO.pdf §16.3.4,,,confirmed
+mountain,Mountain,산,terrain,헥스에 일부만 있어도 산으로 취급하는 지형,Stal42_RULES-2025-Final_LoRes.pdf §2.2.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.2.2,,,confirmed
+marsh,Marsh,늪,terrain,이동과 전투에 영향을 주는 늪 지형,Stal42_RULES-2025-Final_LoRes.pdf §2.2.2; 9.5,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.2.2; 9.5,,,confirmed
+road,Road,도로,terrain,이동 비용을 낮추고 보급선을 연장하는 지도 경로,Stal42_RULES-2025-Final_LoRes.pdf §5.2; 16.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.2; 16.3.3,,,confirmed
+railroad,Railroad,철도,terrain,철도 이동과 보급에 쓰는 연결 경로,Stal42_RULES-2025-Final_LoRes.pdf §5.6; 17.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.6; 17.0,,,confirmed
+minor_river,Minor River,작은 강,terrain,날씨에 따라 도하 비용이 달라지는 강 헥스변,Stal42_RULES-2025-Final_LoRes.pdf §5.5.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.5.1,Minor,,confirmed
+major_river,Major River,큰 강,terrain,도하 및 전투에 별도 제한을 적용하는 강 헥스변,Stal42_RULES-2025-Final_LoRes.pdf §5.5.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.5.2,,,confirmed
+volga_river,Volga River,볼가강,terrain,별도 인접 및 도하 규칙을 적용하는 강,Stal42_RULES-2025-Final_LoRes.pdf §2.2.3; 5.5.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.2.3; 5.5.3,,,confirmed
+bridge,Bridge,다리,terrain,큰 강을 건너는 연결 지점,Stal42_RULES-2025-Final_LoRes.pdf §5.5.4,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.5.4,,,confirmed
+road_bridge,Road Bridge,도로 교량,terrain,도로 이동 비용으로 강을 건너게 하는 다리,Stal42_RULES-2025-Final_LoRes.pdf §5.5.4,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.5.4,,,confirmed
+railroad_bridge,Railroad Bridge,철도 교량,terrain,강을 건널 때 별도 이동 비용을 내는 철도 다리,Stal42_RULES-2025-Final_LoRes.pdf §5.5.4,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.5.4,,,confirmed
+pontoon_bridge,Pontoon Bridge,부교,terrain,강 양쪽에 아군 전투 유닛이 있을 때 성립하는 도하 연결,Stal42_RULES-2025-Final_LoRes.pdf §5.5.5,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.5.5,,,confirmed
+ferry,Ferry,나루터,terrain,영구적인 부교로 취급하는 지도 지점,Stal42_RULES-2025-Final_LoRes.pdf §5.5.6,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.5.6,,,confirmed
+port,Port,항구,terrain,해상 이동과 보급원 판정에 사용하는 지점,Stal42_RULES-2025-Final_LoRes.pdf §5.7; 16.2.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.7; 16.2.3,,,confirmed
+entry_area,Entry Area,진입 구역,map,지도 가장자리의 이동·증원·보급 구역,Stal42_RULES-2025-Final_LoRes.pdf §22.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §22.0,,,confirmed
+turn_record_track,Turn Record Track,턴 기록 트랙,map,현재 턴과 도착 예정 등을 기록하는 트랙,Stal42_RULES-2025-Final_LoRes.pdf §23.3.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §23.3.1,,,confirmed
+stacking,Stacking,스택,rule,한 헥스에 여러 카운터를 놓는 것,Stal42_RULES-2025-Final_LoRes.pdf §4.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §4.1,,,confirmed
+stacking_limit,Stacking Limit,스택 제한,rule,한 헥스에 함께 둘 수 있는 전투 유닛의 수 제한,Stal42_RULES-2025-Final_LoRes.pdf §4.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §4.1,,,confirmed
+free_stacking_unit,Free Stacking Unit,자유 스택 유닛,unit,한 헥스에서 한 개까지 스택 제한에 들지 않는 유닛,Stal42_RULES-2025-Final_LoRes.pdf §4.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §4.2,,,confirmed
+movement_phase,Movement Phase,이동 페이즈,turn_sequence,활성 플레이어가 유닛을 이동시키는 단계,Stal42_RULES-2025-Final_LoRes.pdf §3.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §3.0,,,confirmed
+initial_phase,Initial Phase,시작 페이즈,turn_sequence,증원·보충·자원 할당 등을 처리하는 단계,Stal42_RULES-2025-Final_LoRes.pdf §3.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §3.0,,,confirmed
+combat_phase,Combat Phase,전투 페이즈,turn_sequence,공격과 철수 등을 해결하는 단계,Stal42_RULES-2025-Final_LoRes.pdf §3.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §3.0,,,confirmed
+recovery_phase,Recovery Phase,회복 페이즈,turn_sequence,혼란과 전면 퇴각 상태의 회복을 처리하는 단계,Stal42_RULES-2025-Final_LoRes.pdf §3.0; 13.4,Stal42_RULES-2025-Final_LoRes_KO.pdf §3.0; 13.4,,,confirmed
+supply_phase,Supply Phase,보급 페이즈,turn_sequence,보급 상태와 고립 소모 등을 처리하는 단계,Stal42_RULES-2025-Final_LoRes.pdf §3.0; 16.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §3.0; 16.1,,,confirmed
+weather_phase,Weather Phase,날씨 페이즈,turn_sequence,해당 턴의 날씨를 결정하는 단계,Stal42_RULES-2025-Final_LoRes.pdf §3.0; 23.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §3.0; 23.0,,,confirmed
+victory_determination_phase,Victory Determination Phase,승리 결정 페이즈,turn_sequence,승점과 자동 승리를 확인하는 단계,Stal42_RULES-2025-Final_LoRes.pdf §3.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §3.0,,,confirmed
+game_turn,Game Turn,턴,turn_sequence,추축국과 소련 플레이어 턴을 포함하는 진행 단위,Stal42_RULES-2025-Final_LoRes.pdf §3.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §3.0,,,confirmed
+player_turn,Player Turn,플레이어 턴,turn_sequence,한쪽 플레이어가 수행하는 페이즈들의 묶음,Stal42_RULES-2025-Final_LoRes.pdf §3.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §3.0,,,confirmed
+phasing_player,Phasing Player,활성 플레이어,turn_sequence,현재 플레이어 턴을 진행 중인 측,Stal42_RULES-2025-Final_LoRes.pdf §4.4,Stal42_RULES-2025-Final_LoRes_KO.pdf §4.4,,,confirmed
+road_movement,Road Movement,도로 이동,movement,도로 비용을 적용해 헥스를 이동하는 것,Stal42_RULES-2025-Final_LoRes.pdf §5.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.2,,,confirmed
+extended_movement,Extended Movement,확장 이동,movement,조건을 지키면 이동력을 늘려 이동하는 방식,Stal42_RULES-2025-Final_LoRes.pdf §5.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.3,,,confirmed
+tactical_movement,Tactical Movement,전술 이동,movement,MA나 MP 대신 1~2헥스를 이동하는 방식,Stal42_RULES-2025-Final_LoRes.pdf §5.4,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.4,,,confirmed
+rail_movement,Rail Movement,철도 이동,movement,철도를 따라 장거리 이동하는 방식,Stal42_RULES-2025-Final_LoRes.pdf §5.6,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.6,,,confirmed
+sea_movement,Sea Movement,해상 이동,movement,해상 경로를 통한 이동,Stal42_RULES-2025-Final_LoRes.pdf §5.7,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.7,,,confirmed
+train_marker,Train Marker,열차 마커,marker,철도 이동 중인 유닛을 표시하는 마커,Stal42_RULES-2025-Final_LoRes.pdf §5.6.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.6.1,,,confirmed
+detraining,Detraining,하차,movement,열차 마커를 제거해 철도 이동 상태를 끝내는 것,Stal42_RULES-2025-Final_LoRes.pdf §5.6.5,Stal42_RULES-2025-Final_LoRes_KO.pdf §5.6.5,,,confirmed
+zone_of_control,Zone of Control,통제 구역,zoc,유닛이 인접 헥스에 행사해 이동·후퇴·보급 등에 영향을 주는 통제,Stal42_RULES-2025-Final_LoRes.pdf §6.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §6.0,ZOC,TODO_GLOSSARY_REVIEW; docs/glossary_notes.md 참조,ambiguous
+enemy_zoc,Enemy Zone of Control,적 ZOC,zoc,상대 유닛이 행사하는 통제 구역,Stal42_RULES-2025-Final_LoRes.pdf §6.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §6.0,EZOC,,confirmed
+zoc_bond,ZOC Bond,ZOC Bond,zoc,아군 ZOC가 연결되어 적 이동과 후퇴에 제약을 주는 관계,Stal42_RULES-2025-Final_LoRes.pdf §7.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §7.0,,,confirmed
+hexside_bond,Hexside Bond,헥스변 Bond,zoc,인접 유닛의 ZOC가 헥스변을 따라 만드는 연결,Stal42_RULES-2025-Final_LoRes.pdf §7.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §7.1,,TODO_GLOSSARY_REVIEW; docs/glossary_notes.md 참조,ambiguous
+combat_result_table,Combat Result Table,전투 결과표,combat,공격·방어 비율과 주사위로 전투 결과를 찾는 표,Stal42_RULES-2025-Final_LoRes.pdf §8.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §8.3,CRT,,confirmed
+terrain_effects_chart,Terrain Effects Chart,지형 효과표,terrain,지형별 이동 비용과 전투 효과를 제시하는 표,Stal42_RULES-2025-Final_LoRes.pdf §2.2.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §2.2.1,TEC,,confirmed
+odds,Odds,비율,combat,공격력과 방어력으로 계산하는 전투 비율,Stal42_RULES-2025-Final_LoRes.pdf §8.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §8.3,,,confirmed
+column_shift,Column Shift,쉬프트,combat,CRT에서 적용 칼럼을 옮기는 보정,Stal42_RULES-2025-Final_LoRes.pdf §8.4.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §8.4.2,CRT Shift; 칼럼 쉬프트,TODO_GLOSSARY_REVIEW; docs/glossary_notes.md 참조,ambiguous
+die_roll_modifier,Die Roll Modifier,주사위 보정치,combat,주사위 결과에 더하거나 빼는 값,Stal42_RULES-2025-Final_LoRes.pdf §1.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §1.0,DRM,,confirmed
+automatic_ds,Automatic DS,자동 DS,combat,충분한 전력으로 이동 페이즈에 DS 결과를 자동 적용하는 공격,Stal42_RULES-2025-Final_LoRes.pdf §8.6,Stal42_RULES-2025-Final_LoRes_KO.pdf §8.6,Auto DS,,confirmed
+tank_shift,Tank Shift,기갑 쉬프트,combat,기갑 유닛의 존재로 적용하는 전투 칼럼 보정,Stal42_RULES-2025-Final_LoRes.pdf §9.2.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §9.2.1,,,confirmed
+elite_tank_shift,Elite Tank Shift,정예 기갑 쉬프트,combat,정예 기갑 조건으로 적용하는 전투 칼럼 보정,Stal42_RULES-2025-Final_LoRes.pdf §9.2.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §9.2.2,,,confirmed
+air_support,Air Support,항공 지원,combat,공군 유닛을 배치해 전투에 적용하는 지원,Stal42_RULES-2025-Final_LoRes.pdf §9.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §9.3,,,confirmed
+offensive_support,Offensive Support,공격 지원,combat,공격 전투에 공군 또는 포병 지원을 적용하는 것,Stal42_RULES-2025-Final_LoRes.pdf §9.3.3; 18.3.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §9.3.3; 18.3.1,,,confirmed
+defensive_support,Defensive Support,방어 지원,combat,방어 전투에 공군 또는 포병 지원을 적용하는 것,Stal42_RULES-2025-Final_LoRes.pdf §9.3.4; 18.3.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §9.3.4; 18.3.2,,,confirmed
+artillery_shift,Artillery Shift,포병 쉬프트,combat,포병 지원에 따른 CRT 칼럼 보정,Stal42_RULES-2025-Final_LoRes.pdf §9.4,Stal42_RULES-2025-Final_LoRes_KO.pdf §9.4,,,confirmed
+fortification,Fortification,요새,terrain,자원 포인트로 건설하거나 지도에 인쇄된 방어 지점,Stal42_RULES-2025-Final_LoRes.pdf §9.7,Stal42_RULES-2025-Final_LoRes_KO.pdf §9.7,,,confirmed
+under_construction,Under Construction,건설중,marker,완성 전 요새의 마커 상태,Stal42_RULES-2025-Final_LoRes.pdf §9.7.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §9.7.2,,,confirmed
+combat_result,Combat Result,전투 결과,combat,CRT가 지시하는 손실·후퇴·전진 등의 결과,Stal42_RULES-2025-Final_LoRes.pdf §10.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §10.1,,,confirmed
+defender_shattered,Defender Shattered,방어자 분쇄,combat,방어측 스텝 손실과 4헥스 후퇴 및 전면 퇴각을 지시하는 결과,Stal42_RULES-2025-Final_LoRes.pdf §10.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §10.1,DS,,confirmed
+exchange,Exchange,교환,combat,양측 스텝 손실을 지시하는 CRT 결과,Stal42_RULES-2025-Final_LoRes.pdf §10.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §10.1,EX,,confirmed
+determined_defense,Determined Defense,필사적인 방어,combat,방어자가 후퇴를 막거나 줄이기 위해 수행하는 판정,Stal42_RULES-2025-Final_LoRes.pdf §11.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §11.0,,,confirmed
+desperate_defense,Desperate Defense,결사 방어,combat,추가 손실 위험을 감수하며 후퇴를 막으려는 판정,Stal42_RULES-2025-Final_LoRes.pdf §11.5,Stal42_RULES-2025-Final_LoRes_KO.pdf §11.5,,,confirmed
+lead_unit,Lead Unit,대표 유닛,combat,필사적인 방어 등의 판정에 선택되는 방어 유닛,Stal42_RULES-2025-Final_LoRes.pdf §11.2.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §11.2.3,,,confirmed
+partial_success,Partial Success,부분적 성공,combat,필사적인 방어 표에서 후퇴를 줄이는 결과,Stal42_RULES-2025-Final_LoRes.pdf §11.6,Stal42_RULES-2025-Final_LoRes_KO.pdf §11.6,P,,confirmed
+retreat,Retreat,후퇴,retreat,전투 결과 등에 따라 유닛이 지정 헥스 수만큼 물러나는 것,Stal42_RULES-2025-Final_LoRes.pdf §12.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §12.0,,,confirmed
+disrupted,Disrupted,혼란,marker,전투력과 이동 등에 제한을 받는 유닛 상태,Stal42_RULES-2025-Final_LoRes.pdf §13.1; 13.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §13.1; 13.2,,,confirmed
+full_retreat,Full Retreat,전면 퇴각,marker,ZOC 상실 등 중대한 제한을 받는 유닛 상태,Stal42_RULES-2025-Final_LoRes.pdf §13.1; 13.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §13.1; 13.3,,,confirmed
+rally,Rally,집결,rule,EZOC 안의 혼란·전면 퇴각 유닛이 회복을 시도하는 판정,Stal42_RULES-2025-Final_LoRes.pdf §13.5,Stal42_RULES-2025-Final_LoRes_KO.pdf §13.5,,,confirmed
+advance_after_combat,Advance After Combat,전투 후 전진,advance,전투 결과 후 공격자가 방어자가 비운 헥스로 이동하는 것,Stal42_RULES-2025-Final_LoRes.pdf §14.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §14.0,,,confirmed
+advance_allowance,Advance Allowance,전진 한계,advance,전투 후 전진에서 유닛이 이동할 수 있는 헥스 수,Stal42_RULES-2025-Final_LoRes.pdf §14.2.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §14.2.1,,,confirmed
+breakthrough_combat,Breakthrough Combat,돌파 전투,combat,전투 후 전진 중 연속해서 수행하는 공격,Stal42_RULES-2025-Final_LoRes.pdf §15.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §15.0,,,confirmed
+breakthrough_group,Breakthrough Group,돌파 집단,combat,돌파 전투를 함께 수행하는 공격 유닛 집단,Stal42_RULES-2025-Final_LoRes.pdf §15.2.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §15.2.2,,,confirmed
+supply_source,Supply Source,보급원,supply,보급선의 출발점이 되는 아군 진입 구역이나 항구,Stal42_RULES-2025-Final_LoRes.pdf §16.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §16.2,,,confirmed
+line_of_supply,Line of Supply,보급선,supply,유닛에서 보급원까지 연결되는 허용 경로,Stal42_RULES-2025-Final_LoRes.pdf §16.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §16.3,LOS,,confirmed
+out_of_supply,Out of Supply,보급 단절,supply,보급선을 추적할 수 없어 공격력 등이 제한되는 상태,Stal42_RULES-2025-Final_LoRes.pdf §16.4,Stal42_RULES-2025-Final_LoRes_KO.pdf §16.4,OOS,,confirmed
+isolated,Isolated,고립,supply,길이 제한을 풀어도 보급원까지 보급선을 이을 수 없는 상태,Stal42_RULES-2025-Final_LoRes.pdf §16.5,Stal42_RULES-2025-Final_LoRes_KO.pdf §16.5,,,confirmed
+isolation_attrition,Isolation Attrition,고립 소모,supply,고립된 전투 유닛에 대한 보급 페이즈 손실 판정,Stal42_RULES-2025-Final_LoRes.pdf §16.5,Stal42_RULES-2025-Final_LoRes_KO.pdf §16.5,,,confirmed
+isolated_pocket_marker,Isolated Pocket Marker,고립된 포위망 마커,marker,고립된 집단을 표시하는 마커,Stal42_RULES-2025-Final_LoRes.pdf §16.5.5,Stal42_RULES-2025-Final_LoRes_KO.pdf §16.5.5,,,confirmed
+control_marker,Control Marker,통제 마커,marker,도시·승점 헥스의 지배를 표시하는 마커,Stal42_RULES-2025-Final_LoRes.pdf §16.3.4,Stal42_RULES-2025-Final_LoRes_KO.pdf §16.3.4,,,confirmed
+railhead,Railhead,철도 말단,marker,추축국의 연결된 철도 경계를 표시하는 마커,Stal42_RULES-2025-Final_LoRes.pdf §17.2.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §17.2.1,,,confirmed
+railroad_repair,Railroad Repair,철도 변환,rule,추축국이 철도를 사용 가능하도록 연결 상태를 바꾸는 절차,Stal42_RULES-2025-Final_LoRes.pdf §17.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §17.0,철도 수리,TODO_GLOSSARY_REVIEW; docs/glossary_notes.md 참조,ambiguous
+resource_point,Resource Point,자원 포인트,supply,요새·포병 지원·계획된 공세 등에 쓰는 자원,Stal42_RULES-2025-Final_LoRes.pdf §18.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §18.1,,,confirmed
+massive_barrage,Massive Barrage,대규모 사격,combat,포병 사단과 전선군 HQ를 써서 큰 CRT 보정을 받는 지원,Stal42_RULES-2025-Final_LoRes.pdf §18.5,Stal42_RULES-2025-Final_LoRes_KO.pdf §18.5,,,confirmed
+supply_point,Supply Point,보급 포인트,supply,이동 가능한 자원 포인트 역할의 비전투 유닛,Stal42_RULES-2025-Final_LoRes.pdf §18.6,Stal42_RULES-2025-Final_LoRes_KO.pdf §18.6,SP; SPs,,confirmed
+replacement,Replacement,보충,replacement,손실 유닛의 스텝 복구나 재건에 쓰는 절차,Stal42_RULES-2025-Final_LoRes.pdf §21.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §21.0,,,confirmed
+replacement_marker,Replacement Marker,보충 마커,marker,보충을 받은 유닛에 놓는 표시,Stal42_RULES-2025-Final_LoRes.pdf §21.4,Stal42_RULES-2025-Final_LoRes_KO.pdf §21.4,,,confirmed
+reinforcement,Reinforcement,증원,reinforcement,정해진 턴에 진입 구역에 등장하는 유닛,Stal42_RULES-2025-Final_LoRes.pdf §22.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §22.1,,,confirmed
+clear_weather,Clear,맑음,weather,날씨 표에서 별도 제한이 없는 결과,Stal42_RULES-2025-Final_LoRes.pdf §23.2.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §23.2.1,Clear Weather,,confirmed
+overcast,Overcast,흐림,weather,공군 가용성 등에 영향을 주는 날씨 결과,Stal42_RULES-2025-Final_LoRes.pdf §23.2.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §23.2.2,,,confirmed
+rain,Rain,비,weather,이동과 공군 등에 제한을 주는 날씨 결과,Stal42_RULES-2025-Final_LoRes.pdf §23.2.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §23.2.3,,,confirmed
+snow,Snow,눈,weather,겨울 이동과 전투에 영향을 주는 날씨 결과,Stal42_RULES-2025-Final_LoRes.pdf §23.2.4,Stal42_RULES-2025-Final_LoRes_KO.pdf §23.2.4,,,confirmed
+mud,Mud,진흙탕,weather,라스푸티차 시기에 비와 비슷한 제한을 주는 상태,Stal42_RULES-2025-Final_LoRes.pdf §23.3.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §23.3.3,,,confirmed
+rasputitsa,Rasputitsa,라스푸티차,weather,특정 턴에 진흙탕 효과를 적용하는 시기,Stal42_RULES-2025-Final_LoRes.pdf §23.3,Stal42_RULES-2025-Final_LoRes_KO.pdf §23.3,,,confirmed
+victory_point,Victory Point,승점,victory,추축국이 목표 점령 등으로 획득·기록하는 점수,Stal42_RULES-2025-Final_LoRes.pdf §24.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §24.1,VP; VPs,,confirmed
+automatic_victory,Automatic Victory,자동 승리,victory,승리 결정 페이즈의 승점 조건으로 게임이 끝나는 것,Stal42_RULES-2025-Final_LoRes.pdf §24.2,Stal42_RULES-2025-Final_LoRes_KO.pdf §24.2,,,confirmed
+reserve,Reserve,예비대,rule,마커를 사용해 특정 유닛의 후속 이동을 허용하는 고급 규칙,Stal42_RULES-2025-Final_LoRes.pdf §25.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §25.0,,,confirmed
+planned_offensive,Planned Offensive,계획된 공세,rule,자원 포인트를 써서 준비하는 공격 규칙,Stal42_RULES-2025-Final_LoRes.pdf §26.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §26.0,PO,,confirmed
+disengagement,Disengagement,철수,movement,전투 페이즈에 적과의 접촉에서 벗어나려는 시도,Stal42_RULES-2025-Final_LoRes.pdf §27.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §27.0,,,confirmed
+contested_city_hex,Contested City Hex,도시 공방전,rule,양측 유닛이 관련된 도시 헥스의 특수 상태,Stal42_RULES-2025-Final_LoRes.pdf §29.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §29.0,,TODO_GLOSSARY_REVIEW; docs/glossary_notes.md 참조,ambiguous
+trans_caucasus_front_box,Trans-Caucasus Front Box,트란스-코카서스 전선군 박스,map,캠페인 게임의 별도 전선군 관리 박스,Stal42_RULES-2025-Final_LoRes.pdf §30.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §30.0,,,confirmed
+soviet_reserve_army,Soviet Reserve Armies,소련 예비대 군,unit,캠페인 게임의 소련 예비대 군 유닛,Stal42_RULES-2025-Final_LoRes.pdf §31.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §31.0,,TODO_GLOSSARY_REVIEW; docs/glossary_notes.md 참조,ambiguous
+maskirovka_reserve_army,Maskirovka Reserve Armies,기만 전술 예비대 군,unit,소련 플레이어가 부대를 숨겨 관리하는 예비대 군 박스와 유닛,Stal42_RULES-2025-Final_LoRes.pdf §34.1,Stal42_RULES-2025-Final_LoRes_KO.pdf §34.1,,,confirmed
+winter_offensive,Winter Offensive,겨울 공세,scenario,소련의 겨울 공세 시기와 효과를 정하는 규칙,Stal42_RULES-2025-Final_LoRes.pdf §33.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §33.0,,,confirmed
+maskirovka,Maskirovka,기만 전술,rule,소련 예비대 군의 은폐와 이동을 다루는 캠페인 규칙,Stal42_RULES-2025-Final_LoRes.pdf §34.0,Stal42_RULES-2025-Final_LoRes_KO.pdf §34.0,,,confirmed
+fall_blau_scenario,Fall Blau Scenario,청색 작전,scenario,청색 작전을 다루는 시나리오,Stal42_RULES-2025-Final_LoRes.pdf §S1,Stal42_RULES-2025-Final_LoRes_KO.pdf §S1,,,confirmed
+caucasus_campaign,Caucasus Campaign,코카서스 캠페인,scenario,코카서스 전역 시나리오,Stal42_RULES-2025-Final_LoRes.pdf §S2,Stal42_RULES-2025-Final_LoRes_KO.pdf §S2,,,confirmed
+operation_uranus,Operation Uranus,천왕성 작전,scenario,천왕성 작전 시나리오,Stal42_RULES-2025-Final_LoRes.pdf §S3,Stal42_RULES-2025-Final_LoRes_KO.pdf §S3,,,confirmed
+campaign_game,Campaign Game,캠페인 게임,scenario,전 기간을 다루는 시나리오,Stal42_RULES-2025-Final_LoRes.pdf §S4,Stal42_RULES-2025-Final_LoRes_KO.pdf §S4,,,confirmed
+little_saturn,Little Saturn,소토성,scenario,확장 시나리오의 소련 공세,Stal43-LittleSaturn_2025-LoRes.pdf p.1,Stal43-LittleSaturn_2025-LoRes_KO.pdf p.1,,,confirmed
+winter_storm,Winter Storm,겨울폭풍,scenario,확장 시나리오의 독일 공세,Stal43-LittleSaturn_2025-LoRes.pdf p.1,Stal43-LittleSaturn_2025-LoRes_KO.pdf p.1,,,confirmed
