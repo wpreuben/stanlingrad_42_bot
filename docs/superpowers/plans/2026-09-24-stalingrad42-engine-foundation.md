@@ -6,7 +6,7 @@
 
 **구조:** 판본이 고정된 JSON 자료에 지도·유닛·시나리오의 변하지 않는 사실을 보관하고, 불변 `GameState`에는 게임 중 바뀌는 정보만 둔다. 엔진 API는 행동을 검증하고, 지원되는 범위에서 룰북 §3의 페이즈를 진행하며, 시드가 있는 주사위와 사건을 기록한다. 이후 계획은 이 계약을 유지하면서 이동·전투·보급·고급 규칙과 S1~S4의 완전한 플레이를 추가한다.
 
-**기술 선택:** Python 3.11 이상. 표준 라이브러리의 `dataclasses`, `enum`, `json`, `hashlib`, `unittest`를 사용하며 실행 의존성은 추가하지 않는다.
+**기술 선택:** Python 3.11 이상, 패키지 관리는 `uv`. `pyproject.toml`에 설치 가능한 `src/engine` 패키지를 정의하고 `uv.lock`을 커밋한다. `.venv/`는 Git에서 제외한다. 표준 라이브러리의 `dataclasses`, `enum`, `json`, `hashlib`, `unittest`를 사용하며 실행 의존성은 추가하지 않는다. 테스트와 개발 명령은 `uv run --locked`로 실행한다.
 
 **설계 명세:** `docs/superpowers/specs/2026-09-24-stalingrad42-engine-foundation-design.md`
 
@@ -32,6 +32,7 @@
 
 | 파일 | 책임 |
 |---|---|
+| `pyproject.toml`, `uv.lock`, `.gitignore` | Python 패키지 정의, 재현 가능한 의존성 잠금, 로컬 가상 환경 제외 |
 | `src/engine/types.py` | 불변 게임 상태, enum, 결과·사건 타입 |
 | `src/engine/errors.py` | 불법 행동·자료·저장 형식·미구현 규칙의 오류 타입 |
 | `src/engine/catalog.py` | 불변 지도·유닛·시나리오 정의, 판본별 자료 로더, 참조와 그래프 검증 |
@@ -53,7 +54,7 @@ JSON 자료를 지도·카운터·시나리오별로 분리한다. 검토자가 
 
 ### 작업 1: 게임 상태와 오류 계약
 
-**파일:** `src/engine/__init__.py`, `src/engine/types.py`, `src/engine/errors.py`, `tests/engine/test_state.py` 생성.
+**파일:** `pyproject.toml`, `uv.lock`, `.gitignore`, `src/engine/__init__.py`, `src/engine/types.py`, `src/engine/errors.py`, `tests/__init__.py`, `tests/engine/__init__.py`, `tests/engine/test_state.py` 생성.
 
 **인터페이스:** `Side`, `Phase`, `UnitState`, `RngState`, `Event`, `GameState`, `GameResult`를 제공한다. 오류 타입은 `CatalogError`, `InvalidActionError`, `UnsupportedRuleError`, `StateFormatError`다. 뒤 작업에서는 이 이름을 그대로 사용한다.
 
@@ -75,7 +76,22 @@ class StateTests(unittest.TestCase):
             state.units["axis-2a-hq"] = UnitState("axis-2a-hq", "1301", 1, ())
 ```
 
-- [ ] **2단계:** `PYTHONPATH=src python3 -m unittest tests.engine.test_state -v`를 실행한다. `engine.types`가 없어 실패해야 한다.
+- [ ] **2단계: `uv` 프로젝트를 설정하고 실패하는 테스트를 확인한다.** `src/engine/__init__.py`와 두 테스트 패키지의 `__init__.py`를 빈 파일로 만든다. 아래 설정을 `pyproject.toml`에 기록하고 `.gitignore`에 `.venv/`, `__pycache__/`, `dist/`를 추가한다. `uv lock`으로 `uv.lock`을 생성하고 `uv sync --locked`를 실행한다. 이후 `uv run --locked python -m unittest tests.engine.test_state -v`를 실행한다. `engine.types`가 없어 실패해야 한다.
+
+```toml
+[project]
+name = "stalingrad42-engine"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = []
+
+[build-system]
+requires = ["uv_build>=0.12.12,<0.13"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "engine"
+```
 - [ ] **3단계: 타입을 구현한다.** `Phase` 값은 용어집의 `weather_phase`, `initial_phase`, `movement_phase`, `combat_phase`, `recovery_phase`, `supply_phase`, `victory_determination_phase`를 사용한다. `Side` 값은 `axis`, `soviet`, `none`이다. 입력 매핑을 복사해 읽기 전용으로 만드는 부분이 핵심이다.
 
 ```python
@@ -169,7 +185,7 @@ def test_nonreciprocal_neighbor_rejected(self):
         validate_catalog(catalog)
 ```
 
-- [ ] **2단계:** `PYTHONPATH=src python3 -m unittest tests.engine.test_catalog -v`를 실행한다. import 실패가 예상된다.
+- [ ] **2단계:** `uv run --locked python -m unittest tests.engine.test_catalog -v`를 실행한다. import 실패가 예상된다.
 - [ ] **3단계: 엄격한 로더와 검증기를 구현한다.** 불변 데이터 클래스 `HexDef(id: str, terrain: str, neighbors: Mapping[str, str], features: tuple[str, ...], edge_features: Mapping[str, tuple[str, ...]], source_ref: str)`, `UnitFace(steps: int, attack: int | None, defense: int | None, movement: int | None, abilities: tuple[str, ...])`, `UnitDef(id: str, side: Side, term_id: str, printed_label: str, faces: tuple[UnitFace, ...], source_ref: str)`, `Placement(unit_id: str, location: str, steps: int, source_ref: str)`, `ScenarioDef(id: str, map_ids: tuple[str, ...], start_turn: int, start_phase: Phase, start_side: Side, end_turn: int, placements: tuple[Placement, ...])`, `Catalog(ruleset_id: str, hexes: Mapping[str, HexDef], units: Mapping[str, UnitDef], scenarios: Mapping[str, ScenarioDef])`를 만든다. 각 매핑은 복사해 읽기 전용으로 보관한다. 전투 수치가 없는 비전투 유닛은 선택적 숫자 필드를 사용하고 특수 능력은 인쇄 기호 대신 ID로 기록한다. JSON 중복 키를 거부하는 `object_pairs_hook`을 사용한다. `schema_version == 1`, `ruleset_id == "v2025_04"`, 비어 있지 않은 `source_ref`를 요구한다. 지형 ID의 시작 집합은 `clear`, `desert`, `rough`, `woods`, `wooded_rough`, `mountain`, `minor_city`, `major_city`, `marsh`, `seasonal_marsh`다. 추가 ID는 제공된 TEC/지도에 실제로 있을 때만 출처와 함께 정의한다. 유효하지 않은 자료는 `Catalog`를 반환하기 전에 거부한다.
 
 ```python
@@ -193,7 +209,7 @@ for h in catalog.hexes.values():
 **인터페이스:** `load_catalog`에 Map A의 모든 플레이 가능 헥스를 제공한다. 작업 2의 방향·지형 ID를 사용한다. 각 헥스 JSON에는 `id`, `terrain`, `neighbors`, `features`, `edge_features`, `source_ref`가 있다. `features`는 헥스의 속성, `edge_features`는 방향별 도로·철도·강·교량·나루터·통행 불가 속성이다.
 
 - [ ] **1단계: 전체 자료가 필요한 실패 테스트를 만든다.** 실제 자료를 읽어 S1에서 쓰는 `1300`, `1600`, `3806`, `4100`, `4111`의 존재를 확인한다. 모든 헥스변 속성이 이웃의 반대쪽에도 같은 값으로 기록됐는지 검사한다. 이웃이 없는 해안·지도 끝은 허용하지만, 이웃 없이 연결 도로가 있다고 적힌 자료는 거부한다.
-- [ ] **2단계:** `PYTHONPATH=src python3 -m unittest tests.engine.test_map_a -v`를 실행한다. `map_a.json`이 없어서 실패해야 한다.
+- [ ] **2단계:** `uv run --locked python -m unittest tests.engine.test_map_a -v`를 실행한다. `map_a.json`이 없어서 실패해야 한다.
 - [ ] **3단계: 지도 원본에서 Map A의 인쇄된 헥스 ID와 여섯 방향 이웃을 전사한다.** 작업 2에 적은 6519×7186 지도 이미지를 사용한다. 인쇄된 플레이 가능 헥스마다 JSON 객체 하나를 작성한다. 각 이미지 행을 끝낼 때 ID, 여섯 변, 가장자리 부분 헥스의 플레이 가능 여부를 원본과 확인한다. 네 자리 숫자만 계산해서 이웃을 추정하지 않는다. 이미지 영역마다 전체 그래프 검증을 실행하고, 모든 영역의 전사가 끝나야 이 작업을 커밋한다.
 
 ```json
@@ -203,7 +219,7 @@ for h in catalog.hexes.values():
 위 줄은 **실제 지도 자료가 아닌**, 두 헥스 테스트용 레코드의 형태다. Map A 레코드에는 인쇄된 헥스 ID와 눈으로 확인한 모든 연결을 넣는다. `source_ref`는 이미지 위치를 찾기 위한 값이며 검수 완료 표시가 아니다.
 
 - [ ] **4단계: 헥스 지형과 헥스변 속성을 옮긴다.** 대·소하천, 도로·철도 교차, 교량, 통행 불가 경계, 도시, 승리 점수, 진입 경계를 포함한다. 2019년 TEC 이미지 `Images/httpssteamusercontentaakamaihdnetugc1788468838055324885C6C8FFAB6D5B1E880B63E27895D8291F069A9C64.jpg`는 기호 판독에만 사용하고 실제 효과는 이후 2025년 규칙으로 구현한다. 판독이 어려운 항목은 `docs/rule_issues.md`에 `TODO_RULE_REVIEW`로 적고 확정 전에는 자료 검증을 통과시키지 않는다.
-- [ ] **5단계:** 이미지 영역을 완료할 때마다, 마지막에는 전체에 대해 `PYTHONPATH=src python3 -m unittest tests.engine.test_map_a tests.engine.test_catalog -v`를 실행한다. 원본 그림의 각 영역을 다시 보고 JSON의 헥스 행과 대조한다. 검토한 영역과 개수는 `sources.json`에 기록한다.
+- [ ] **5단계:** 이미지 영역을 완료할 때마다, 마지막에는 전체에 대해 `uv run --locked python -m unittest tests.engine.test_map_a tests.engine.test_catalog -v`를 실행한다. 원본 그림의 각 영역을 다시 보고 JSON의 헥스 행과 대조한다. 검토한 영역과 개수는 `sources.json`에 기록한다.
 - [ ] **6단계:** 완성된 Map A 자료, 영역별 대조 기록, 테스트, 규칙 쟁점 기록을 `data: transcribe and validate Map A`로 커밋한다.
 
 ### 작업 4: Fall Blau 유닛 정의와 시작 배치
@@ -213,7 +229,7 @@ for h in catalog.hexes.values():
 **인터페이스:** `Catalog.scenarios["fall_blau"]`는 S1.1~S1.2에 따라 Map A만 사용하고, 1턴에 시작하여 8턴에 종료하며, 추축군 초기 페이즈에서 시작한다. 양측 시작 카드에 있는 Map A 시작 유닛 전체를 읽는다. `ScenarioDef.placements`에는 `unit_id`, `location`, `steps`, `source_ref`가 있다.
 
 - [ ] **1단계: 실패 테스트를 작성한다.** `axis-2a-hq`가 `1300`에서 시작하는지, `1600`에 소련군 시작 배치가 있는지 확인한다. `fall_blau`의 시작 턴·진영·페이즈, 마지막 턴, 사용 지도도 검사한다. `missing-unit` 또는 `9999`를 배치한 자료는 `CatalogError`가 나야 한다.
-- [ ] **2단계:** `PYTHONPATH=src python3 -m unittest tests.engine.test_fall_blau_data -v`를 실행한다. 자료가 없어서 실패해야 한다.
+- [ ] **2단계:** `uv run --locked python -m unittest tests.engine.test_fall_blau_data -v`를 실행한다. 자료가 없어서 실패해야 한다.
 - [ ] **3단계: 양측 시작 카드와 카운터를 전사한다.** 추축군 카드는 `Images/httpssteamusercontentaakamaihdnetugc17884688380553658153FC9D37838E1E7AE747007396036D0CAE7AF8A0C.jpg`, 소련군 카드는 `Images/httpssteamusercontentaakamaihdnetugc1788468838055329033A93814D55EA6FBC4805AE36AD0C6339D5A88391A.jpg`다. S1 Map A 또는 S1.1~S1.2의 배치 구역에 해당하는 유닛만 포함한다. 물리적 카운터마다 안정적인 ID를 주고 인쇄된 이름은 별도 필드로 둔다. 감소 면, 마커, 수용 상자·진입 구역은 억지로 지도 헥스에 놓지 않고 위치 종류를 기록한다. `Images/`의 카운터 앞뒷면으로 포함된 유닛의 면별 수치를 확인한다.
 
 ```json
@@ -233,7 +249,7 @@ for h in catalog.hexes.values():
 **인터페이스:** `next_phase(turn: int, phase: Phase, side: Side) -> tuple[int, Phase, Side]`, `EndPhaseAction(side: Side)`, `Engine(catalog: Catalog).new_game(scenario_id: str) -> GameState`, `get_legal_actions(state: GameState) -> list[EndPhaseAction]`, `apply_action(state: GameState, action: EndPhaseAction) -> GameState`.
 
 - [ ] **1단계: §3 순서의 실패 테스트를 작성한다.** 날씨 → 추축군 초기·이동·전투·회복·보급 → 소련군 초기·이동·전투·회복·보급 → 승리 판정 → 다음 턴 날씨를 확인한다. S1이 곧바로 추축군 초기 페이즈에서 시작하는지, 추축군 페이즈에 소련군의 `EndPhaseAction`이 불법인지 확인한다.
-- [ ] **2단계:** `PYTHONPATH=src python3 -m unittest tests.engine.test_phase tests.engine.test_actions -v`를 실행한다. import 실패가 예상된다.
+- [ ] **2단계:** `uv run --locked python -m unittest tests.engine.test_phase tests.engine.test_actions -v`를 실행한다. import 실패가 예상된다.
 - [ ] **3단계: 순수 페이즈 전이 함수와 S1 초기화 함수를 구현한다.** `new_game("fall_blau")`는 배치 상태를 읽되 아직 없는 규칙은 실행하지 않는다. S1은 1~8턴이므로 §3·§23에 따라 초기 날씨를 `clear_weather`로 설정한다. 모르는 시나리오 ID는 `CatalogError`다.
 
 ```python
@@ -263,7 +279,7 @@ raise InvalidActionError(f"invalid phase/side: {phase}/{side}")
 **인터페이스:** `roll_d6(state: RngState, reason: str) -> tuple[int, RngState, Event]`. 순수 함수이며 규칙을 호출하는 쪽에서 주사위 소비 시점을 결정한다.
 
 - [ ] **1단계: 실패 테스트를 작성한다.** 같은 `(seed, draw_count, reason)`에서 같은 주사위와 사건이 나오는지, 연속 호출에서 `draw_count`가 증가하는지, 값이 항상 1~6인지 확인한다. `reason`을 바꿔도 주사위 숫자는 같아야 한다. `reason`은 기록 정보이지 난수 입력이 아니다.
-- [ ] **2단계:** `PYTHONPATH=src python3 -m unittest tests.engine.test_rng -v`를 실행한다. import 실패가 예상된다.
+- [ ] **2단계:** `uv run --locked python -m unittest tests.engine.test_rng -v`를 실행한다. import 실패가 예상된다.
 - [ ] **3단계: 버전별로 결과가 일정한 바이트 인코딩과 거부 표본 추출을 구현한다.** Python의 프로세스마다 달라질 수 있는 `hash()`나 전역 난수는 사용하지 않는다. `f"st42-v1:{seed}:{draw_count}:{attempt}".encode("ascii")`의 SHA-256 첫 바이트가 252보다 작을 때만 `(byte % 6) + 1`을 반환한다. 새 상태는 `RngState(seed, draw_count + 1)`, 사건은 `Event("die_roll", (("reason", reason), ("value", str(value))))`다.
 - [ ] **4단계:** 시드 `428193`, 0~9번째 추출의 고정 기대값 `[3, 3, 6, 1, 2, 3, 4, 1, 6, 4]`를 테스트한다. 새 프로세스에서 다시 실행해도 같아야 한다. RNG 테스트를 두 번 실행한다.
 - [ ] **5단계:** RNG 코드와 테스트를 `feat: make die rolls reproducible across processes`로 커밋한다.
@@ -275,10 +291,10 @@ raise InvalidActionError(f"invalid phase/side: {phase}/{side}")
 **인터페이스:** `serialize_state(state: GameState) -> dict`, `deserialize_state(data: dict, catalog: Catalog) -> GameState`, `hash_state(state: GameState) -> str`, `serialize_action(action: EndPhaseAction) -> dict`, `deserialize_action(data: dict) -> EndPhaseAction`.
 
 - [ ] **1단계: 실패 테스트를 작성한다.** 상태·행동의 저장 후 복원, JSON 키 순서의 안정성, 사건 기록만 다를 때 같은 상태 해시, 유닛 위치 또는 RNG `draw_count`가 다를 때 다른 해시를 확인한다. 미래 스키마 판본, 모르는 유닛 ID, 빠진 `ruleset_id`, 손상된 RNG 카운터는 `StateFormatError`가 나야 한다.
-- [ ] **2단계:** `PYTHONPATH=src python3 -m unittest tests.engine.test_codec -v`를 실행한다. import 실패가 예상된다.
+- [ ] **2단계:** `uv run --locked python -m unittest tests.engine.test_codec -v`를 실행한다. import 실패가 예상된다.
 - [ ] **3단계: 명시적인 인코더를 작성한다.** enum·불변 데이터 클래스·매핑을 JSON 값으로 바꾼다. `schema_version: 1`을 기록하고 유닛·마커·통제·보급·자원·증원·승리 점수·비공개 상태의 키를 정렬한다. 대기 중인 결정과 RNG 시드·카운터를 포함해 모든 동적 필드를 저장한다. `MappingProxyType`에 `dataclasses.asdict`를 바로 사용하지 않는다. 행동 JSON의 형태는 `{"schema_version":1,"type":"end_phase","side":"axis"}`다.
 - [ ] **4단계: 복원 시 엄격히 검사한다.** 모르는 키, 누락 필드, 잘못된 enum 값, 정수 자리에 들어온 bool, 모르는 유닛 참조, 중복 유닛 ID, 카탈로그와 다른 `ruleset_id`를 거부한다. 모든 검사 후 완전한 `GameState`를 생성한다. 상태 해시는 `events`만 제외한 정규 JSON으로 계산한다. RNG 상태는 이후 결과에 영향을 주므로 해시에 포함한다.
-- [ ] **5단계: 저장 후 재개 사례를 추가한다.** 한 번 굴리고 저장·복원한 다음 양쪽 상태에서 두 번째 주사위와 사건이 같은지 검사한다. `PYTHONPATH=src python3 -m unittest tests.engine.test_codec tests.engine.test_rng -v`가 통과해야 한다.
+- [ ] **5단계: 저장 후 재개 사례를 추가한다.** 한 번 굴리고 저장·복원한 다음 양쪽 상태에서 두 번째 주사위와 사건이 같은지 검사한다. `uv run --locked python -m unittest tests.engine.test_codec tests.engine.test_rng -v`가 통과해야 한다.
 - [ ] **6단계:** 저장 형식과 테스트를 `feat: save restore and hash engine states`로 커밋한다.
 
 ### 작업 8: 공개 API와 기반 단계 인수 검사
@@ -288,9 +304,9 @@ raise InvalidActionError(f"invalid phase/side: {phase}/{side}")
 **인터페이스:** `new_game`, `get_legal_actions`, `apply_action`, `is_terminal`, `get_result`, `serialize_state`, `deserialize_state`를 내보낸다. 격리된 테스트에는 `Engine(catalog)`를 제공한다. 공개 함수는 기본 `v2025_04` 카탈로그를 읽는다. 기반 단계에서 실제로 도달 가능한 상태의 `is_terminal`은 `False`, `get_result`는 `GameResult.ONGOING`이다.
 
 - [ ] **1단계: 실패하는 인수 테스트를 작성한다.** 실제 S1 자료를 읽어 1턴·추축군 초기 페이즈·Map A 시작 배치를 확인한다. 초기 페이즈 규칙이 이 계획에서 미구현이므로 `get_legal_actions`가 `UnsupportedRuleError`를 내야 한다. 상태·행동 JSON을 저장·복원하고, 테스트용 맑은 날씨 상태에서는 페이즈가 전이되면서 원본이 바뀌지 않는지 확인한다.
-- [ ] **2단계:** `PYTHONPATH=src python3 -m unittest tests.engine.test_foundation_acceptance -v`를 실행한다. 공개 함수가 없어 실패해야 한다.
+- [ ] **2단계:** `uv run --locked python -m unittest tests.engine.test_foundation_acceptance -v`를 실행한다. 공개 함수가 없어 실패해야 한다.
 - [ ] **3단계:** `__init__.py`에 정확한 공개 함수를 내보내고 얇은 위임 함수를 만든다. `Engine`은 검증된 불변 카탈로그만 소유하고 변경 중인 게임 상태는 소유하지 않는다. `new_game`은 반환 전에 자료를 검증한다. 공개 함수는 기본 자료에서 읽기 전용 `Engine`을 구성할 수 있으나 현재 게임을 전역 변수에 보관하지 않는다.
-- [ ] **4단계:** `PYTHONPATH=src python3 -m unittest discover -s tests -v`로 전체 테스트를 실행한다. `TODO_RULE_REVIEW` 항목이 S1 초기화 자료와 관계있다면 해결 전에는 인수 검사를 실패시킨다. S1을 한 턴 끝까지 플레이할 수 있다고 주장하는 테스트가 없는지도 확인한다.
+- [ ] **4단계:** `uv run --locked python -m unittest discover -s tests -v`로 전체 테스트를 실행한다. `TODO_RULE_REVIEW` 항목이 S1 초기화 자료와 관계있다면 해결 전에는 인수 검사를 실패시킨다. S1을 한 턴 끝까지 플레이할 수 있다고 주장하는 테스트가 없는지도 확인한다.
 - [ ] **5단계:** 공개 함수, 인수 테스트, 쟁점 기록을 `feat: expose validated S1 engine foundation`으로 커밋한다.
 
 ## 자체 검토와 구현 전 확인
