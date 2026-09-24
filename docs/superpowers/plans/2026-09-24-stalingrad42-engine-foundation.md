@@ -236,6 +236,8 @@ for h in catalog.hexes.values():
 
 양측 지도 시작 카운터 171개의 카드 앞면 수치도 `docs/s1_start_card_fronts.csv`에 중간 전사했다. 두 CSV의 묶음별 카운터 개수·인쇄 표기 순서가 일치하는지 검사했다. `UnitDef`를 만들기 전에 카운터 고유 ID, 단계별 뒷면, 인쇄 기호·병과·국적을 원본과 확인한다.
 
+카드에 보이는 면이 항상 강한 면은 아니다. 개별 카운터 이미지 대조에서 소련군 `160`(`1502`)과 `62`(`1305`)가 감소된 면으로 시작함을 확인했다. `docs/s1_counter_image_checks.csv`의 부분 검수 기록을 확장할 때 카드에 보이는 면과 다른 면을 따로 기록하고, 실제 시작 `steps`를 판정한 뒤 배치에 넣는다.
+
 - [ ] **1단계: 실패 테스트를 작성한다.** `axis-2a-hq`가 `1300`에서 시작하는지, `1600`에 소련군 시작 배치가 있는지 확인한다. `fall_blau`의 시작 턴·진영·페이즈, 마지막 턴, 사용 지도도 검사한다. `missing-unit` 또는 `9999`를 배치한 자료는 `CatalogError`가 나야 한다.
 - [ ] **2단계:** `uv run --locked python -m unittest tests.engine.test_fall_blau_data -v`를 실행한다. 자료가 없어서 실패해야 한다.
 - [ ] **3단계: 양측 시작 카드와 카운터를 전사한다.** 추축군 카드는 `Images/httpssteamusercontentaakamaihdnetugc17884688380553658153FC9D37838E1E7AE747007396036D0CAE7AF8A0C.jpg`, 소련군 카드는 `Images/httpssteamusercontentaakamaihdnetugc1788468838055329033A93814D55EA6FBC4805AE36AD0C6339D5A88391A.jpg`다. S1 Map A 또는 S1.1~S1.2의 배치 구역에 해당하는 유닛만 포함한다. 물리적 카운터마다 안정적인 ID를 주고 인쇄된 이름은 별도 필드로 둔다. 감소 면, 마커, 수용 상자·진입 구역은 억지로 지도 헥스에 놓지 않고 위치 종류를 기록한다. `Images/`의 카운터 앞뒷면으로 포함된 유닛의 면별 수치를 확인한다.
