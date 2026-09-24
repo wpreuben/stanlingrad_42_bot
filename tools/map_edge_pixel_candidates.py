@@ -22,6 +22,7 @@ class EdgePixelCandidate:
     dark_pixels: int
     wide_signal_pixels: int
     border_signal_pixels: int
+    route_crossing_score: int
     signals: tuple[str, ...]
 
 
@@ -69,6 +70,21 @@ def score_edge_pixels(
                     + (red - green > 8 and red - blue_channel > 10 and red > 180 and green > 140)
                     + (max(red, green, blue_channel) < 100)
                 )
+        route_score = 0
+        for along in range(-30, 31, 2):
+            side_counts = []
+            for sign in (-1, 1):
+                side_count = 0
+                for distance_from_border in range(10, 34, 3):
+                    for offset in (-2, 0, 2):
+                        x = round(center_x + along_x * (along + offset)
+                                  + across_x * sign * distance_from_border)
+                        y = round(center_y + along_y * (along + offset)
+                                  + across_y * sign * distance_from_border)
+                        if 0 <= x < image.size[0] and 0 <= y < image.size[1]:
+                            side_count += max(image.getpixel((x, y))) < 200
+                side_counts.append(side_count)
+            route_score = max(route_score, min(side_counts))
         signals = []
         if blue >= threshold:
             signals.append("river_candidate")
@@ -76,14 +92,16 @@ def score_edge_pixels(
             signals.append("road_candidate")
         if dark >= 10:
             signals.append("rail_or_primary_candidate")
-        if wide_signal <= 10:
+        if route_score >= 4:
+            signals.append("route_crossing_candidate")
+        if wide_signal <= 10 and route_score < 4:
             signals.append("no_feature_candidate")
             if border_signal <= 5:
                 signals.append("strong_no_feature_candidate")
         result.append(EdgePixelCandidate(
             edge.hex_id, edge.direction, edge.neighbor_id,
             edge.review_status, edge.crossing_features, blue, pink, dark,
-            wide_signal, border_signal, tuple(signals),
+            wide_signal, border_signal, route_score, tuple(signals),
         ))
     return result
 
@@ -98,6 +116,10 @@ def evaluate_reviewed(candidates: list[EdgePixelCandidate]) -> dict[str, dict[st
         ),
         "no_feature_candidate": lambda features: features == "none",
         "strong_no_feature_candidate": lambda features: features == "none",
+        "route_crossing_candidate": lambda features: (
+            "secondary_road" in features or "primary_road" in features
+            or "railroad" in features
+        ),
     }
     metrics = {name: {"true_positive": 0, "false_positive": 0, "false_negative": 0}
                for name in truth}
@@ -121,12 +143,13 @@ def write_candidates(candidates: list[EdgePixelCandidate], stream) -> None:
     writer.writerow(("hex_id", "direction", "neighbor_id", "review_status",
                      "crossing_features", "blue_pixels_29x29", "pink_pixels_29x29",
                      "dark_pixels_29x29", "color_pixels_51x51", "border_signal_pixels",
-                     "signals"))
+                     "route_crossing_score", "signals"))
     for edge in candidates:
         writer.writerow((edge.hex_id, edge.direction, edge.neighbor_id,
                          edge.review_status, edge.crossing_features,
                          edge.blue_pixels, edge.pink_pixels, edge.dark_pixels,
                          edge.wide_signal_pixels, edge.border_signal_pixels,
+                         edge.route_crossing_score,
                          ";".join(edge.signals)))
 
 

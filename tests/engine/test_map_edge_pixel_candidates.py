@@ -20,6 +20,16 @@ class FakeImage:
         return (240, 233, 210)
 
 
+class RouteImage:
+    size = (3300, 5100)
+
+    def getpixel(self, point):
+        x, y = point
+        if 418 <= x <= 422 and (278 <= y <= 299 or 319 <= y <= 340):
+            return (120, 120, 120)
+        return (240, 233, 210)
+
+
 class MapEdgePixelCandidateTests(unittest.TestCase):
     def test_scores_independent_signals_without_verifying_an_edge(self):
         edge = EdgeCandidate("1300", "s", "1301", "unreviewed", "", "")
@@ -50,14 +60,21 @@ class MapEdgePixelCandidateTests(unittest.TestCase):
         self.assertIn("no_feature_candidate", result[1].signals)
         self.assertNotIn("strong_no_feature_candidate", result[1].signals)
 
+    def test_crossing_line_on_both_sides_suggests_route(self):
+        edge = EdgeCandidate("1301", "s", "1302", "unreviewed", "", "")
+        result = score_edge_pixels([edge], RouteImage())
+        self.assertIn("route_crossing_candidate", result[0].signals)
+        self.assertGreaterEqual(result[0].route_crossing_score, 4)
+        self.assertNotIn("strong_no_feature_candidate", result[0].signals)
+
     def test_evaluation_counts_misses_and_false_positives_on_reviewed_edges(self):
         edges = [
             EdgePixelCandidate("1300", "s", "1301", "reviewed", "minor_river",
-                               25, 0, 0, 25, 25, ("river_candidate",)),
+                               25, 0, 0, 25, 25, 0, ("river_candidate",)),
             EdgePixelCandidate("1301", "s", "1302", "reviewed", "none",
-                               25, 0, 0, 25, 25, ("river_candidate",)),
+                               25, 0, 0, 25, 25, 0, ("river_candidate",)),
             EdgePixelCandidate("1302", "s", "1303", "reviewed", "major_river",
-                               0, 0, 0, 0, 0, ()),
+                               0, 0, 0, 0, 0, 0, ()),
         ]
         self.assertEqual(evaluate_reviewed(edges)["river_candidate"],
                          {"true_positive": 1, "false_positive": 1, "false_negative": 1})
