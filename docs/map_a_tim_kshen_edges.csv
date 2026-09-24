@@ -1,4 +1,9 @@
 hex_id,direction,neighbor_id,source_ref,crossing_features
+1400,ne,1500,Stal42_Map_west-FINAL-150 Q12.jpg crop x455-765 y55-445,none
+1400,se,1501,Stal42_Map_west-FINAL-150 Q12.jpg crop x455-765 y55-445,none
+1401,ne,1501,Stal42_Map_west-FINAL-150 Q12.jpg crop x455-765 y55-445,none
+1401,se,1502,Stal42_Map_west-FINAL-150 Q12.jpg crop x455-765 y55-445,none
+1402,ne,1502,Stal42_Map_west-FINAL-150 Q12.jpg crop x455-765 y55-445,none
 1500,s,1501,Stal42_Map_west-FINAL-150 Q12.jpg crop x585-970 y45-475,none
 1500,se,1600,Stal42_Map_west-FINAL-150 Q12.jpg crop x585-970 y45-475,minor_river
 1501,s,1502,Stal42_Map_west-FINAL-150 Q12.jpg crop x585-970 y45-475,none

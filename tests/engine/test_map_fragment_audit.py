@@ -40,6 +40,16 @@ class MapFragmentAuditTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "missing internal edge"):
                 audit_fragments(root)
 
+    def test_missing_edge_between_fragments_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for name, hex_id in (("west", "1300"), ("east", "1400")):
+                write_csv(root / f"map_a_{name}_hexes.csv", HEX_FIELDS, (
+                    (hex_id, "clear", "map:crop", "none"),))
+                write_csv(root / f"map_a_{name}_edges.csv", EDGE_FIELDS, ())
+            with self.assertRaisesRegex(ValueError, "missing internal edge"):
+                audit_fragments(root)
+
     def test_wrong_geometry_and_duplicate_edge_are_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -60,8 +70,9 @@ class MapFragmentAuditTests(unittest.TestCase):
     def test_current_verified_fragments(self):
         root = Path(__file__).resolve().parents[2] / "docs"
         result = audit_fragments(root)
-        self.assertEqual((result.hexes, result.edges), (33, 67))
-        self.assertEqual(result.features["minor_river"], 15)
+        self.assertEqual((result.hexes, result.edges), (42, 93))
+        self.assertEqual(result.features["minor_river"], 18)
+        self.assertEqual(result.features["major_river"], 5)
 
 
 if __name__ == "__main__":

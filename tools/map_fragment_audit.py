@@ -41,13 +41,12 @@ def _features(value: str, allowed: frozenset[str], context: str) -> tuple[str, .
 
 
 def audit_fragments(root: Path) -> AuditResult:
-    """Validate all reviewed fragments and each fragment's internal adjacency."""
+    """Validate all reviewed fragments and adjacency among all reviewed hexes."""
     paths = sorted(root.glob("map_a_*_hexes.csv"))
     if not paths:
         raise ValueError(f"no Map A fragments: {root}")
 
     ids: set[str] = set()
-    members: list[set[str]] = []
     edge_files: list[Path] = []
     for hex_path in paths:
         edge_path = hex_path.with_name(hex_path.name.replace("_hexes.csv", "_edges.csv"))
@@ -65,7 +64,6 @@ def audit_fragments(root: Path) -> AuditResult:
             local.add(hex_id)
         if not local:
             raise ValueError(f"empty fragment: {hex_path}")
-        members.append(local)
         edge_files.append(edge_path)
 
     edges: set[tuple[str, str]] = set()
@@ -83,12 +81,11 @@ def audit_fragments(root: Path) -> AuditResult:
             edges.add(pair)
             features.update(_features(row["crossing_features"], EDGE_FEATURES, str(pair)))
 
-    for local in members:
-        for hex_id in local:
-            for direction in OPPOSITE:
-                neighbor = _expected_neighbor(hex_id, direction)
-                if neighbor in local and tuple(sorted((hex_id, neighbor))) not in edges:
-                    raise ValueError(f"missing internal edge: {hex_id}->{neighbor}")
+    for hex_id in ids:
+        for direction in OPPOSITE:
+            neighbor = _expected_neighbor(hex_id, direction)
+            if neighbor in ids and tuple(sorted((hex_id, neighbor))) not in edges:
+                raise ValueError(f"missing internal edge: {hex_id}->{neighbor}")
     return AuditResult(len(ids), len(edges), features)
 
 
