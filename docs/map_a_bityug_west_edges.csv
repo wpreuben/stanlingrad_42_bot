@@ -1,0 +1,17 @@
+hex_id,direction,neighbor_id,source_ref,crossing_features
+2900,s,2901,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560,none
+2900,se,3000,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560,none
+2901,s,2902,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560,none
+2901,ne,3000,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560,none
+2901,se,3001,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560,none
+2902,ne,3001,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560,none
+2902,se,3002,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560,railroad
+3000,s,3001,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560,none
+3000,ne,3100,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560,none
+3000,se,3101,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560,none
+3001,s,3002,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560,none
+3001,ne,3101,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560,none
+3001,se,3102,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560,none
+3002,ne,3102,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560,none
+3100,s,3101,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560,none
+3101,s,3102,Stal42_Map_west-FINAL-150 Q12.jpg crop x1890-2420 y40-560,none

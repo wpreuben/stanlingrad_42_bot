@@ -9,7 +9,7 @@ from pathlib import Path
 from engine.catalog import EDGE_FEATURES, HEX_FEATURES, OPPOSITE, TERRAINS, _expected_neighbor
 
 
-HEX_FIELDS = ("hex_id", "terrain", "source_ref", "other_features")
+HEX_FIELDS = ("hex_id", "terrain", "source_ref", "other_features", "victory_points")
 EDGE_FIELDS = ("hex_id", "direction", "neighbor_id", "source_ref", "crossing_features")
 
 
@@ -18,16 +18,21 @@ class AuditResult:
     hexes: int
     edges: int
     features: Counter[str]
+    victory_points: int
 
 
-def _read_rows(path: Path, fields: tuple[str, ...]) -> list[dict[str, str]]:
+def _read_rows(path: Path, fields: tuple[str, ...], optional_last: bool = False) -> list[dict[str, str]]:
     with path.open(newline="", encoding="utf-8-sig") as stream:
         reader = csv.DictReader(stream)
-        if tuple(reader.fieldnames or ()) != fields:
+        header = tuple(reader.fieldnames or ())
+        if header != fields and not (optional_last and header == fields[:-1]):
             raise ValueError(f"invalid columns: {path}")
         rows = list(reader)
     if any(None in row or any(value is None for value in row.values()) for row in rows):
         raise ValueError(f"incomplete row: {path}")
+    if optional_last and header == fields[:-1]:
+        for row in rows:
+            row[fields[-1]] = "0"
     return rows
 
 
@@ -47,19 +52,24 @@ def audit_fragments(root: Path) -> AuditResult:
         raise ValueError(f"no Map A fragments: {root}")
 
     ids: set[str] = set()
+    victory_points = 0
     edge_files: list[Path] = []
     for hex_path in paths:
         edge_path = hex_path.with_name(hex_path.name.replace("_hexes.csv", "_edges.csv"))
         if not edge_path.is_file():
             raise ValueError(f"missing edge file: {edge_path}")
         local: set[str] = set()
-        for row in _read_rows(hex_path, HEX_FIELDS):
+        for row in _read_rows(hex_path, HEX_FIELDS, optional_last=True):
             hex_id = row["hex_id"]
             if len(hex_id) != 4 or not hex_id.isascii() or not hex_id.isdigit():
                 raise ValueError(f"invalid hex ID: {hex_id}")
             if hex_id in ids or row["terrain"] not in TERRAINS or not row["source_ref"].strip():
                 raise ValueError(f"invalid or duplicate hex: {hex_id}")
             _features(row["other_features"], HEX_FEATURES, hex_id)
+            vp = row["victory_points"]
+            if not vp.isascii() or not vp.isdigit():
+                raise ValueError(f"invalid victory_points at {hex_id}: {vp}")
+            victory_points += int(vp)
             ids.add(hex_id)
             local.add(hex_id)
         if not local:
@@ -86,7 +96,7 @@ def audit_fragments(root: Path) -> AuditResult:
             neighbor = _expected_neighbor(hex_id, direction)
             if neighbor in ids and tuple(sorted((hex_id, neighbor))) not in edges:
                 raise ValueError(f"missing internal edge: {hex_id}->{neighbor}")
-    return AuditResult(len(ids), len(edges), features)
+    return AuditResult(len(ids), len(edges), features, victory_points)
 
 
 if __name__ == "__main__":
@@ -94,4 +104,5 @@ if __name__ == "__main__":
     parser.add_argument("root", nargs="?", type=Path, default=Path("docs"))
     args = parser.parse_args()
     result = audit_fragments(args.root)
-    print(f"reviewed hexes={result.hexes}, edges={result.edges}, features={dict(result.features)}")
+    print(f"reviewed hexes={result.hexes}, edges={result.edges}, "
+          f"victory_points={result.victory_points}, features={dict(result.features)}")
