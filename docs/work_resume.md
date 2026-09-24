@@ -21,7 +21,7 @@
 - [변 픽셀 후보](map_a_edge_pixel_candidates.csv)는 `tools.map_edge_pixel_candidates`로 확인된 인쇄 ID 사이의 기하학적 변 2,942개를 일괄 점수화한 자료다. 51×51픽셀 영역의 색 신호가 거의 없고 통과선이 없는 미검수 변 1,116개는 `no_feature_candidate`, 그중 공유 변의 양 끝까지 조용한 972개는 `strong_no_feature_candidate`로 표시된다. 변을 가로질러 양쪽으로 이어지는 선은 `route_crossing_candidate`로 표시된다. 후보 신호는 실행용 지도 속성이 아니다.
 - 지형 표본 탐색: 기존 검수 헥스 80개는 전부 `clear`다. VASSAL 지형표와 지도 확대 대조에서 `3905`·`4010`·`2122`·`3805`는 수목, `3534`는 습지, `2029`·`2503`·`3134`는 대도시, `1824`는 소도시의 후보로 확인했다. 아직 부분 CSV의 정식 검수 자료는 아니다. 이 표본으로 비평지 분류 가능성을 시험한다.
 - [헥스 색상 후보](map_a_hex_pixel_candidates.csv)는 `tools.map_hex_pixel_candidates`로 확인된 ID 1,040개를 일괄 점수화한 자료다. 평지 967, 수목 32, 습지 2, 대도시 3, 미해결 36개로 분류됐다. [일괄 판독 시험](map_a_automation_spike.md)에 표본 검사와 규칙상 한계를 적었다. 모두 실행용 지형이 아닌 후보이다.
-- VASSAL의 Map A 격자 영역 1,174개 중심과 확인 ID 1,040개를 대조한 [추가 ID 검토 대기열](map_a_vassal_grid_review.csv)은 134개다. `1833`·`1834`는 회색 `X` 엔트리 구역이라 인쇄 헥스 목록에서 제외했다. 134개를 포함한 전체 영역에는 기하학적 이웃 변 3,367개가 가능하며, 기존 후보와 겹치지 않는 425개는 [별도 변 대기열](map_a_vassal_edge_review.csv)에 기록했다. `a678b63`까지 GitHub 브랜치에 푸시했다.
+- VASSAL의 Map A 격자 영역 1,174개 중심과 확인 ID 1,040개를 대조한 [추가 ID 검토 대기열](map_a_vassal_grid_review.csv)은 134개다. `1833`·`1834`는 회색 `X` 엔트리 구역이라 인쇄 헥스 목록에서 제외했다. 134개의 색 분류는 [별도 헥스 점수표](map_a_vassal_hex_pixel_candidates.csv), 추가 425개 기하학적 변의 픽셀 신호는 [별도 변 점수표](map_a_vassal_edge_pixel_candidates.csv)에 있다. 모두 미확정 후보이며 실행용 지도 자료에 섞지 않는다. `ee95394`까지 GitHub 브랜치에 푸시했다.
 
 ## 재현 명령
 

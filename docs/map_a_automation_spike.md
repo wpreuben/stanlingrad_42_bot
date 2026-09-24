@@ -63,13 +63,21 @@ uv run --locked --group map-tools python -m tools.map_hex_pixel_candidates \
 
 이 대조에서 회색 `X` 엔트리 구역 `1833`·`1834`는 존 바깥인 것으로 확인했다. 기존 인쇄 ID 목록에서 두 항목을 빼고 변 후보 5개를 제거했다. 해당 엔트리 구역은 맵 헥스와 별도로 모델링해야 한다.
 
-134개 존 전용 후보에 같은 색상 분류를 적용하면 평지 109, 수목 10, 습지 2, 대도시 1, 미해결 12개다. 미해결에는 바다색 중심이 다수 포함된다. 시드 `420206`의 임의 표본 12개와 미해결 12개를 확대했을 때 모두 해당 숫자 ID가 인쇄된 것을 확인했지만, 전체 134개가 검수된 것은 아니다. 확인 ID와 이 후보를 합친 격자 중심 1,174개 사이에는 기하학적 이웃 변 3,367개가 가능하며, 현재 확인 ID만으로 만든 2,942개보다 425개 많다. 추가 425개는 [별도 변 대기열](map_a_vassal_edge_review.csv)에 두었다. 이 후보들은 플레이 가능성·변 특성이 확정된 자료가 아니다.
+134개 존 전용 후보에 같은 색상 분류를 적용한 [별도 헥스 점수표](map_a_vassal_hex_pixel_candidates.csv)는 평지 109, 수목 10, 습지 2, 대도시 1, 미해결 12개다. 미해결에는 바다색 중심이 다수 포함된다. 시드 `420206`의 임의 표본 12개와 미해결 12개를 확대했을 때 모두 해당 숫자 ID가 인쇄된 것을 확인했지만, 전체 134개가 검수된 것은 아니다. 확인 ID와 이 후보를 합친 격자 중심 1,174개 사이에는 기하학적 이웃 변 3,367개가 가능하며, 현재 확인 ID만으로 만든 2,942개보다 425개 많다. 추가 425개는 [별도 변 대기열](map_a_vassal_edge_review.csv)에 두고, [별도 변 점수표](map_a_vassal_edge_pixel_candidates.csv)로 픽셀 신호를 확인한다. 그중 강 후보 120개, 도로 후보 203개, 철도·간선도로 후보 89개, 선 연결 후보 173개, 저신호 후보 100개다. 이 후보들은 플레이 가능성·지형·변 특성이 확정된 자료가 아니다.
 
 ```bash
 uv run --locked python -m tools.map_vassal_grid_coverage \
   '../../Stalingrad42_v203/buildFile.xml' \
   --output docs/map_a_vassal_grid_review.csv \
   --edge-output docs/map_a_vassal_edge_review.csv
+uv run --locked --group map-tools python -m tools.map_hex_pixel_candidates \
+  '../../images_high/Stal42_Map_west-FINAL-150 Q12.jpg' \
+  --zone-center-csv docs/map_a_vassal_grid_review.csv \
+  --output docs/map_a_vassal_hex_pixel_candidates.csv
+uv run --locked --group map-tools python -m tools.map_edge_pixel_candidates \
+  '../../images_high/Stal42_Map_west-FINAL-150 Q12.jpg' \
+  --zone-edge-csv docs/map_a_vassal_edge_review.csv \
+  --output docs/map_a_vassal_edge_pixel_candidates.csv
 ```
 
 후보 파일 재생성 명령:

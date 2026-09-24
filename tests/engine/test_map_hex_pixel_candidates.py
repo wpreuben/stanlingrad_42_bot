@@ -1,6 +1,10 @@
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
-from tools.map_hex_pixel_candidates import classify_hex_pixels, score_hex_pixels
+from tools.map_hex_pixel_candidates import (classify_hex_pixels, read_zone_center_queue,
+                                            score_hex_pixels)
+from tools.map_image_evidence import center_of
 
 
 class FakeImage:
@@ -14,6 +18,14 @@ class FakeImage:
 
 
 class MapHexPixelCandidateTests(unittest.TestCase):
+    def test_reads_unconfirmed_zone_centers_without_certifying_them(self):
+        with TemporaryDirectory() as folder:
+            path = Path(folder) / "centers.csv"
+            x, y = center_of("1300")
+            path.write_text("hex_id,center_x,center_y,review_status\n"
+                            f"1300,{x},{y},unconfirmed_zone_center\n", encoding="utf-8")
+            self.assertEqual(read_zone_center_queue(path), ["1300"])
+
     def test_scores_distinct_hex_colors_as_candidates(self):
         result = score_hex_pixels(["1300", "1500"], FakeImage(), {"1300": "clear"})
         self.assertEqual(result[0].candidate, "clear_candidate")

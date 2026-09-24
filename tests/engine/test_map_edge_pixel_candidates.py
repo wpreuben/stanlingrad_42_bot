@@ -1,7 +1,10 @@
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 from tools.map_edge_candidates import EdgeCandidate
-from tools.map_edge_pixel_candidates import EdgePixelCandidate, evaluate_reviewed, score_edge_pixels
+from tools.map_edge_pixel_candidates import (EdgePixelCandidate, evaluate_reviewed,
+                                             read_zone_edge_queue, score_edge_pixels)
 
 
 class FakeImage:
@@ -31,6 +34,15 @@ class RouteImage:
 
 
 class MapEdgePixelCandidateTests(unittest.TestCase):
+    def test_zone_edge_queue_preserves_unconfirmed_status(self):
+        with TemporaryDirectory() as folder:
+            path = Path(folder) / "zone_edges.csv"
+            path.write_text("hex_id,direction,neighbor_id,review_status\n"
+                            "1300,se,1400,zone_unconfirmed\n", encoding="utf-8")
+            edges = read_zone_edge_queue(path)
+        self.assertEqual(edges, [EdgeCandidate("1300", "se", "1400",
+                                               "zone_unconfirmed", "", "")])
+
     def test_scores_independent_signals_without_verifying_an_edge(self):
         edge = EdgeCandidate("1300", "s", "1301", "unreviewed", "", "")
         result = score_edge_pixels([edge], FakeImage(), threshold=1)

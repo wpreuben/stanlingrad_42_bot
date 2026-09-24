@@ -24,6 +24,26 @@ class HexPixelCandidate:
     reviewed_terrain: str
 
 
+def read_zone_center_queue(path: Path) -> list[str]:
+    """Read geometric zone centers as candidate IDs, not confirmed map hexes."""
+    expected = ("hex_id", "center_x", "center_y", "review_status")
+    result = []
+    with path.open(newline="", encoding="utf-8") as stream:
+        reader = csv.DictReader(stream)
+        if tuple(reader.fieldnames or ()) != expected:
+            raise ValueError(f"zone center queue columns must be {expected}")
+        for row in reader:
+            hex_id = row["hex_id"]
+            if (row["review_status"] != "unconfirmed_zone_center"
+                    or len(hex_id) != 4 or not hex_id.isascii() or not hex_id.isdigit()
+                    or (int(row["center_x"]), int(row["center_y"])) != center_of(hex_id)):
+                raise ValueError(f"invalid zone center: {row}")
+            result.append(hex_id)
+    if len(result) != len(set(result)):
+        raise ValueError("duplicate zone center ID")
+    return result
+
+
 def classify_hex_pixels(
     median_rgb: tuple[int, int, int], green_fraction: float,
     dark_fraction: float, blue_fraction: float,
@@ -85,25 +105,31 @@ if __name__ == "__main__":
     parser.add_argument("--printed-csv", type=Path,
                         default=Path("docs/map_a_printed_id_checks.csv"))
     parser.add_argument("--fragments-root", type=Path, default=Path("docs"))
+    parser.add_argument("--zone-center-csv", type=Path,
+                        help="score an unconfirmed VASSAL zone center queue instead")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
     from PIL import Image
 
-    audit_fragments(args.fragments_root)
-    with args.printed_csv.open(newline="", encoding="utf-8-sig") as stream:
-        reader = csv.DictReader(stream)
-        if tuple(reader.fieldnames or ()) != ("hex_id", "source_region", "review_scope"):
-            raise ValueError(f"invalid printed ID columns: {args.printed_csv}")
-        hex_ids = [row["hex_id"] for row in reader]
-    if len(hex_ids) != len(set(hex_ids)) or any(len(h) != 4 or not h.isascii() or not h.isdigit()
-                                               for h in hex_ids):
-        raise ValueError("printed IDs must be unique four-digit numbers")
-    reviewed = {row["hex_id"]: row["terrain"]
-                for path in args.fragments_root.glob("map_a_*_hexes.csv")
-                for row in _read_rows(path, HEX_FIELDS, optional_last=True)}
-    if reviewed.keys() - set(hex_ids):
-        raise ValueError("reviewed hex missing from printed ID list")
+    if args.zone_center_csv:
+        hex_ids = read_zone_center_queue(args.zone_center_csv)
+        reviewed = {}
+    else:
+        audit_fragments(args.fragments_root)
+        with args.printed_csv.open(newline="", encoding="utf-8-sig") as stream:
+            reader = csv.DictReader(stream)
+            if tuple(reader.fieldnames or ()) != ("hex_id", "source_region", "review_scope"):
+                raise ValueError(f"invalid printed ID columns: {args.printed_csv}")
+            hex_ids = [row["hex_id"] for row in reader]
+        if len(hex_ids) != len(set(hex_ids)) or any(len(h) != 4 or not h.isascii() or not h.isdigit()
+                                                   for h in hex_ids):
+            raise ValueError("printed IDs must be unique four-digit numbers")
+        reviewed = {row["hex_id"]: row["terrain"]
+                    for path in args.fragments_root.glob("map_a_*_hexes.csv")
+                    for row in _read_rows(path, HEX_FIELDS, optional_last=True)}
+        if reviewed.keys() - set(hex_ids):
+            raise ValueError("reviewed hex missing from printed ID list")
     with Image.open(args.map_image) as source:
         candidates = score_hex_pixels(hex_ids, source.convert("RGB"), reviewed)
     with args.output.open("w", newline="", encoding="utf-8") as stream:

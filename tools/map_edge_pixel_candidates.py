@@ -6,6 +6,7 @@ import math
 from dataclasses import dataclass
 from pathlib import Path
 
+from engine.catalog import _expected_neighbor
 from tools.map_edge_candidates import EdgeCandidate, build_edge_candidates
 from tools.map_image_evidence import PixelImage, center_of
 
@@ -24,6 +25,30 @@ class EdgePixelCandidate:
     border_signal_pixels: int
     route_crossing_score: int
     signals: tuple[str, ...]
+
+
+def read_zone_edge_queue(path: Path) -> list[EdgeCandidate]:
+    """Read VASSAL zone geometry without promoting it to reviewed map data."""
+    expected = ("hex_id", "direction", "neighbor_id", "review_status")
+    result = []
+    seen = set()
+    with path.open(newline="", encoding="utf-8") as stream:
+        reader = csv.DictReader(stream)
+        if tuple(reader.fieldnames or ()) != expected:
+            raise ValueError(f"zone edge queue columns must be {expected}")
+        for row in reader:
+            hex_id, direction, neighbor_id = (row[name] for name in expected[:3])
+            if (row["review_status"] != "zone_unconfirmed"
+                    or direction not in ("s", "ne", "se")
+                    or _expected_neighbor(hex_id, direction) != neighbor_id):
+                raise ValueError(f"invalid zone edge: {row}")
+            key = hex_id, direction
+            if key in seen:
+                raise ValueError(f"duplicate zone edge: {key}")
+            seen.add(key)
+            result.append(EdgeCandidate(hex_id, direction, neighbor_id,
+                                        "zone_unconfirmed", "", ""))
+    return result
 
 
 def score_edge_pixels(
@@ -159,12 +184,15 @@ if __name__ == "__main__":
     parser.add_argument("--printed-csv", type=Path,
                         default=Path("docs/map_a_printed_id_checks.csv"))
     parser.add_argument("--fragments-root", type=Path, default=Path("docs"))
+    parser.add_argument("--zone-edge-csv", type=Path,
+                        help="score an unconfirmed VASSAL zone edge queue instead")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
     from PIL import Image
 
-    edges = build_edge_candidates(args.printed_csv, args.fragments_root)
+    edges = (read_zone_edge_queue(args.zone_edge_csv) if args.zone_edge_csv
+             else build_edge_candidates(args.printed_csv, args.fragments_root))
     with Image.open(args.map_image) as source:
         scores = score_edge_pixels(edges, source.convert("RGB"))
     with args.output.open("w", newline="", encoding="utf-8") as stream:
