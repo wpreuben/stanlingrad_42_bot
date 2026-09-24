@@ -21,6 +21,11 @@
       "kind": "soviet_at_start",
       "path": "Images/httpssteamusercontentaakamaihdnetugc1788468838055329033A93814D55EA6FBC4805AE36AD0C6339D5A88391A.jpg",
       "edition": "2019 component image; cross-check with 2025 rules"
+    },
+    {
+      "kind": "counter_images_named",
+      "path": "images_high/*.png",
+      "edition": "User-provided named counter images; 306 referenced faces pixel-matched to Images/ PNG files"
     }
   ]
 }

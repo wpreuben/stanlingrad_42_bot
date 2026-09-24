@@ -1,0 +1,172 @@
+side,card_row,location,order,printed_label,front_factors,counter_file_stem,start_face_filename,other_face_filename,other_face_factors,review_note
+axis,A1,1300,1,2A HQ,S(1)5,GE-2AHQ,GE-2AHQ-f.png,GE-2AHQ-r.png,0(1)5,HQ reverse
+axis,A1,1500,1,385(-),3-5-3,GE-385Inf-Div,GE-385Inf-Div-f.png,GE-385Inf-Div-r.png,1-3-3,
+axis,A1,1501,1,45,6-7-3,GE-45Inf-Div,GE-45Inf-Div-f.png,GE-45Inf-Div-r.png,4-5-3,
+axis,A1,1501,2,95,6-7-3,GE-95Inf-Div,GE-95Inf-Div-f.png,GE-95Inf-Div-r.png,4-5-3,
+axis,A1,1501,3,383,5-7-3,GE-383Inf-Div,GE-383Inf-Div-f.png,GE-383Inf-Div-r.png,3-5-3,
+axis,A1,1501,4,177+243,2-2-5,GE-177&243Stug-Bn,GE-177&243Stug-Bn-f.png,,,no matching reverse image identified
+axis,A2,1202,1,4PZA HQ,S(1)5,GE-4PzAHQ,GE-4PzAHQ-f.png,GE-4PzAHQ-r.png,0(1)5,HQ reverse
+axis,A2,1202,2,Supply,0-0-5,GE-SupplyPt-1,GE-SupplyPt-1-f.png,,,no matching reverse image identified
+axis,A2,1401,1,9,10-8-6,GE-9Pz-Div,GE-9Pz-Div-f.png,GE-9Pz-Div-r.png,7-6-6,
+axis,A2,1401,2,11,10-8-6,GE-11Pz-Div,GE-11Pz-Div-f.png,GE-11Pz-Div-r.png,7-6-6,
+axis,A2,1401,3,3,6-7-6,GE-3Pzg-Div,GE-3Pzg-Div-f.png,GE-3Pzg-Div-r.png,4-5-6,
+axis,A2,1402,1,82,5-7-3,GE-82Inf-Div,GE-82Inf-Div-f.png,GE-82Inf-Div-r.png,3-5-3,
+axis,A2,1402,2,88,5-7-3,GE-88Inf-Div,GE-88Inf-Div-f.png,GE-88Inf-Div-r.png,3-5-3,
+axis,A2,1402,3,377,5-7-3,GE-377Inf-Div,GE-377Inf-Div-f.png,GE-377Inf-Div-r.png,3-5-3,
+axis,A2,1303,1,24,10-8-6,GE-24Pz-Div,GE-24Pz-Div-f.png,GE-24Pz-Div-r.png,7-6-6,
+axis,A2,1303,2,16,6-7-6,GE-16Pzg-Div,GE-16Pzg-Div-f.png,,,no matching reverse image identified
+axis,A2,1303,3,GD,7-8-6,GE-GDPzg-Div,GE-GDPzg-Div-f.png,GE-GDPzg-Div-r.png,5-6-6,
+axis,A2,1203,1,387,5-7-3,GE-387Inf-Div,GE-387Inf-Div-f.png,GE-387Inf-Div-r.png,3-5-3,
+axis,A3,1003,1,340,5-7-3,GE-340Inf-Div,GE-340Inf-Div-f.png,GE-340Inf-Div-r.png,3-5-3,
+axis,A3,1304,1,6L,2-4-3,HU-6LInf-Div,HU-6LInf-Div-f.png,HU-6LInf-Div-r.png,1-2-3,
+axis,A3,1204,1,9L,2-4-3,HU-9LInf-Div,HU-9LInf-Div-f.png,HU-9LInf-Div-r.png,1-2-3,
+axis,A3,1205,1,7L,2-4-3,HU-7LInf-Div,HU-7LInf-Div-f.png,HU-7LInf-Div-r.png,1-2-3,
+axis,A4,1517,1,6A HQ,S(1)5,GE-6AHQ,GE-6AHQ-f.png,GE-6AHQ-r.png,0(1)5,HQ reverse
+axis,A4,1207,1,57,6-7-3,GE-57Inf-Div,GE-57Inf-Div-f.png,GE-57Inf-Div-r.png,4-5-3,
+axis,A4,1209,1,168,6-7-3,GE-168Inf-Div,GE-168Inf-Div-f.png,GE-168Inf-Div-r.png,4-5-3,
+axis,A4,1211,1,75,6-7-3,GE-75Inf-Div,GE-75Inf-Div-f.png,GE-75Inf-Div-r.png,4-5-3,
+axis,A4,1412,1,305,4-7-3,GE-305Inf-Div,GE-305Inf-Div-f.png,GE-305Inf-Div-r.png,2-5-3,
+axis,A4,1412,2,389,5-7-3,GE-389Inf-Div,GE-389Inf-Div-f.png,GE-389Inf-Div-r.png,3-5-3,
+axis,A4,1613,1,100,5-5-4,GE-100JgrInf-Div,GE-100JgrInf-Div-f.png,GE-100JgrInf-Div-r.png,3-3-4,
+axis,A4,1613,2,376,5-7-3,GE-376Inf-Div,GE-376Inf-Div-f.png,GE-376Inf-Div-r.png,3-5-3,
+axis,A4,1714,1,113,6-7-3,GE-113Inf-Div,GE-113Inf-Div-f.png,GE-113Inf-Div-r.png,4-5-3,
+axis,A4,1714,2,336,5-7-3,GE-336Inf-Div,GE-336Inf-Div-f.png,GE-336Inf-Div-r.png,3-5-3,
+axis,A4,1715,1,79,6-7-3,GE-79Inf-Div,GE-79Inf-Div-f.png,GE-79Inf-Div-r.png,4-5-3,
+axis,A4,1715,2,294,6-7-3,GE-294Inf-Div,GE-294Inf-Div-f.png,GE-294Inf-Div-r.png,4-5-3,
+axis,A5,1716,1,71,6-7-3,GE-71Inf-Div,GE-71Inf-Div-f.png,GE-71Inf-Div-r.png,4-5-3,
+axis,A5,1716,2,297,6-7-3,GE-297Inf-Div,GE-297Inf-Div-f.png,GE-297Inf-Div-r.png,4-5-3,
+axis,A5,1717,1,62,6-7-3,GE-62Inf-Div,GE-62Inf-Div-f.png,GE-62Inf-Div-r.png,4-5-3,
+axis,A5,1717,2,44,4-5-3,GE-44Inf-Div,GE-44Inf-Div-r.png,GE-44Inf-Div-f.png,6-7-3,starts on reduced face
+axis,A5,1515,1,3,10-8-6,GE-3Pz-Div,GE-3Pz-Div-f.png,GE-3Pz-Div-r.png,7-6-6,
+axis,A5,1515,2,23,7-6-6,GE-23Pz-Div,GE-23Pz-Div-r.png,GE-23Pz-Div-f.png,10-8-6,starts on reduced face
+axis,A5,1515,3,29,4-5-6,GE-29Pzg-Div,GE-29Pzg-Div-r.png,GE-29Pzg-Div-f.png,6-7-6,starts on reduced face
+axis,A5,1415,1,244+245,2-2-5,GE-244&245Stug-Bn,GE-244&245Stug-Bn-f.png,,,no matching other face image identified
+axis,A5,1415,2,369,1-2-4,CR-369Inf-Regt,CR-369Inf-Regt-f.png,,,named blank reverse image in images_high
+axis,A5,1518,1,384,5-7-3,GE-384Inf-Div,GE-384Inf-Div-f.png,GE-384Inf-Div-r.png,3-5-3,
+axis,A6,1824,1,1PZA HQ,S(1)5,GE-1PzAHQ,GE-1PzAHQ-f.png,GE-1PzAHQ-r.png,0(1)5,HQ reverse
+axis,A6,1719,1,1,2-5-3,RO-1Inf-Div,RO-1Inf-Div-f.png,RO-1Inf-Div-r.png,1-2-3,
+axis,A6,1719,2,20,2-5-3,RO-20Inf-Div,RO-20Inf-Div-f.png,RO-20Inf-Div-r.png,1-2-3,
+axis,A6,1721,1,4,2-5-3,RO-4Inf-Div,RO-4Inf-Div-f.png,RO-4Inf-Div-r.png,1-2-3,
+axis,A6,1620,1,2,2-5-3,RO-2Inf-Div,RO-2Inf-Div-f.png,RO-2Inf-Div-r.png,1-2-3,
+axis,A6,1421,1,454,1-4-2,GE-454SEC-Div,GE-454SEC-Div-f.png,,,no matching other face image identified
+axis,A6,1621,1,97,5-5-4,GE-97JgrInf-Div,GE-97JgrInf-Div-f.png,GE-97JgrInf-Div-r.png,3-3-4,
+axis,A6,1722,1,101,5-5-4,GE-101JgrInf-Div,GE-101JgrInf-Div-f.png,GE-101JgrInf-Div-r.png,3-3-4,
+axis,A6,1523,1,1,5[10]-5-4,GE-1MtnInf-Div,GE-1MtnInf-Div-f.png,GE-1MtnInf-Div-r.png,3[6]-3-4,superscript attack requires rule review
+axis,A6,1823,1,68,4-5-3,GE-68Inf-Div,GE-68Inf-Div-r.png,GE-68Inf-Div-f.png,6-7-3,starts on reduced face
+axis,A6,1923,1,257,6-7-3,GE-257Inf-Div,GE-257Inf-Div-f.png,GE-257Inf-Div-r.png,4-5-3,
+axis,A6,2024,1,295,6-7-3,GE-295Inf-Div,GE-295Inf-Div-f.png,GE-295Inf-Div-r.png,4-5-3,
+axis,A7,2225,1,94,6-7-3,GE-94Inf-Div,GE-94Inf-Div-f.png,GE-94Inf-Div-r.png,4-5-3,
+axis,A7,2225,2,76,6-7-3,GE-76Inf-Div,GE-76Inf-Div-f.png,GE-76Inf-Div-r.png,4-5-3,
+axis,A7,1926,1,22,7-5-6,GE-22Pz-Div,GE-22Pz-Div-f.png,GE-22Pz-Div-r.png,4-3-6,
+axis,A7,2027,1,60,6-7-6,GE-60Pzg-Div,GE-60Pzg-Div-f.png,GE-60Pzg-Div-r.png,4-5-6,
+axis,A7,2029,1,14,7-6-6,GE-14Pz-Div,GE-14Pz-Div-r.png,GE-14Pz-Div-f.png,10-8-6,starts on reduced face
+axis,A7,2331,1,17A HQ,S(1)5,GE-17AHQ,GE-17AHQ-f.png,GE-17AHQ-r.png,0(1)5,HQ reverse
+axis,A7,2326,1,370,5-7-3,GE-370Inf-Div,GE-370Inf-Div-f.png,GE-370Inf-Div-r.png,3-5-3,
+axis,A7,2327,1,111,6-7-3,GE-111Inf-Div,GE-111Inf-Div-f.png,GE-111Inf-Div-r.png,4-5-3,
+axis,A7,2427,1,3 Cel,4-4-6,IT-3CalMechInf-Div,IT-3CalMechInf-Div-f.png,IT-3CalMechInf-Div-r.png,2-2-6,
+axis,A7,2427,2,Prs,2-4-3,IT-PasInf-Div,IT-PasInf-Div-f.png,IT-PasInf-Div-r.png,1-2-3,
+axis,A7,2427,3,Tor,2-4-3,IT-TorInf-Div,IT-TorInf-Div-f.png,IT-TorInf-Div-r.png,1-2-3,
+axis,A8,2427,1,Barbo,2-2-5,IT-BarboCav-Bde,IT-BarboCav-Bde-f.png,,,no matching other face image identified
+axis,A8,2529,1,198,6-7-3,GE-198Inf-Div,GE-198Inf-Div-f.png,GE-198Inf-Div-r.png,4-5-3,
+axis,A8,2529,2,4,5[10]-5-4,GE-4MtnInf-Div,GE-4MtnInf-Div-f.png,GE-4MtnInf-Div-r.png,3[6]-3-4,superscript attack requires rule review
+axis,A8,2531,1,Slov,4-4-6,SL-SlovMotInf-Div,SL-SlovMotInf-Div-f.png,SL-SlovMotInf-Div-r.png,2-2-6,
+axis,A8,2531,2,Wilk,6-8-6,GE-WikSSPzg-Div,GE-WikSSPzg-Div-f.png,GE-WikSSPzg-Div-r.png,4-5-6,
+axis,A8,2533,1,13,7-6-6,GE-13Pz-Div,GE-13Pz-Div-r.png,GE-13Pz-Div-f.png,10-8-6,starts on reduced face
+axis,A8,2533,2,125,4-5-3,GE-125Inf-Div,GE-125Inf-Div-r.png,GE-125Inf-Div-f.png,6-7-3,starts on reduced face
+axis,A8,2634,1,298,6-7-3,GE-298Inf-Div,GE-298Inf-Div-f.png,GE-298Inf-Div-r.png,4-5-3,
+axis,A8,2634,2,73,4-5-3,GE-73Inf-Div,GE-73Inf-Div-r.png,GE-73Inf-Div-f.png,6-7-3,starts on reduced face
+axis,A8,2634,3,4,1-2-4,GE-4Bicycle-Regt,GE-4Bicycle-Regt-f.png,,,no matching other face image identified
+axis,A8,1936,1,5,3-3-5,RO-5Cav-Div,RO-5Cav-Div-f.png,RO-5Cav-Div-r.png,1-1-5,
+soviet,S1,1600,1,15+143,3-5-3,SO-15&143Inf-Div,SO-15&143Inf-Div-f.png,SO-15&143Inf-Div-r.png,1-3-3,
+soviet,S1,1600,2,129,2-2-6,SO-129Tank-Bde,SO-129Tank-Bde-f.png,,,no matching other face image identified
+soviet,S1,1800,1,106,2-2-3,SO-106Inf-Bde,SO-106Inf-Bde-f.png,,,no matching other face image identified
+soviet,S1,1502,1,121,3-5-3,SO-121Inf-Div,SO-121Inf-Div-f.png,SO-121Inf-Div-r.png,1-3-3,
+soviet,S1,1502,2,160,1-3-3,SO-160Inf-Div,SO-160Inf-Div-r.png,SO-160Inf-Div-f.png,3-5-3,starts on reduced face
+soviet,S1,1502,3,111,2-2-3,SO-111Inf-Bde,SO-111Inf-Bde-f.png,,,no matching other face image identified
+soviet,S1,1403,1,212,3-5-3,SO-212Inf-Div,SO-212Inf-Div-f.png,SO-212Inf-Div-r.png,1-3-3,
+soviet,S1,1403,2,141,2-2-3,SO-141Inf-Bde,SO-141Inf-Bde-f.png,,,no matching other face image identified
+soviet,S1,1305,1,45,3-5-3,SO-45Inf-Div,SO-45Inf-Div-f.png,SO-45Inf-Div-r.png,1-3-3,
+soviet,S1,1305,2,62,1-3-3,SO-62Inf-Div,SO-62Inf-Div-r.png,SO-62Inf-Div-f.png,3-5-3,starts on reduced face
+soviet,S1,1802,1,16,7-5-5,SO-16Tank-Corps,SO-16Tank-Corps-f.png,SO-16Tank-Corps-r.png,4-3-5,
+soviet,S1,1802,2,119,2-2-3,SO-119Inf-Bde,SO-119Inf-Bde-f.png,,,no matching other face image identified
+soviet,S2,2002,1,Bry HQ,S(1)5,SO-Bry-Front-HQ,SO-Bry-Front-HQ-f.png,SO-Bry-Front-HQ-r.png,0(1)5,HQ reverse
+soviet,S2,2002,2,284,3-5-3,SO-284Inf-Div,SO-284Inf-Div-f.png,SO-284Inf-Div-r.png,1-3-3,
+soviet,S2,2002,3,115+116,2-2-6,SO-115&116Tank-Bde,SO-115&116Tank-Bde-f.png,,,no matching other face image identified
+soviet,S2,1604,1,6,1-3-3,SO-6Inf-Div,SO-6Inf-Div-r.png,SO-6Inf-Div-f.png,3-5-3,starts on reduced face
+soviet,S2,1604,2,14+170,2-2-6,SO-14&170Tank-Bde,SO-14&170Tank-Bde-f.png,,,no matching other face image identified
+soviet,S2,1307,1,8 NKVD,2-5-3,SO-8NKVD-Div,SO-8NKVD-Div-f.png,SO-8NKVD-Div-r.png,1-3-3,
+soviet,S2,1307,2,1,2-2-6,SO-1MotInf-Bde,SO-1MotInf-Bde-f.png,,,no matching reverse image identified
+soviet,S2,1309,1,227,1-3-3,SO-227Inf-Div,SO-227Inf-Div-r.png,SO-227Inf-Div-f.png,3-5-3,starts on reduced face
+soviet,S2,1309,2,297,3-5-3,SO-297Inf-Div,SO-297Inf-Div-f.png,SO-297Inf-Div-r.png,1-3-3,
+soviet,S2,1311,1,301,1-3-3,SO-301Inf-Div,SO-301Inf-Div-r.png,SO-301Inf-Div-f.png,3-5-3,starts on reduced face
+soviet,S2,1311,2,10,2-2-6,SO-10Tank-Bde,SO-10Tank-Bde-f.png,,,no matching other face image identified
+soviet,S3,1510,1,4,7-5-5,SO-4Tank-Corps,SO-4Tank-Corps-f.png,SO-4Tank-Corps-r.png,4-3-5,
+soviet,S3,1510,2,226+343,3-5-3,SO-226&343Inf-Div,SO-226&343Inf-Div-f.png,SO-226&343Inf-Div-r.png,1-3-3,
+soviet,S3,1512,1,76+293,3-5-3,SO-76&293Inf-Div,SO-76&293Inf-Div-f.png,SO-76&293Inf-Div-r.png,1-3-3,
+soviet,S3,1512,2,124,1-3-3,SO-124Inf-Div,SO-124Inf-Div-r.png,SO-124Inf-Div-f.png,3-5-3,starts on reduced face
+soviet,S3,1713,1,13,1-3-3,SO-13GdsInf-Div,SO-13GdsInf-Div-r.png,SO-13GdsInf-Div-f.png,3-5-3,starts on reduced face
+soviet,S3,1713,2,169,3-5-3,SO-169Inf-Div,SO-169Inf-Div-f.png,SO-169Inf-Div-r.png,1-3-3,
+soviet,S3,1713,3,90,2-2-6,SO-90Tank-Bde,SO-90Tank-Bde-f.png,,,no matching other face image identified
+soviet,S3,1813,1,15,1-3-3,SO-15GdsInf-Div,SO-15GdsInf-Div-r.png,SO-15GdsInf-Div-f.png,3-5-3,starts on reduced face
+soviet,S3,1813,2,65,2-2-6,SO-65Tank-Bde,SO-65Tank-Bde-f.png,,,no matching other face image identified
+soviet,S3,1813,3,38+175,3-5-3,SO-38&175Inf-Div,SO-38&175Inf-Div-f.png,SO-38&175Inf-Div-r.png,1-3-3,
+soviet,S3,2013,1,23,7-5-5,SO-23Tank-Corps,SO-23Tank-Corps-f.png,SO-23Tank-Corps-r.png,4-3-5,
+soviet,S4,1611,1,13,7-5-5,SO-13Tank-Corps,SO-13Tank-Corps-f.png,SO-13Tank-Corps-r.png,4-3-5,
+soviet,S4,1911,1,SW HQ,S(1)5,SO-SW-Front-HQ,SO-SW-Front-HQ-f.png,SO-SW-Front-HQ-r.png,0(1)5,HQ reverse
+soviet,S4,1911,2,24,7-5-5,SO-24Tank-Corps,SO-24Tank-Corps-f.png,SO-24Tank-Corps-r.png,4-3-5,
+soviet,S4,1815,1,9,3-5-3,SO-9GdsInf-Div,SO-9GdsInf-Div-f.png,SO-9GdsInf-Div-r.png,1-3-3,
+soviet,S4,1815,2,3,4-5-5,SO-3GdsCav-Corps,SO-3GdsCav-Corps-f.png,SO-3GdsCav-Corps-r.png,2-3-5,
+soviet,S4,1815,3,6,3-2-5,SO-6GdsTank-Bde,SO-6GdsTank-Bde-f.png,,,no matching other face image identified
+soviet,S4,1816,1,162+300,3-5-3,SO-162&300Inf-Div,SO-162&300Inf-Div-f.png,SO-162&300Inf-Div-r.png,1-3-3,
+soviet,S4,1816,2,277,1-3-3,SO-277Inf-Div,SO-277Inf-Div-r.png,SO-277Inf-Div-f.png,3-5-3,starts on reduced face
+soviet,S4,1816,3,1 TD,1-3-5,SO-1TD-Div,SO-1TD-Div-f.png,,,no matching other face image identified
+soviet,S4,1818,1,199+278,1-3-3,SO-199&278Inf-Div,SO-199&278Inf-Div-r.png,SO-199&278Inf-Div-f.png,3-5-3,starts on reduced face
+soviet,S4,1818,2,242+255,3-5-3,SO-242&255Inf-Div,SO-242&255Inf-Div-f.png,SO-242&255Inf-Div-r.png,1-3-3,
+soviet,S4,1819,1,106+333,3-5-3,SO-106&333Cav-Div,SO-106&333Cav-Div-f.png,SO-106&333Cav-Div-r.png,1-3-3,
+soviet,S5,1819,1,81+304,1-3-3,SO-81&304MotCav-Div,SO-81&304MotCav-Div-r.png,SO-81&304MotCav-Div-f.png,3-5-3,starts on reduced face
+soviet,S5,1821,1,51+140,3-5-3,SO-51&140Cav-Div,SO-51&140Cav-Div-f.png,SO-51&140Cav-Div-r.png,1-3-3,
+soviet,S5,2022,1,296+318,3-5-3,SO-296&318Cav-Div,SO-296&318Cav-Div-f.png,SO-296&318Cav-Div-r.png,1-3-3,
+soviet,S5,2017,1,22,4-3-5,SO-22Tank-Corps,SO-22Tank-Corps-r.png,SO-22Tank-Corps-f.png,7-5-5,starts on reduced face
+soviet,S5,2120,1,5,2-3-5,SO-5Cav-Corps,SO-5Cav-Corps-r.png,SO-5Cav-Corps-f.png,4-5-5,starts on reduced face
+soviet,S5,2120,2,159,2-2-6,SO-159Tank-Bde,SO-159Tank-Bde-f.png,,,no matching other face image identified
+soviet,S5,2120,3,14,4-3-5,SO-14Tank-Corps,SO-14Tank-Corps-r.png,SO-14Tank-Corps-f.png,7-5-5,starts on reduced face
+soviet,S5,2023,1,295,3-5-3,SO-295Inf-Div,SO-295Inf-Div-f.png,SO-295Inf-Div-r.png,1-3-3,
+soviet,S5,2023,2,275,3-5-3,SO-275Inf-Div,SO-275Inf-Div-f.png,SO-275Inf-Div-r.png,1-3-3,
+soviet,S5,2224,1,218+349,3-5-3,SO-218&349Inf-Div,SO-218&349Inf-Div-f.png,SO-218&349Inf-Div-r.png,1-3-3,
+soviet,S5,2224,2,102+230,3-5-3,SO-102&230Inf-Div,SO-102&230Inf-Div-f.png,SO-102&230Inf-Div-r.png,1-3-3,
+soviet,S5,2224,3,121,2-2-6,SO-121Tank-Bde,SO-121Tank-Bde-f.png,,,no matching other face image identified
+soviet,S6,2425,1,4,3-5-3,SO-4Inf-Div,SO-4Inf-Div-f.png,SO-4Inf-Div-r.png,1-3-3,
+soviet,S6,2425,2,261,1-3-3,SO-261Inf-Div,SO-261Inf-Div-f.png,,,no matching other face image identified
+soviet,S6,2426,1,73+176,3-5-3,SO-73&176Inf-Div,SO-73&176Inf-Div-f.png,SO-73&176Inf-Div-r.png,1-3-3,
+soviet,S6,2426,2,74,3-5-3,SO-74Inf-Div,SO-74Inf-Div-f.png,SO-74Inf-Div-r.png,1-3-3,
+soviet,S6,2528,1,216,3-5-3,SO-216Inf-Div,SO-216Inf-Div-f.png,SO-216Inf-Div-r.png,1-3-3,
+soviet,S6,2528,2,353,3-5-3,SO-353Inf-Div,SO-353Inf-Div-f.png,SO-353Inf-Div-r.png,1-3-3,
+soviet,S6,2629,1,395,3-5-3,SO-395Inf-Div,SO-395Inf-Div-f.png,SO-395Inf-Div-r.png,1-3-3,
+soviet,S6,2629,2,383,3-5-3,SO-383Inf-Div,SO-383Inf-Div-f.png,SO-383Inf-Div-r.png,1-3-3,
+soviet,S6,2828,1,228+347,3-5-3,SO-228&347Inf-Div,SO-228&347Inf-Div-f.png,SO-228&347Inf-Div-r.png,1-3-3,
+soviet,S6,2828,2,64,2-2-6,SO-64Tank-Bde,SO-64Tank-Bde-f.png,,,no matching other face image identified
+soviet,S6,2725,1,South HQ,S(1)5,SO-South-Front-HQ,SO-South-Front-HQ-f.png,SO-South-Front-HQ-r.png,0(1)5,HQ reverse
+soviet,S6,2725,2,140,2-2-6,SO-140Tank-Bde,SO-140Tank-Bde-f.png,,,no matching other face image identified
+soviet,S7,2631,1,31,3-5-3,SO-31Inf-Div,SO-31Inf-Div-f.png,SO-31Inf-Div-r.png,1-3-3,
+soviet,S7,2631,2,76,2-2-3,SO-76NavInf-Bde,SO-76NavInf-Bde-f.png,,,no matching other face image identified
+soviet,S7,2633,1,339,3-5-3,SO-339Inf-Div,SO-339Inf-Div-f.png,SO-339Inf-Div-r.png,1-3-3,
+soviet,S7,2633,2,68,2-2-3,SO-68NavInf-Bde,SO-68NavInf-Bde-f.png,,,no matching other face image identified
+soviet,S7,2734,1,30 Irk,3-5-3,SO-30IrkInf-Div,SO-30IrkInf-Div-f.png,SO-30IrkInf-Div-r.png,1-3-3,
+soviet,S7,2734,2,16,2-2-3,SO-16Inf-Bde,SO-16Inf-Bde-f.png,,,no matching other face image identified
+soviet,S7,2832,1,2,3-5-3,SO-2GdsInf-Div,SO-2GdsInf-Div-f.png,SO-2GdsInf-Div-r.png,1-3-3,
+soviet,S7,2832,2,63,2-2-6,SO-63Tank-Bde,SO-63Tank-Bde-f.png,,,no matching other face image identified
+soviet,S7,2503,1,17,7-5-5,SO-17Tank-Corps,SO-17Tank-Corps-f.png,SO-17Tank-Corps-r.png,4-3-5,
+soviet,S7,2503,2,2 TD,1-3-5,SO-2TD-Div,SO-2TD-Div-f.png,,,no matching other face image identified
+soviet,S7,2503,3,Vor NKVD,1-2-3,SO-Vor-NKVD-Div,SO-Vor-NKVD-Div-f.png,,,no matching other face image identified
+soviet,S7,3134,1,Ros NKVD,2-6-3,SO-9NKVD-Div,SO-9NKVD-Div-f.png,SO-9NKVD-Div-r.png,1-3-3,
+soviet,S8,2936,1,91+302,3-5-3,SO-91&302Inf-Div,SO-91&302Inf-Div-f.png,SO-91&302Inf-Div-r.png,1-3-3,
+soviet,S8,2338,1,116KK,2-2-5,SO-116KKCav-Div,SO-116KKCav-Div-f.png,,,no matching other face image identified
+soviet,S8,3139,1,12KK,2-2-5,SO-12KKCav-Div,SO-12KKCav-Div-f.png,,,no matching other face image identified
+soviet,S8,3241,1,15KK,2-2-5,SO-15KKCav-Div,SO-15KKCav-Div-f.png,,,no matching other face image identified
+soviet,S8,3241,2,NCau HQ,S(1)5,SO-NCau-Front-HQ,SO-NCau-Front-HQ-f.png,SO-NCau-Front-HQ-r.png,0(1)5,HQ reverse
+soviet,S8,3434,1,110+115,2-2-5,SO-110&115Cav-Div,SO-110&115Cav-Div-f.png,,,no matching other face image identified
+soviet,S8,3806,1,141+206,3-5-3,SO-141&206Inf-Div,SO-141&206Inf-Div-f.png,SO-141&206Inf-Div-r.png,1-3-3,
+soviet,S8,3806,2,174+232,3-5-3,SO-174&232Inf-Div,SO-174&232Inf-Div-f.png,SO-174&232Inf-Div-r.png,1-3-3,
+soviet,S8,3806,3,219,3-5-3,SO-219Inf-Div,SO-219Inf-Div-f.png,SO-219Inf-Div-r.png,1-3-3,
+soviet,S8,3806,4,309,3-5-3,SO-309Inf-Div,SO-309Inf-Div-f.png,SO-309Inf-Div-r.png,1-3-3,
+soviet,S8,3322,1,335+341,1-3-3,SO-335&341Inf-Div,SO-335&341Inf-Div-r.png,SO-335&341Inf-Div-f.png,3-5-3,starts on reduced face
