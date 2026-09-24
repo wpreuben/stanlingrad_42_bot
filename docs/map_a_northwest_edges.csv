@@ -1,17 +1,17 @@
-hex_id,direction,neighbor_id,source_ref,crossing_features_status
-1200,s,1201,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,pending
-1200,ne,1300,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,pending
-1200,se,1301,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,pending
-1201,s,1202,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,pending
-1201,ne,1301,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,pending
-1201,se,1302,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,pending
-1202,ne,1302,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,pending
-1300,s,1301,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,pending
-1300,se,1400,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,pending
-1301,s,1302,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,pending
-1301,ne,1400,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,pending
-1301,se,1401,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,pending
-1302,ne,1401,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,pending
-1302,se,1402,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,pending
-1400,s,1401,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,pending
-1401,s,1402,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,pending
+hex_id,direction,neighbor_id,source_ref,crossing_features
+1200,s,1201,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,none
+1200,ne,1300,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,none
+1200,se,1301,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,secondary_road
+1201,s,1202,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,none
+1201,ne,1301,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,none
+1201,se,1302,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,none
+1202,ne,1302,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,none
+1300,s,1301,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,none
+1300,se,1400,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,none
+1301,s,1302,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,secondary_road
+1301,ne,1400,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,none
+1301,se,1401,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,none
+1302,ne,1401,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,none
+1302,se,1402,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,secondary_road
+1400,s,1401,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,none
+1401,s,1402,Stal42_Map_west-FINAL-150 Q12.jpg top-left crop x0-850 y0-900,none
