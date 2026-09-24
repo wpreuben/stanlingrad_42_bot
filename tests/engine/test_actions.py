@@ -1,5 +1,5 @@
 import unittest
-from dataclasses import replace
+from dataclasses import FrozenInstanceError, replace
 
 from engine.actions import EndPhaseAction
 from engine.catalog import Catalog, ScenarioDef
@@ -20,9 +20,19 @@ class ActionTests(unittest.TestCase):
         with self.assertRaises(UnsupportedRuleError):
             self.engine.get_legal_actions(state)
 
+    def test_new_game_accepts_explicit_rng_seed(self):
+        state = self.engine.new_game("fall_blau", seed=428193)
+        self.assertEqual(state.rng, RngState(428193, 0))
+        with self.assertRaises(ValueError):
+            self.engine.new_game("fall_blau", seed=True)
+
     def test_unknown_scenario_is_rejected(self):
         with self.assertRaises(CatalogError):
             self.engine.new_game("unknown")
+
+    def test_engine_catalog_binding_cannot_be_replaced(self):
+        with self.assertRaises(FrozenInstanceError):
+            self.engine.catalog = Catalog("v2025_04", {}, {}, {})
 
     def test_clear_weather_phase_can_advance_without_mutating_input(self):
         state = replace(self.engine.new_game("fall_blau"), phase=Phase.WEATHER, active_side=Side.NONE)

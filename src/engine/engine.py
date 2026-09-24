@@ -1,6 +1,6 @@
 """State transitions for the currently supported rules subset."""
 
-from dataclasses import replace
+from dataclasses import dataclass, replace
 
 from .actions import EndPhaseAction
 from .catalog import Catalog, validate_catalog
@@ -9,12 +9,16 @@ from .phase import next_phase
 from .types import Event, GameResult, GameState, Phase, RngState, Side, UnitState
 
 
+@dataclass(frozen=True)
 class Engine:
-    def __init__(self, catalog: Catalog) -> None:
-        validate_catalog(catalog)
-        self.catalog = catalog
+    catalog: Catalog
 
-    def new_game(self, scenario_id: str) -> GameState:
+    def __post_init__(self) -> None:
+        validate_catalog(self.catalog)
+
+    def new_game(self, scenario_id: str, seed: int = 0) -> GameState:
+        if type(seed) is not int:
+            raise ValueError("seed must be an integer")
         scenario = self.catalog.scenarios.get(scenario_id)
         if scenario is None:
             raise CatalogError(f"unknown scenario: {scenario_id}")
@@ -23,7 +27,7 @@ class Engine:
                  for p in scenario.placements}
         return GameState(self.catalog.ruleset_id, scenario.id, scenario.start_turn,
                          scenario.start_phase, scenario.start_side, "clear_weather",
-                         units, {}, RngState(0, 0), None, ())
+                         units, {}, RngState(seed, 0), None, ())
 
     def get_legal_actions(self, state: GameState) -> list[EndPhaseAction]:
         self._check_state_catalog(state)

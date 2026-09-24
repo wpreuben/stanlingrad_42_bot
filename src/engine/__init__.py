@@ -17,8 +17,8 @@ def _default_engine() -> Engine:
     return Engine(load_catalog(_DATA_ROOT))
 
 
-def new_game(scenario_id: str) -> GameState:
-    return _default_engine().new_game(scenario_id)
+def new_game(scenario_id: str, seed: int = 0) -> GameState:
+    return _default_engine().new_game(scenario_id, seed=seed)
 
 
 def get_legal_actions(state: GameState) -> list[EndPhaseAction]:

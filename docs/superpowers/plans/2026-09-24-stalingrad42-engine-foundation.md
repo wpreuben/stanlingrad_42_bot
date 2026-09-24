@@ -246,7 +246,7 @@ for h in catalog.hexes.values():
 
 **파일:** `src/engine/phase.py`, `src/engine/actions.py`, `src/engine/engine.py`, `tests/engine/test_phase.py`, `tests/engine/test_actions.py` 생성.
 
-**인터페이스:** `next_phase(turn: int, phase: Phase, side: Side) -> tuple[int, Phase, Side]`, `EndPhaseAction(side: Side)`, `Engine(catalog: Catalog).new_game(scenario_id: str) -> GameState`, `get_legal_actions(state: GameState) -> list[EndPhaseAction]`, `apply_action(state: GameState, action: EndPhaseAction) -> GameState`.
+**인터페이스:** `next_phase(turn: int, phase: Phase, side: Side) -> tuple[int, Phase, Side]`, `EndPhaseAction(side: Side)`, `Engine(catalog: Catalog).new_game(scenario_id: str, seed: int = 0) -> GameState`, `get_legal_actions(state: GameState) -> list[EndPhaseAction]`, `apply_action(state: GameState, action: EndPhaseAction) -> GameState`. 시드 인자를 생략하면 0을 사용한다.
 
 - [ ] **1단계: §3 순서의 실패 테스트를 작성한다.** 날씨 → 추축군 초기·이동·전투·회복·보급 → 소련군 초기·이동·전투·회복·보급 → 승리 판정 → 다음 턴 날씨를 확인한다. S1이 곧바로 추축군 초기 페이즈에서 시작하는지, 추축군 페이즈에 소련군의 `EndPhaseAction`이 불법인지 확인한다.
 - [ ] **2단계:** `uv run --locked python -m unittest tests.engine.test_phase tests.engine.test_actions -v`를 실행한다. import 실패가 예상된다.
