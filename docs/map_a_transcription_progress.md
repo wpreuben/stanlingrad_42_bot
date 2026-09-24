@@ -52,6 +52,8 @@ uv run --locked python -m tools.map_edge_candidates --output docs/map_a_edge_can
 
 2019년 제공 지도 이미지(3300×5100)에서 각 후보 변 중심의 29×29픽셀을 검사해 파란 픽셀이 25개 이상인 미검수 변 485개를 [`map_a_river_review_queue.csv`](map_a_river_review_queue.csv)에 모았다. `map-tools` 의존성 그룹의 Pillow는 이 보조 도구에만 필요하며 게임 엔진의 실행 의존성에는 넣지 않았다. 검수된 변 144개를 기준으로 이 신호는 강 변 28개 중 25개를 잡았고 강이 아닌 변 116개 중 3개도 표시했다. 따라서 **강 판정이나 빈 변 확정에는 사용할 수 없으며**, 표시되지 않은 변도 후속 육안 검수가 필요하다.
 
+첫 대조로 Savala 주변 `3600→3701`, `3700→3701` 후보를 확대 원본에서 확인했다. 두 변의 강 표시는 보이지만 `3600→3701`에는 철도도 가로지르므로, 교량 속성까지 확인하기 전에는 검수 CSV로 승격하지 않는다.
+
 ```bash
 uv run --locked --group map-tools python -m tools.map_image_evidence \
   '../../images_high/Stal42_Map_west-FINAL-150 Q12.jpg' \
