@@ -232,6 +232,8 @@ for h in catalog.hexes.values():
 
 **인터페이스:** `Catalog.scenarios["fall_blau"]`는 S1.1~S1.2에 따라 Map A만 사용하고, 1턴에 시작하여 8턴에 종료하며, 추축군 초기 페이즈에서 시작한다. 양측 시작 카드에 있는 Map A 시작 유닛 전체를 읽는다. `ScenarioDef.placements`에는 `unit_id`, `location`, `steps`, `source_ref`가 있다.
 
+2019년 시작 카드의 지도 배치 묶음 98개를 `docs/s1_start_card_locations.csv`에 중간 전사했다. 이는 고유 유닛 ID·면별 수치가 없는 검수 자료이며 최종 카탈로그가 아니다. 2025년 규칙 S1.2에 따라 `3806`의 6예비군 4개는 2턴에 이동 가능하고, 5예비군 5개는 초기 배치가 아닌 3턴 Entry Area M 증원이다. 2019년 카드와 다른 진입 범위에는 2025년 S1.2를 적용한다. 해제·증원 일정은 추후 규칙 데이터 계약에서 명시한다.
+
 - [ ] **1단계: 실패 테스트를 작성한다.** `axis-2a-hq`가 `1300`에서 시작하는지, `1600`에 소련군 시작 배치가 있는지 확인한다. `fall_blau`의 시작 턴·진영·페이즈, 마지막 턴, 사용 지도도 검사한다. `missing-unit` 또는 `9999`를 배치한 자료는 `CatalogError`가 나야 한다.
 - [ ] **2단계:** `uv run --locked python -m unittest tests.engine.test_fall_blau_data -v`를 실행한다. 자료가 없어서 실패해야 한다.
 - [ ] **3단계: 양측 시작 카드와 카운터를 전사한다.** 추축군 카드는 `Images/httpssteamusercontentaakamaihdnetugc17884688380553658153FC9D37838E1E7AE747007396036D0CAE7AF8A0C.jpg`, 소련군 카드는 `Images/httpssteamusercontentaakamaihdnetugc1788468838055329033A93814D55EA6FBC4805AE36AD0C6339D5A88391A.jpg`다. S1 Map A 또는 S1.1~S1.2의 배치 구역에 해당하는 유닛만 포함한다. 물리적 카운터마다 안정적인 ID를 주고 인쇄된 이름은 별도 필드로 둔다. 감소 면, 마커, 수용 상자·진입 구역은 억지로 지도 헥스에 놓지 않고 위치 종류를 기록한다. `Images/`의 카운터 앞뒷면으로 포함된 유닛의 면별 수치를 확인한다.
