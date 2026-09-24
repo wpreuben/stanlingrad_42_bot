@@ -2,6 +2,7 @@
 
 import argparse
 import csv
+import math
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -20,6 +21,7 @@ class EdgePixelCandidate:
     pink_pixels: int
     dark_pixels: int
     wide_signal_pixels: int
+    border_signal_pixels: int
     signals: tuple[str, ...]
 
 
@@ -49,6 +51,24 @@ def score_edge_pixels(
                     blue += is_blue
                     pink += is_pink
                     dark += is_dark
+        dx, dy = x2 - x1, y2 - y1
+        distance = math.hypot(dx, dy)
+        along_x, along_y = -dy / distance, dx / distance
+        across_x, across_y = dx / distance, dy / distance
+        center_x, center_y = (x1 + x2) / 2, (y1 + y2) / 2
+        border_signal = 0
+        for along in range(-53, 54, 2):
+            for across in range(-6, 7, 2):
+                x = round(center_x + along_x * along + across_x * across)
+                y = round(center_y + along_y * along + across_y * across)
+                if not (0 <= x < image.size[0] and 0 <= y < image.size[1]):
+                    continue
+                red, green, blue_channel = image.getpixel((x, y))
+                border_signal += (
+                    (blue_channel > red + 20 and blue_channel > green + 5 and blue_channel > 120)
+                    + (red - green > 8 and red - blue_channel > 10 and red > 180 and green > 140)
+                    + (max(red, green, blue_channel) < 100)
+                )
         signals = []
         if blue >= threshold:
             signals.append("river_candidate")
@@ -58,10 +78,12 @@ def score_edge_pixels(
             signals.append("rail_or_primary_candidate")
         if wide_signal <= 10:
             signals.append("no_feature_candidate")
+            if border_signal <= 5:
+                signals.append("strong_no_feature_candidate")
         result.append(EdgePixelCandidate(
             edge.hex_id, edge.direction, edge.neighbor_id,
             edge.review_status, edge.crossing_features, blue, pink, dark,
-            wide_signal, tuple(signals),
+            wide_signal, border_signal, tuple(signals),
         ))
     return result
 
@@ -75,6 +97,7 @@ def evaluate_reviewed(candidates: list[EdgePixelCandidate]) -> dict[str, dict[st
             "railroad" in features or "primary_road" in features
         ),
         "no_feature_candidate": lambda features: features == "none",
+        "strong_no_feature_candidate": lambda features: features == "none",
     }
     metrics = {name: {"true_positive": 0, "false_positive": 0, "false_negative": 0}
                for name in truth}
@@ -97,12 +120,13 @@ def write_candidates(candidates: list[EdgePixelCandidate], stream) -> None:
     writer = csv.writer(stream, lineterminator="\n")
     writer.writerow(("hex_id", "direction", "neighbor_id", "review_status",
                      "crossing_features", "blue_pixels_29x29", "pink_pixels_29x29",
-                     "dark_pixels_29x29", "color_pixels_51x51", "signals"))
+                     "dark_pixels_29x29", "color_pixels_51x51", "border_signal_pixels",
+                     "signals"))
     for edge in candidates:
         writer.writerow((edge.hex_id, edge.direction, edge.neighbor_id,
                          edge.review_status, edge.crossing_features,
                          edge.blue_pixels, edge.pink_pixels, edge.dark_pixels,
-                         edge.wide_signal_pixels,
+                         edge.wide_signal_pixels, edge.border_signal_pixels,
                          ";".join(edge.signals)))
 
 

@@ -11,6 +11,8 @@ class FakeImage:
         x, y = point
         if y == 195 and x == 420:
             return (80, 150, 215)
+        if 421 <= y <= 425 and 468 <= x <= 474:
+            return (80, 150, 215)
         if y == 195 and 421 <= x <= 425:
             return (215, 180, 170)
         if y == 194 and 420 <= x <= 429:
@@ -38,14 +40,24 @@ class MapEdgePixelCandidateTests(unittest.TestCase):
         self.assertIn("no_feature_candidate", result[1].signals)
         self.assertEqual(result[1].review_status, "unreviewed")
 
+    def test_far_end_signal_prevents_strong_no_feature_candidate(self):
+        edges = [
+            EdgeCandidate("1301", "s", "1302", "unreviewed", "", ""),
+            EdgeCandidate("1302", "s", "1303", "unreviewed", "", ""),
+        ]
+        result = score_edge_pixels(edges, FakeImage())
+        self.assertIn("strong_no_feature_candidate", result[0].signals)
+        self.assertIn("no_feature_candidate", result[1].signals)
+        self.assertNotIn("strong_no_feature_candidate", result[1].signals)
+
     def test_evaluation_counts_misses_and_false_positives_on_reviewed_edges(self):
         edges = [
             EdgePixelCandidate("1300", "s", "1301", "reviewed", "minor_river",
-                               25, 0, 0, 25, ("river_candidate",)),
+                               25, 0, 0, 25, 25, ("river_candidate",)),
             EdgePixelCandidate("1301", "s", "1302", "reviewed", "none",
-                               25, 0, 0, 25, ("river_candidate",)),
+                               25, 0, 0, 25, 25, ("river_candidate",)),
             EdgePixelCandidate("1302", "s", "1303", "reviewed", "major_river",
-                               0, 0, 0, 0, ()),
+                               0, 0, 0, 0, 0, ()),
         ]
         self.assertEqual(evaluate_reviewed(edges)["river_candidate"],
                          {"true_positive": 1, "false_positive": 1, "false_negative": 1})
