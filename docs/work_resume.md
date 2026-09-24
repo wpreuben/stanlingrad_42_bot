@@ -21,7 +21,8 @@
 - [변 픽셀 후보](map_a_edge_pixel_candidates.csv)는 `tools.map_edge_pixel_candidates`로 확인된 인쇄 ID 사이의 기하학적 변 2,942개를 일괄 점수화한 자료다. 51×51픽셀 영역의 색 신호가 거의 없고 통과선이 없는 미검수 변 1,116개는 `no_feature_candidate`, 그중 공유 변의 양 끝까지 조용한 972개는 `strong_no_feature_candidate`로 표시된다. 변을 가로질러 양쪽으로 이어지는 선은 `route_crossing_candidate`로 표시된다. 후보 신호는 실행용 지도 속성이 아니다.
 - 지형 표본 탐색: 기존 검수 헥스 80개는 전부 `clear`다. VASSAL 지형표와 지도 확대 대조에서 `3905`·`4010`·`2122`·`3805`는 수목, `3534`는 습지, `2029`·`2503`·`3134`는 대도시, `1824`는 소도시의 후보로 확인했다. 아직 부분 CSV의 정식 검수 자료는 아니다. 이 표본으로 비평지 분류 가능성을 시험한다.
 - [헥스 색상 후보](map_a_hex_pixel_candidates.csv)는 `tools.map_hex_pixel_candidates`로 확인된 ID 1,040개를 일괄 점수화한 자료다. 평지 967, 수목 32, 습지 2, 대도시 3, 미해결 36개로 분류됐다. [일괄 판독 시험](map_a_automation_spike.md)에 표본 검사와 규칙상 한계를 적었다. 모두 실행용 지형이 아닌 후보이다.
-- VASSAL의 Map A 격자 영역 1,174개 중심과 확인 ID 1,040개를 대조한 [추가 ID 검토 대기열](map_a_vassal_grid_review.csv)은 134개다. `1833`·`1834`는 회색 `X` 엔트리 구역이라 인쇄 헥스 목록에서 제외했다. 134개의 색 분류는 [별도 헥스 점수표](map_a_vassal_hex_pixel_candidates.csv), 추가 425개 기하학적 변의 픽셀 신호는 [별도 변 점수표](map_a_vassal_edge_pixel_candidates.csv)에 있다. 모두 미확정 후보이며 실행용 지도 자료에 섞지 않는다. `ee95394`까지 GitHub 브랜치에 푸시했다.
+- VASSAL의 Map A 격자 영역 1,174개 중심과 확인 ID 1,040개를 대조한 [추가 ID 검토 대기열](map_a_vassal_grid_review.csv)은 134개다. `1833`·`1834`는 회색 `X` 엔트리 구역이라 인쇄 헥스 목록에서 제외했다. 134개의 색 분류는 [별도 헥스 점수표](map_a_vassal_hex_pixel_candidates.csv), 추가 425개 기하학적 변의 픽셀 신호는 [별도 변 점수표](map_a_vassal_edge_pixel_candidates.csv)에 있다. 모두 미확정 후보이며 실행용 지도 자료에 섞지 않는다. `c05f2d6`까지 GitHub 브랜치에 푸시했다.
+- 미해결 중심 12개를 한 화면에 보여주는 `tools.map_hex_review_sheet`를 만들었다. 빨간 원이 계산된 중심이다. 표본에서 보였던 숫자가 인접 헥스에 속할 수 있으므로, 과거의 '모두 숫자 확인' 기록을 [일괄 판독 시험](map_a_automation_spike.md)에서 정정했다. 현재 검토 시트는 `/tmp/map_a_vassal_unresolved_review.png`에 있지만 임시 파일이므로 아래 명령으로 재생성한다.
 
 ## 재현 명령
 
@@ -37,15 +38,19 @@ uv run --locked --group map-tools python -m tools.map_edge_review_sheet \
   '../../images_high/Stal42_Map_west-FINAL-150 Q12.jpg' \
   --columns 29 31 --rows 3 4 --output /tmp/map_a_edge_review_29_31.png
 uv run --locked --group map-tools python -m unittest discover -s tests -t . -q
+uv run --locked --group map-tools python -m tools.map_hex_review_sheet \
+  '../../images_high/Stal42_Map_west-FINAL-150 Q12.jpg' \
+  --candidates docs/map_a_vassal_hex_pixel_candidates.csv \
+  --output /tmp/map_a_vassal_unresolved_review.png
 ```
 
 네트워크 없이 실행할 때는 기존 세션과 같이 `UV_CACHE_DIR=/tmp/stalingrad42-uv-cache`를 명령 앞에 붙인다. 시스템 재시작 후 이 임시 캐시가 사라질 수 있으므로 그 경우 `uv`가 잠금 파일에 따라 다시 다운로드하게 한다.
 
 ## 바로 이어 할 일
 
-1. [VASSAL 격자 검토 대기열](map_a_vassal_grid_review.csv)의 134개 중심을 지형색·해안 여부에 따라 묶고 인쇄 번호와 플레이 가능성을 대조한다. 특히 바다색 중심이 섞인 12개부터 판독한다. 확인한 ID만 인쇄 목록에 옮기고 후보 도구를 재생성한다. 도로·철도 연결성 신호는 이미 구현했지만 검수된 도로·철도 37변 중 10개를 놓치므로 확정값으로 쓰지 않는다. 지도 수동 검수로 돌아가면 `3103`·`3104`와 인접 변을 판독한다.
+1. [VASSAL 격자 검토 대기열](map_a_vassal_grid_review.csv)의 134개 중심을 지형색·해안 여부에 따라 묶고 인쇄 번호와 플레이 가능성을 대조한다. [미해결 12개 검토 시트](map_a_automation_spike.md)를 재생성하고 빨간 원이 있는 헥스에 해당 숫자가 실제 인쇄됐는지 살핀다. `2138`처럼 옆 헥스의 숫자만 보일 수 있다. 확인한 ID만 인쇄 목록에 옮기고 후보 도구를 재생성한다. 도로·철도 연결성 신호는 검수된 도로·철도 37변 중 10개를 놓치므로 확정값으로 쓰지 않는다. 지도 수동 검수로 돌아가면 `3103`·`3104`와 인접 변을 판독한다.
 2. [규칙·자료 확인 사항](rule_issues.md)의 Savala `3600→3701`과 Anna의 도로·강 교차에서 `bridge`/`road_bridge` 속성을 어떻게 적는지 2025년 규칙과 TEC로 확인한다.
 3. 부분 CSV를 고칠 때마다 후보 CSV와 강변 대기열을 재생성하고, 감사 도구·전체 테스트를 실행한다. 현재의 99픽셀 이미지 좌표 보정은 검수된 강 변 28개 중 25개를 표시했고 강이 아닌 150개 중 0개를 표시했다. 누락 3개가 있으므로 파란색 신호가 없어도 검수한다.
 4. 지도 전체가 완성되기 전에는 `map_a.json`을 완성 자료로 만들지 않는다. 지도 작업 뒤에는 S1 유닛·시나리오 자료와 미구현 규칙으로 돌아간다.
 
-주간 사용량은 `python3 /home/pc/.codex/skills/codex-usage/scripts/usage.py`로 확인한다. 2026-09-24 마지막 확인 시 잔여 6%였다. 3% 이하가 되면 안전한 지점에서 이 문서를 갱신하고 작업을 멈춘다.
+주간 사용량은 `python3 /home/pc/.codex/skills/codex-usage/scripts/usage.py`로 확인한다. 2026-09-25 마지막 확인 시 잔여 3%였고 초기화 예정은 2026-09-30 20:24 KST다. 안전한 지점에서 작업을 멈추고 다음 세션에서 이 문서와 Git 상태를 먼저 확인한다.
