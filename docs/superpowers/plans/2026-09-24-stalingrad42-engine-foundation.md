@@ -199,7 +199,7 @@ for h in catalog.hexes.values():
 ```
 
 - [ ] **4단계:** 지도 밖 인접 헥스, JSON 중복 키, 모르는 용어 ID, 없는 배치 유닛 ID의 실패 테스트를 추가한다. `data/glossary.csv`는 `encoding="utf-8-sig"`로 읽고 표시어가 아닌 `term_id`를 보존한다. 테스트 파일 전체가 통과해야 한다.
-- [ ] **5단계:** `sources.json`에 스키마·룰셋 ID와 다음 실제 파일 경로를 기록한다: 로컬 영문 규칙서; `Images/httpssteamusercontentaakamaihdnetugc17884687792252896570A62D23C2FCE91331EED1641567952E124BC8AF7.jpg`(지도); `Images/httpssteamusercontentaakamaihdnetugc17884688380553658153FC9D37838E1E7AE747007396036D0CAE7AF8A0C.jpg`(추축군 시작 배치); `Images/httpssteamusercontentaakamaihdnetugc1788468838055329033A93814D55EA6FBC4805AE36AD0C6339D5A88391A.jpg`(소련군 시작 배치).
+- [ ] **5단계:** `sources.json`에 스키마·룰셋 ID와 다음 실제 파일 경로를 기록한다: 로컬 영문 규칙서; `Stal42_Map_west-FINAL-150 Q12.jpg`(Map A); `Images/httpssteamusercontentaakamaihdnetugc17884688380553658153FC9D37838E1E7AE747007396036D0CAE7AF8A0C.jpg`(추축군 시작 배치); `Images/httpssteamusercontentaakamaihdnetugc1788468838055329033A93814D55EA6FBC4805AE36AD0C6339D5A88391A.jpg`(소련군 시작 배치).
 - [ ] **6단계:** 자료 로더, 출처 목록, 테스트를 `feat: validate versioned game reference data`로 커밋한다.
 
 ### Task 3: 작업 3 — Map A의 전체 헥스 그래프와 지형 자료
@@ -210,7 +210,7 @@ for h in catalog.hexes.values():
 
 - [ ] **1단계: 전체 자료가 필요한 실패 테스트를 만든다.** 실제 자료를 읽어 S1에서 쓰는 `1300`, `1600`, `3806`, `4100`, `4111`의 존재를 확인한다. 모든 헥스변 속성이 이웃의 반대쪽에도 같은 값으로 기록됐는지 검사한다. 이웃이 없는 해안·지도 끝은 허용하지만, 이웃 없이 연결 도로가 있다고 적힌 자료는 거부한다.
 - [ ] **2단계:** `uv run --locked python -m unittest tests.engine.test_map_a -v`를 실행한다. `map_a.json`이 없어서 실패해야 한다.
-- [ ] **3단계: 지도 원본에서 Map A의 인쇄된 헥스 ID와 여섯 방향 이웃을 전사한다.** 작업 2에 적은 6519×7186 지도 이미지를 사용한다. 인쇄된 플레이 가능 헥스마다 JSON 객체 하나를 작성한다. 각 이미지 행을 끝낼 때 ID, 여섯 변, 가장자리 부분 헥스의 플레이 가능 여부를 원본과 확인한다. 네 자리 숫자만 계산해서 이웃을 추정하지 않는다. 이미지 영역마다 전체 그래프 검증을 실행하고, 모든 영역의 전사가 끝나야 이 작업을 커밋한다.
+- [ ] **3단계: 지도 원본에서 Map A의 인쇄된 헥스 ID와 여섯 방향 이웃을 전사한다.** 새로 제공된 `Stal42_Map_west-FINAL-150 Q12.jpg`(3300×5100) 원본을 사용한다. 인쇄된 플레이 가능 헥스마다 JSON 객체 하나를 작성한다. 각 이미지 행을 끝낼 때 ID, 여섯 변, 가장자리 부분 헥스의 플레이 가능 여부를 원본과 확인한다. 네 자리 숫자만 계산해서 이웃을 추정하지 않는다. 이미지 영역마다 전체 그래프 검증을 실행하고, 모든 영역의 전사가 끝나야 이 작업을 커밋한다.
 
 ```json
 {"id":"fixture-a","terrain":"clear","neighbors":{"e":"fixture-b"},"features":[],"edge_features":{},"source_ref":"fixture:a"}
