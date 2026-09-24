@@ -1,0 +1,15 @@
+hex_id,direction,neighbor_id,source_ref,crossing_features
+1800,s,1801,Stal42_Map_west-FINAL-150 Q12.jpg crop x850-1160 y45-455,none
+1800,ne,1900,Stal42_Map_west-FINAL-150 Q12.jpg crop x850-1160 y45-455,none
+1800,se,1901,Stal42_Map_west-FINAL-150 Q12.jpg crop x850-1160 y45-455,none
+1801,s,1802,Stal42_Map_west-FINAL-150 Q12.jpg crop x850-1160 y45-455,none
+1801,ne,1901,Stal42_Map_west-FINAL-150 Q12.jpg crop x850-1160 y45-455,none
+1801,se,1902,Stal42_Map_west-FINAL-150 Q12.jpg crop x850-1160 y45-455,none
+1802,ne,1902,Stal42_Map_west-FINAL-150 Q12.jpg crop x850-1160 y45-455,none
+1900,s,1901,Stal42_Map_west-FINAL-150 Q12.jpg crop x850-1160 y45-455,none
+1900,se,2000,Stal42_Map_west-FINAL-150 Q12.jpg crop x850-1160 y45-455,minor_river
+1901,s,1902,Stal42_Map_west-FINAL-150 Q12.jpg crop x850-1160 y45-455,none
+1901,ne,2000,Stal42_Map_west-FINAL-150 Q12.jpg crop x850-1160 y45-455,minor_river
+1901,se,2001,Stal42_Map_west-FINAL-150 Q12.jpg crop x850-1160 y45-455,minor_river
+1902,ne,2001,Stal42_Map_west-FINAL-150 Q12.jpg crop x850-1160 y45-455,minor_river
+1902,se,2002,Stal42_Map_west-FINAL-150 Q12.jpg crop x850-1160 y45-455,minor_river
