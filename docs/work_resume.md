@@ -18,6 +18,7 @@
 - [이웃 후보](map_a_edge_candidates.csv)는 2,947개 중 178개만 `reviewed`이며 나머지는 단순 기하 후보이다. [강변 검토 대기열](map_a_river_review_queue.csv)은 99픽셀 가로 간격으로 보정한 이미지 신호를 사용한다. 두 파일 모두 실행용 지도 자료가 아니다.
 - 사용자 제공 `Stalingrad42_v203/` 조사 결과는 [VASSAL 모듈 자료 조사](vassal_module_inventory.md)에 기록했다. 격자·카운터·시나리오 배치는 구조화되어 있으나 헥스별 지형·변 자료는 확인되지 않았다. Map A 이미지는 기존 `images_high` 파일과 해시가 같다.
 - [일괄 판독 시험](map_a_automation_spike.md)에서 단순 색 신호의 한계를 측정했다. 강 28변 중 25개를 오탐 없이 찾았으나 보조도로·철도 신호는 오탐이 많다. 검수된 헥스 80개가 모두 `clear`라 다른 지형의 정확도를 평가할 수 없다. 다음에는 선 연결성 분석과 다양한 지형 표본 검수를 우선한다.
+- [변 픽셀 후보](map_a_edge_pixel_candidates.csv)는 `tools.map_edge_pixel_candidates`로 2,947개 기하학적 변을 일괄 점수화한 자료다. 후보 신호는 실행용 지도 속성이 아니다.
 
 ## 재현 명령
 
