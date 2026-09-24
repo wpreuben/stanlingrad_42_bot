@@ -31,6 +31,28 @@
 
 사용자가 추가로 해야 할 일은 없다. 편집 가능한 원본 지도가 이미 있다면 제공 시 작업량을 크게 줄일 가능성이 있지만, 현 자료만으로도 위 시험을 진행할 수 있다.
 
+## 헥스 지형 색상 후보
+
+`tools.map_hex_pixel_candidates`는 지금까지 확인한 인쇄 ID 1,042개의 중앙 61×71픽셀을 샘플링해 [헥스 후보](map_a_hex_pixel_candidates.csv)를 만든다. 중앙값 색상과 초록색·어두운색·파란색 비율로만 분류하므로 `candidate`는 지형의 확정값이 아니다.
+
+| 후보 | 수 | 확인 상태 |
+|---|---:|---|
+| `clear_candidate` | 967 | 기존 평지 검수 80/80 포함. 별도 난수 표본 24개를 확대 대조한 결과 모두 평지로 판독. |
+| `vegetation_candidate` | 32 | 난수 표본 12개를 확대 대조한 결과 모두 수목으로 판독. 수목과 수목 있는 험지를 자동 구분한 결과는 아님. |
+| `marsh_candidate` | 2 | 습지 색상 후보. 일반 습지와 계절성 습지는 아직 구분하지 않음. |
+| `major_city_candidate` | 3 | 대도시 색상 후보. |
+| `unresolved` | 38 | 소도시, 해안, 요새 인쇄, 습지, 엔트리 구역 등이 혼합됨. |
+
+표본은 각 후보 집합에서 `random.sample`을 사용해 시드 `420204`(평지), `420205`(수목)로 골랐다. 표본을 모델 개발 과정에서 살펴봤으므로 독립된 최종 정확도 인증은 아니다. [영문 규칙서 §2.2](https://gmtwebsiteassets.s3.us-west-2.amazonaws.com/Stalingrad42/Stal42_RULES-2025-Final_LoRes.pdf)는 도시가 아래 지형을 덮어쓰고, 산지가 일부라도 있는 헥스를 산지로 취급한다고 명시한다. 따라서 중앙색만 평지인 경우 산지 조각 같은 예외를 놓칠 수 있다. 현재 도구는 Map A 후보 검토에만 사용하고 플레이용 지도로 승격하지 않는다.
+
+헥스 후보 재생성 명령:
+
+```bash
+uv run --locked --group map-tools python -m tools.map_hex_pixel_candidates \
+  '../../images_high/Stal42_Map_west-FINAL-150 Q12.jpg' \
+  --output docs/map_a_hex_pixel_candidates.csv
+```
+
 후보 파일 재생성 명령:
 
 ```bash
