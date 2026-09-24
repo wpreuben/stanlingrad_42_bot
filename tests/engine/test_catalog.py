@@ -13,6 +13,27 @@ def hex_def(hex_id, neighbors=None, source_ref="fixture:hex"):
 
 
 class CatalogTests(unittest.TestCase):
+    def test_loader_rejects_missing_map_instead_of_returning_empty_catalog(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "sources.json").write_text(
+                '{"schema_version":1,"ruleset_id":"v2025_04","sources":[]}', encoding="utf-8")
+            with self.assertRaises(CatalogError):
+                load_catalog(root)
+
+    def test_loader_rejects_empty_data_sets(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for filename, key in (("map_a.json", "hexes"),
+                                  ("units_s1.json", "units"),
+                                  ("fall_blau.json", "scenarios")):
+                (root / filename).write_text(json.dumps({"schema_version": 1,
+                    "ruleset_id": "v2025_04", key: []}), encoding="utf-8")
+            (root / "sources.json").write_text(json.dumps({"schema_version": 1,
+                "ruleset_id": "v2025_04", "sources": []}), encoding="utf-8")
+            with self.assertRaises(CatalogError):
+                load_catalog(root)
+
     def test_nonreciprocal_neighbor_rejected(self):
         catalog = Catalog("v2025_04", {
             "a": hex_def("a", {"e": "b"}),
@@ -45,6 +66,18 @@ class CatalogTests(unittest.TestCase):
         self.assertIn("a", catalog.hexes)
         with self.assertRaises(TypeError):
             catalog.hexes["b"] = hex_def("b")
+
+    def test_nested_definition_lists_are_copied(self):
+        abilities = ["elite"]
+        faces = [UnitFace(1, 1, 1, 1, abilities)]
+        unit = UnitDef("u", Side.AXIS, "infantry", "U", faces, "fixture:unit")
+        maps = ["map_a"]
+        scenario = ScenarioDef("s", maps, 1, Phase.INITIAL, Side.AXIS, 8, [])
+        abilities.append("motorized")
+        faces.clear()
+        maps.clear()
+        self.assertEqual(unit.faces[0].abilities, ("elite",))
+        self.assertEqual(scenario.map_ids, ("map_a",))
 
     def test_duplicate_json_keys_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:

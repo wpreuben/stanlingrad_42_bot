@@ -6,7 +6,7 @@ from .actions import EndPhaseAction
 from .catalog import Catalog, validate_catalog
 from .errors import CatalogError, InvalidActionError, UnsupportedRuleError
 from .phase import next_phase
-from .types import Event, GameState, Phase, RngState, Side, UnitState
+from .types import Event, GameResult, GameState, Phase, RngState, Side, UnitState
 
 
 class Engine:
@@ -50,6 +50,14 @@ class Engine:
                                       ("turn", str(state.turn))))
         return replace(state, turn=turn, phase=phase, active_side=side,
                        events=state.events + (event,))
+
+    def is_terminal(self, state: GameState) -> bool:
+        self._check_state_catalog(state)
+        return False
+
+    def get_result(self, state: GameState) -> GameResult:
+        self._check_state_catalog(state)
+        return GameResult.ONGOING
 
     def _check_state_catalog(self, state: GameState) -> None:
         if state.ruleset_id != self.catalog.ruleset_id or state.scenario_id not in self.catalog.scenarios:

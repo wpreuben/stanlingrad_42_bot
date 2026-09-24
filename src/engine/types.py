@@ -29,6 +29,9 @@ class UnitState:
     steps: int
     statuses: tuple[str, ...]
 
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "statuses", tuple(self.statuses))
+
 
 @dataclass(frozen=True)
 class RngState:
@@ -40,6 +43,9 @@ class RngState:
 class Event:
     kind: str
     params: tuple[tuple[str, str], ...]
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "params", tuple(tuple(pair) for pair in self.params))
 
 
 @dataclass(frozen=True)
@@ -66,6 +72,9 @@ class GameState:
         for name in ("units", "markers", "control", "supply", "resources",
                      "reinforcements", "victory_points", "private_state"):
             object.__setattr__(self, name, MappingProxyType(dict(getattr(self, name))))
+        object.__setattr__(self, "reinforcements", MappingProxyType(
+            {key: tuple(value) for key, value in self.reinforcements.items()}))
+        object.__setattr__(self, "events", tuple(self.events))
 
 
 class GameResult(str, Enum):

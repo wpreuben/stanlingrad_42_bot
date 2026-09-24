@@ -43,6 +43,9 @@ class UnitFace:
     movement: int | None
     abilities: tuple[str, ...]
 
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "abilities", tuple(self.abilities))
+
 
 @dataclass(frozen=True)
 class UnitDef:
@@ -52,6 +55,9 @@ class UnitDef:
     printed_label: str
     faces: tuple[UnitFace, ...]
     source_ref: str
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "faces", tuple(self.faces))
 
 
 @dataclass(frozen=True)
@@ -71,6 +77,10 @@ class ScenarioDef:
     start_side: Side
     end_turn: int
     placements: tuple[Placement, ...]
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "map_ids", tuple(self.map_ids))
+        object.__setattr__(self, "placements", tuple(self.placements))
 
 
 @dataclass(frozen=True)
@@ -189,9 +199,12 @@ def _unique_by_id(records: list[dict], factory, label: str) -> dict:
 
 
 def load_catalog(root: Path) -> Catalog:
-    """Read the available versioned JSON files from a data directory."""
+    """Read a complete versioned catalog from a data directory."""
     root = Path(root)
     _read_json(root / "sources.json")
+    for filename in ("map_a.json", "units_s1.json", "fall_blau.json"):
+        if not (root / filename).is_file():
+            raise CatalogError(f"missing catalog file: {filename}")
     try:
         hexes = {}
         if (root / "map_a.json").exists():
@@ -214,6 +227,8 @@ def load_catalog(root: Path) -> Catalog:
                 Side(s["start_side"]), s["end_turn"],
                 tuple(Placement(p["unit_id"], p["location"], p["steps"], p["source_ref"])
                       for p in s["placements"])), "scenario")
+        if not hexes or not units or not scenarios:
+            raise CatalogError("catalog map, unit, and scenario data must be nonempty")
         catalog = Catalog(RULESET_ID, hexes, units, scenarios)
         validate_catalog(catalog)
         return catalog
