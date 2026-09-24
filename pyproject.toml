@@ -10,3 +10,8 @@ build-backend = "uv_build"
 
 [tool.uv.build-backend]
 module-name = "engine"
+
+[dependency-groups]
+map-tools = [
+    "pillow==12.3.0",
+]

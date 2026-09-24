@@ -42,6 +42,22 @@
 부분 검수 CSV는 `uv run --locked python -m tools.map_fragment_audit docs`로 묶어서 검사한다. 이 도구는 검수한 헥스끼리의 인접 변 누락(구역 경계 포함), 좌표 오류, 중복 변, 모르는 지형·특성 ID를 거부한다. 아직 검수하지 않은 헥스로 향하는 연결의 완전성과 그림 판독 자체는 검사할 수 없으므로 전체 `map_a.json`의 완료 판정에 사용하지 않는다.
 현재 구역별 부분 검수 합계는 헥스 66개, 변 144개, 인쇄 승점 1점이다. 변 특성의 내역은 보조도로 15개, 주도로 2개, 철도 10개, 소하천 23개, 대하천 5개이며, 나머지 89개 변에는 횡단 특성이 없다.
 
+### 전사 후보 생성과 이미지 검토 순서
+
+인쇄 ID 1,042개와 검수된 부분 CSV에서 [`map_a_edge_candidates.csv`](map_a_edge_candidates.csv)를 생성했다. 격자 좌표로 가능한 이웃 변 2,947개를 한 번씩 나열하며, 그중 기존 검수 변 144개만 `reviewed`와 확정된 `crossing_features`·출처를 갖는다. 나머지 2,803개는 `unreviewed`이고 속성이 빈칸이다. 인쇄 ID에는 바다 헥스도 있으므로 이 후보 목록은 통행 가능 지도 그래프가 아니다. 검수 자료를 바꾸면 아래 명령으로 다시 생성한다.
+
+```bash
+uv run --locked python -m tools.map_edge_candidates --output docs/map_a_edge_candidates.csv
+```
+
+2019년 제공 지도 이미지(3300×5100)에서 각 후보 변 중심의 29×29픽셀을 검사해 파란 픽셀이 25개 이상인 미검수 변 485개를 [`map_a_river_review_queue.csv`](map_a_river_review_queue.csv)에 모았다. `map-tools` 의존성 그룹의 Pillow는 이 보조 도구에만 필요하며 게임 엔진의 실행 의존성에는 넣지 않았다. 검수된 변 144개를 기준으로 이 신호는 강 변 28개 중 25개를 잡았고 강이 아닌 변 116개 중 3개도 표시했다. 따라서 **강 판정이나 빈 변 확정에는 사용할 수 없으며**, 표시되지 않은 변도 후속 육안 검수가 필요하다.
+
+```bash
+uv run --locked --group map-tools python -m tools.map_image_evidence \
+  '../../images_high/Stal42_Map_west-FINAL-150 Q12.jpg' \
+  --output docs/map_a_river_review_queue.csv
+```
+
 ### 구역 사이 연결과 Don 강 북쪽
 
 북서쪽 9개 헥스와 Tim 강 구역 사이 `1400`–`1402`/`1500`–`1502` 접경 변 5개를 지도 `x=455–765, y=55–445`에서 확인해 `map_a_tim_kshen_edges.csv`에 추가했다. 모두 횡단 특성이 없다.
